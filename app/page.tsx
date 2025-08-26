@@ -47,8 +47,8 @@ export default function Page() {
               <Image src="/logo.png" width={44} height={44} alt="LimpiaBien" className="logoImg" />
             </div>
             <div className="brand">
-              <strong className="brandName">LimpiaBien</strong>
-              <span className="brandTag">.cl • Limpieza a domicilio</span>
+              <strong className="brandName">LimpiaBien.cl</strong>
+              {/* <span className="brandTag">.cl • Limpieza a domicilio</span> */}
             </div>
           </div>
 
