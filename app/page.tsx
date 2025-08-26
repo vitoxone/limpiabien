@@ -108,9 +108,11 @@ export default function Page() {
                     ) : null}
                   </div>
                   <div className="chips">
-                    {'domicilio' in cat && !(cat as any).domicilio ? (
+                    {'domicilio' in cat && (cat as any).domicilio === false ? (
                       <span className="chip alt">Sólo retiro</span>
-                    ) : <span className="chip alt">Domiciio</span>}
+                    ) : (
+                      <span className="chip alt">A domicilio</span>
+                    )}
                   </div>
                 </header>
 
@@ -143,16 +145,16 @@ export default function Page() {
         © {new Date().getFullYear()} LimpiaBien • Nancagua, Santa Cruz, San Fernando, Chimbarongo, Chépica y alrededores
       </footer>
 
-      <style jsx>{`
-        /* ---------- PALETA & TOKENS ---------- */
+      {/* GLOBAL: mueve :root y estilos verdaderamente globales aquí */}
+      <style jsx global>{`
         :root {
           --ink: #0f172a;
           --muted: #6b7280;
           --line: #e6eef5;
 
-          --brand: #0ea5e9;    /* celeste */
-          --brand-2: #06b6d4;  /* turquesa */
-          --brand-3: #22d3ee;  /* aqua claro */
+          --brand: #0ea5e9;
+          --brand-2: #06b6d4;
+          --brand-3: #22d3ee;
 
           --bg-hero-a: #e0f7ff;
           --bg-hero-b: #f8fdff;
@@ -162,8 +164,10 @@ export default function Page() {
           --shadow-sm: 0 6px 16px rgba(2, 132, 199, 0.10);
           --shadow-lg: 0 18px 50px rgba(14, 165, 233, 0.18);
         }
+      `}</style>
 
-        /* ---------- LAYOUT ---------- */
+      {/* SCOPED */}
+      <style jsx>{`
         .wrap { max-width: 1100px; margin: 0 auto; padding: 12px 16px; }
         .headerWrap { display: flex; align-items: center; justify-content: space-between; }
 
@@ -193,7 +197,6 @@ export default function Page() {
 
         .container { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
 
-        /* ---------- HERO ---------- */
         .hero {
           border-radius: var(--radius-lg);
           padding: 0; margin: 14px 0 28px;
@@ -235,7 +238,6 @@ export default function Page() {
         .badgeTitle { font-weight: 700; color: #0369a1; }
         .badgeNote { display: block; color: #0f172a; opacity: .7; font-size: 13px; }
 
-        /* ---------- CATÁLOGO ---------- */
         .catalog { display: grid; gap: 18px; }
         .categoryCard {
           background: rgba(255,255,255,.82);
@@ -260,27 +262,20 @@ export default function Page() {
         .categoryDesc { margin: 6px 0 0; color: #5b6b7a; font-size: 14px; max-width: 60ch; }
         .chips { display: flex; gap: 8px; flex-wrap: wrap; }
         .chip {
-          --c: var(--brand);
-          color: #035074;
-          background: linear-gradient(180deg, rgba(34,211,238,.18), rgba(14,165,233,.12));
-          border: 1px solid rgba(14,165,233,.35);
-          border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 600;
-        }
-        .chip.alt {
           color: #065f46;
           background: linear-gradient(180deg, rgba(16,185,129,.16), rgba(5,150,105,.12));
-          border-color: rgba(5,150,105,.35);
+          border: 1px solid rgba(5,150,105,.35);
+          border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 600;
         }
+        .chip.alt { /* mismo estilo, por si luego agregas otra variante */ }
 
         .categoryBody { padding: 10px 12px 14px; }
 
-        /* ---------- CTA ---------- */
         .ctaBar {
           display: flex; gap: 12px; flex-wrap: wrap;
           margin: 20px 0 0;
         }
 
-        /* ---------- BOTONES ---------- */
         .btn {
           display: inline-flex; align-items: center; justify-content: center;
           gap: 8px; padding: 10px 14px;
@@ -311,7 +306,6 @@ export default function Page() {
         }
         .btn.ghost:hover { background: #e6f6ff; }
 
-        /* ---------- FOOTER ---------- */
         .siteFooter {
           margin: 36px auto 22px;
           text-align: center;
@@ -319,7 +313,6 @@ export default function Page() {
           font-size: 13px;
         }
 
-        /* ---------- RESPONSIVE ---------- */
         @media (max-width: 900px) {
           .heroInner { grid-template-columns: 1fr; }
           .heroBadge { border-left: none; border-top: 1px solid var(--line); }
