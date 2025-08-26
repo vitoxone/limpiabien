@@ -8,6 +8,8 @@ export type CatalogItem = {
 export type CatalogCategory = {
   slug: string;
   name: string;
+  domicilio?: boolean;
+  description?: string;
   items: CatalogItem[];
 };
 
@@ -15,6 +17,8 @@ export const CATEGORIES: CatalogCategory[] = [
   {
     slug: 'tapices',
     name: 'Tapices',
+    domicilio: true,
+    description: 'Limpieza profunda de sillones y seccionales con sistema de inyección-extracción. Eliminamos manchas, ácaros y olores, dejando tus muebles frescos y con secado rápido.',
     items: [
       { id: 'sillon-1-cuerpo', title: 'Sillón 1 cuerpo', price: 20000 },
       { id: 'sillon-2-cuerpos', title: 'Sillón 2 cuerpos', price: 25000 },
@@ -26,6 +30,8 @@ export const CATEGORIES: CatalogCategory[] = [
   {
     slug: 'colchones',
     name: 'Colchones',
+    domicilio: true,
+    description: 'Higienización completa en ambas caras con productos hipoalergénicos. Eliminamos ácaros y manchas para un descanso más saludable.',
     items: [
       { id: 'colchon-1-plaza', title: 'Colchón 1 plaza (ambas cara)', price: 20000 },
       { id: 'colchon-1.5-plaza', title: 'Colchón 1.5 plaza (ambas cara)', price: 22000 },
@@ -33,9 +39,11 @@ export const CATEGORIES: CatalogCategory[] = [
       { id: 'colchon-queen-king', title: 'Colchón Queen/King (ambas caras)', price: 30000 },
     ],
   },
-    {
+  {
     slug: 'vehiculos',
     name: 'Tapices vehículos',
+    domicilio: true,
+    description: 'Limpieza interior de autos, camionetas y SUVs. Incluye asientos, alfomillas y detalles, removiendo manchas y olores para un viaje más fresco.',
     items: [
       { id: 'auto-sedan', title: 'Auto sedán/hatchback (interior)', price: 35000 },
       { id: 'suv-camioneta', title: 'SUV/Camioneta (interior)', price: 45000 },
@@ -45,6 +53,8 @@ export const CATEGORIES: CatalogCategory[] = [
   {
     slug: 'alfombras',
     name: 'Alfombras Decorativas',
+    domicilio: false,
+    description: 'Lavado en profundidad que reaviva colores y texturas. Eliminamos suciedad incrustada, manchas y olores en alfombras de diferentes tamaños.',
     items: [
       { id: 'alfombra-pequena', title: 'Alfombra pequeña (hasta 2 m²)', price: 8000 },
       { id: 'alfombra-mediana', title: 'Alfombra mediana (2–4 m²)', price: 15000 },
@@ -54,6 +64,8 @@ export const CATEGORIES: CatalogCategory[] = [
   {
     slug: 'alfombras-muro',
     name: 'Alfombras muro a muro',
+    domicilio: true,
+    description: 'Servicio especializado para grandes superficies. Limpieza pareja y completa, ideal para hogares y oficinas con alfombras fijas.',
     items: [
       { id: 'muro-10m2', title: 'Muro a muro hasta 10 m²', price: 22000 },
       { id: 'muro-20m2', title: 'Muro a muro hasta 20 m²', price: 38000 },
@@ -63,6 +75,8 @@ export const CATEGORIES: CatalogCategory[] = [
   {
     slug: 'sillas',
     name: 'Sillas',
+    domicilio: true,
+    description: 'Lavado de sillas tapizadas y sitiales. Eliminamos manchas y suciedad acumulada en pocos minutos con secado rápido.',
     items: [
       { id: 'silla-tapizada', title: 'Silla tapizada', price: 4000 },
       { id: 'sitial', title: 'Sitial', price: 6000 },
@@ -71,6 +85,8 @@ export const CATEGORIES: CatalogCategory[] = [
   {
     slug: 'respaldos',
     name: 'Respaldos de cama',
+    domicilio: true,
+    description: 'Higienización de respaldos tapizados. Eliminamos polvo y manchas para mejorar la estética y prolongar la vida útil del mueble.',
     items: [
       { id: 'respaldo-1', title: 'Resp. 1 plaza', price: 12000 },
       { id: 'respaldo-2', title: 'Resp. 2 plazas', price: 16000 },
