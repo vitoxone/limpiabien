@@ -109,9 +109,9 @@ export default function Page() {
                   </div>
                   <div className="chips">
                     {'domicilio' in cat && (cat as any).domicilio === false ? (
-                      <span className="chip alt">Sólo retiro</span>
+                      <span className="chip alt">Retiro</span>
                     ) : (
-                      <span className="chip alt">A domicilio</span>
+                      <span className="chip alt">Domicilio</span>
                     )}
                   </div>
                 </header>
