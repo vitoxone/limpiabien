@@ -1,7 +1,13 @@
-:root{
-  --brand:#1fa3ff; --brand-2:#0b6aa8;
-  --bg:#f7fbfe; --card:#ffffff; --border:#e5e7eb;
-  --text:#111827; --muted:#6b7280; --ok:#10b981;
+:root {
+  color-scheme: light; /* fuerza siempre esquema claro */
+  --brand: #1fa3ff;    /* azul principal */
+  --brand-2: #0b6aa8;  /* azul secundario */
+  --bg: #f7fbfe;       /* fondo general */
+  --card: #ffffff;     /* fondo de tarjetas/boxes */
+  --border: #e5e7eb;   /* borde gris claro */
+  --text: #111827;     /* texto principal oscuro */
+  --muted: #6b7280;    /* texto secundario */
+  --ok: #10b981;       /* verde para “éxito” */
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial}
