@@ -7,7 +7,7 @@
   --border: #e5e7eb;   /* borde gris claro */
   --text: #111827;     /* texto principal oscuro */
   --muted: #6b7280;    /* texto secundario */
-  --ok: #10b981;       /* verde para “éxito” */
+  --ok: #10b981;       /* verde “éxito” */
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial}
@@ -66,10 +66,7 @@ header .cta{margin-left:auto}
 .textarea:focus{outline:2px solid rgba(31,163,255,.25)}
 
 footer{padding:36px 16px;color:var(--muted);text-align:center}
-@media (prefers-color-scheme: dark){
-  :root{--bg:#0b1118;--card:#0f1720;--text:#e5e7eb;--muted:#9ca3af;--border:#1f2937}
-  header{background:rgba(11,17,24,.75)}
-}
+
 .section{margin:28px 0}
 .section-head{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
 .section-head h2{font-size:clamp(20px,3vw,28px);margin:0}
