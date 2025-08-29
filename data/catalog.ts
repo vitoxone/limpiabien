@@ -78,8 +78,8 @@ export const CATEGORIES: CatalogCategory[] = [
     domicilio: true,
     description: 'Lavado de sillas tapizadas y sitiales. Eliminamos manchas y suciedad acumulada en pocos minutos con secado rápido.',
     items: [
-      { id: 'silla-tapizada', title: 'Silla tapizada', price: 4000 },
-      { id: 'sitial', title: 'Sitial', price: 6000 },
+      { id: 'silla-tapizada', title: 'Silla tapizada', price: 10000 },
+      { id: 'sitial', title: 'Sitial', price: 10000 },
     ],
   },
   {
