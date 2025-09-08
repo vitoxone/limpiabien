@@ -77,6 +77,18 @@ export const CATEGORIES: CatalogCategory[] = [
     ],
   },
   {
+  slug: 'escaleras',
+  name: 'Escaleras alfombradas',
+  domicilio: true,
+  description: 'Limpieza profunda de escaleras alfombradas, peldaño por peldaño. Incluye inyección-extracción en huellas y contrahuellas.',
+  items: [
+    { id: 'escalera-pequena', title: 'Escalera pequeña (hasta 10 peldaños)', price: 38000 },
+    { id: 'escalera-mediana', title: 'Escalera mediana (11–15 peldaños)', price: 50000 },
+    { id: 'escalera-grande', title: 'Escalera grande (16–20 peldaños)', price: 65000 },
+    { id: 'peldaño-extra', title: 'Peldaño adicional', price: 4000 },
+  ],
+},
+  {
     slug: 'sillas',
     name: 'Sillas',
     domicilio: true,
