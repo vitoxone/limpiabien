@@ -67,7 +67,7 @@ export const CATEGORIES: CatalogCategory[] = [
     domicilio: true,
     description: 'Servicio especializado para grandes superficies. Limpieza pareja y completa, ideal para hogares y oficinas con alfombras fijas.',
     items: [
-      { id: 'muro-10m2', title: 'Muro a muro hasta m²', price: 2800 }
+      { id: 'muro-10m2', title: 'Muro a muro hasta m²', price: 3000 }
     ],
   },
   {
