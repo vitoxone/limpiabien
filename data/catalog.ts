@@ -57,8 +57,8 @@ export const CATEGORIES: CatalogCategory[] = [
     description: 'Lavado en profundidad que reaviva colores y texturas. Eliminamos suciedad incrustada, manchas y olores en alfombras de diferentes tamaños.',
     items: [
       { id: 'alfombra-pequena', title: 'Alfombra pequeña (hasta 2 m²)', price: 8000 },
-      { id: 'alfombra-mediana', title: 'Alfombra mediana (2–4 m²)', price: 15000 },
-      { id: 'alfombra-grande', title: 'Alfombra grande (4–6 m²)', price: 22000 },
+      { id: 'alfombra-mediana', title: 'Alfombra mediana (2–4 m²)', price: 20000 },
+      { id: 'alfombra-grande', title: 'Alfombra grande (4–6 m²)', price: 25000 },
     ],
   },
   {
@@ -107,6 +107,15 @@ export const CATEGORIES: CatalogCategory[] = [
       { id: 'respaldo-1', title: 'Resp. 1 plaza', price: 12000 },
       { id: 'respaldo-2', title: 'Resp. 2 plazas', price: 16000 },
       { id: 'respaldo-queen', title: 'Resp. Queen/King', price: 20000 },
+    ],
+  },
+    {
+    slug: 'extras',
+    name: 'Extras',
+    domicilio: true,
+    description: 'Higienización de respaldos tapizados. Eliminamos polvo y manchas para mejorar la estética y prolongar la vida útil del mueble.',
+    items: [
+      { id: 'cojin-1', title: 'Cojín', price: 5000 }
     ],
   },
 ];
