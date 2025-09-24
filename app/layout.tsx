@@ -110,8 +110,8 @@ export default function RootLayout({
     '@type': 'HomeAndConstructionBusiness',
     name: 'LimpiaBien',
     url: 'https://limpiabien.cl',
-    logo: 'https://limpiabien.cl/_next/image?url=%2Flogo.png&w=96&q=75',
-    image: 'https://limpiabien.cl/_next/image?url=%2Flogo.png&w=96&q=75',
+    logo: 'https://limpiabien.cl/logo.png',
+    image: 'https://limpiabien.cl/logo.png',
     telephone: '+56977515193', // reemplaza
     sameAs: ['https://www.instagram.com/limpiabien.cl'],
     areaServed: ['Nancagua', 'San Fernando', 'Santa Cruz', 'Chimbarongo', 'Chépica', 'Región de O’Higgins'],
