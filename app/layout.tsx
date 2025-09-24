@@ -161,7 +161,6 @@ export default function RootLayout({
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:m-2 focus:rounded-md focus:bg-black/80 focus:px-3 focus:py-2 focus:text-white"
         >
-          Saltar al contenido
         </a>
 
         {/* Contenido */}
