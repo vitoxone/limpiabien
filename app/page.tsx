@@ -38,13 +38,101 @@ export default function Page() {
 
   const waHref = useMemo(() => buildWaLink(message), [message]);
 
+  // ======= JSON-LD =======
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://limpiabien.cl/' },
+      { '@type': 'ListItem', position: 2, name: 'Servicios', item: 'https://limpiabien.cl/#catalogo' },
+    ],
+  };
+
+  const itemListLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Catálogo de servicios de limpieza',
+    itemListOrder: 'https://schema.org/ItemListOrderAscending',
+    itemListElement: CATEGORIES.map((cat, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      url: `https://limpiabien.cl/#cat-${cat.slug}`,
+      name: cat.name,
+      description: 'description' in cat ? (cat as any).description : undefined,
+    })),
+  };
+
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: '¿Cada cuánto tiempo conviene limpiar sillones y colchones?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text:
+            'Recomendamos una mantención cada 6 a 12 meses, o antes si hay manchas visibles, alérgenos o mascotas.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: '¿Trabajan a domicilio en Nancagua, Santa Cruz y San Fernando?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text:
+            'Sí. Atendemos a domicilio en Nancagua, Santa Cruz, San Fernando, Chimbarongo, Chépica y alrededores.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: '¿Qué método usan para la limpieza de tapices y alfombras?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text:
+            'Usamos equipos de inyección–extracción con productos hipoalergénicos y biodegradables. Realizamos desmanchado focalizado.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: '¿Puedo cotizar por WhatsApp?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text:
+            'Claro. Selecciona tus servicios, ajusta cantidades y envíanos la cotización por WhatsApp para coordinar fecha y hora.',
+        },
+      },
+    ],
+  };
+
   return (
     <>
-      <header className="siteHeader">
+      {/* JSON-LD para rich results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
+
+      <header className="siteHeader" role="banner">
         <div className="wrap headerWrap">
           <div className="logo" aria-label="LimpiaBien">
             <div className="logoMark">
-              <Image src="/logo.png" width={44} height={44} alt="LimpiaBien" className="logoImg" />
+              <Image
+                src="/logo.png"
+                width={44}
+                height={44}
+                alt="LimpiaBien — limpieza profesional"
+                className="logoImg"
+                priority
+              />
             </div>
             <div className="brand">
               <strong className="brandName">LimpiaBien.cl</strong>
@@ -52,41 +140,43 @@ export default function Page() {
             </div>
           </div>
 
-          <Link className="btn ghost" href={waHref} target="_blank" rel="noopener">
+          <Link className="btn ghost" href={waHref} target="_blank" rel="noopener nofollow sponsored" aria-label="Pedir cotización por WhatsApp">
             Pedir cotización
           </Link>
         </div>
       </header>
 
-      <main className="pageBg">
+      <main className="pageBg" role="main">
         <div className="container">
           {/* HERO */}
-          <section className="hero">
+          <section className="hero" aria-labelledby="hero-title">
             <div className="heroInner">
               <div className="heroText">
                 <span className="eyebrow">Higiene & Confort</span>
-                <h1>Nuestros Servicios</h1>
+                <h1 id="hero-title">Limpieza de tapices, sillones y alfombras a domicilio</h1>
                 <p className="lead">
-                  Limpieza profesional de tapices y superficies con equipos de inyección–extracción.
-                  Eliminamos manchas, ácaros y olores, y atención a domicilio.
+                  Servicio profesional con equipos de inyección–extracción. Eliminamos manchas, ácaros y olores.
+                  Atención en Nancagua, Santa Cruz, San Fernando, Chimbarongo y Chépica.
                 </p>
                 <ul className="benefits">
                   <li>Productos hipoalergénicos y biodegradables</li>
-                  <li>Desmanchado focalizado</li>
-                  <li>Servicio en Nancagua, Santa Cruz, San Fernando, Chimbarongo y Chépica</li>
+                  <li>Desmanchado focalizado y secado más rápido</li>
+                  <li>Cotización inmediata por WhatsApp</li>
                 </ul>
                 <div className="heroCtas">
-                  <Link className="btn primary" href={waHref} target="_blank" rel="noopener">
+                  <Link className="btn primary" href={waHref} target="_blank" rel="noopener nofollow sponsored">
                     Consultar por WhatsApp
                   </Link>
                   <a className="btn ghost" href="#catalogo">Ver catálogo</a>
                 </div>
-                <p className="helper">Selecciona lo que necesitas, ajusta la cantidad y envíanos tu pedido.</p>
+                <p className="helper">
+                  Selecciona lo que necesitas, ajusta la cantidad y envíanos tu pedido.
+                </p>
               </div>
-              <div className="heroBadge">
+              <div className="heroBadge" aria-label="Sello de confianza">
                 <div className="badgeCard">
                   <span className="badgeTitle">Atención Personalizada</span>
-                  <span className="badgeNote">Nos ajustamos a sus horarios</span>
+                  <span className="badgeNote">Nos ajustamos a tus horarios</span>
                 </div>
                 <div className="badgeCard">
                   <span className="badgeTitle">Eco-friendly</span>
@@ -97,21 +187,25 @@ export default function Page() {
           </section>
 
           {/* CATEGORÍAS */}
-          <section id="catalogo" className="catalog">
+          <section id="catalogo" className="catalog" aria-labelledby="catalogo-title">
+            <h2 id="catalogo-title" className="sr-only">Nuestros Servicios</h2>
+
             {CATEGORIES.map(cat => (
-              <article key={cat.slug} className="categoryCard">
+              <article key={cat.slug} className="categoryCard" id={`cat-${cat.slug}`} itemScope itemType="https://schema.org/Service">
                 <header className="categoryHeader">
                   <div className="categoryTitleSide">
-                    <h2 className="categoryTitle">{cat.name}</h2>
+                    <h3 className="categoryTitle" itemProp="name">{cat.name}</h3>
                     {'description' in cat && (cat as any).description ? (
-                      <p className="categoryDesc">{(cat as any).description}</p>
+                      <p className="categoryDesc" itemProp="description">
+                        {(cat as any).description}
+                      </p>
                     ) : null}
                   </div>
                   <div className="chips">
                     {'domicilio' in cat && (cat as any).domicilio === false ? (
-                      <span className="chip alt">Retiro</span>
+                      <span className="chip alt" aria-label="Retiro en taller">Retiro</span>
                     ) : (
-                      <span className="chip alt">Domicilio</span>
+                      <span className="chip alt" aria-label="Servicio a domicilio">Domicilio</span>
                     )}
                   </div>
                 </header>
@@ -129,23 +223,44 @@ export default function Page() {
             ))}
           </section>
 
+          {/* FAQ SEO */}
+          <section aria-labelledby="faq-title" className="faq">
+            <h2 id="faq-title">Preguntas frecuentes</h2>
+            <details>
+              <summary>¿Cada cuánto tiempo conviene limpiar sillones y colchones?</summary>
+              <p>Recomendamos cada 6–12 meses o antes si hay manchas, alérgenos o mascotas.</p>
+            </details>
+            <details>
+              <summary>¿Trabajan a domicilio en Nancagua, Santa Cruz y San Fernando?</summary>
+              <p>Sí. También en Chimbarongo, Chépica y alrededores.</p>
+            </details>
+            <details>
+              <summary>¿Qué método usan para tapices y alfombras?</summary>
+              <p>Inyección–extracción con productos hipoalergénicos y biodegradables, más desmanchado focalizado.</p>
+            </details>
+            <details>
+              <summary>¿Puedo cotizar por WhatsApp?</summary>
+              <p>Claro. Selecciona tus servicios, ajusta cantidades y envíanos la cotización para coordinar.</p>
+            </details>
+          </section>
+
           {/* CTA */}
-          <div className="ctaBar">
-            <Link className="btn ghost" href={waHref} target="_blank" rel="noopener">
+          <div className="ctaBar" role="region" aria-label="Acciones rápidas">
+            <Link className="btn ghost" href={waHref} target="_blank" rel="noopener nofollow sponsored">
               Consultar por WhatsApp
             </Link>
-            <button className="btn secondary" onClick={() => setCart({})}>
+            <button className="btn secondary" onClick={() => setCart({})} aria-label="Limpiar selección de servicios">
               Limpiar selección
             </button>
           </div>
         </div>
       </main>
 
-      <footer className="siteFooter">
+      <footer className="siteFooter" role="contentinfo">
         © {new Date().getFullYear()} LimpiaBien • Nancagua, Santa Cruz, San Fernando, Chimbarongo, Chépica y alrededores
       </footer>
 
-      {/* GLOBAL: mueve :root y estilos verdaderamente globales aquí */}
+      {/* GLOBAL: variables */}
       <style jsx global>{`
         :root {
           --ink: #0f172a;
@@ -163,6 +278,10 @@ export default function Page() {
           --radius-md: 12px;
           --shadow-sm: 0 6px 16px rgba(2, 132, 199, 0.10);
           --shadow-lg: 0 18px 50px rgba(14, 165, 233, 0.18);
+        }
+        .sr-only {
+          position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+          overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
         }
       `}</style>
 
@@ -187,7 +306,6 @@ export default function Page() {
         .logoImg { border-radius: 10px; }
         .brand { display: flex; flex-direction: column; line-height: 1.1; }
         .brandName { font-size: 18px; color: var(--ink); letter-spacing: .2px; }
-        .brandTag { color: var(--muted); font-size: 13px; }
 
         .pageBg {
           background:
@@ -215,7 +333,7 @@ export default function Page() {
           color: #0284c7; background: rgba(14,165,233,.08); border: 1px solid rgba(14,165,233,.2);
           padding: 6px 10px; border-radius: 999px; margin-bottom: 8px;
         }
-        .hero h1 { margin: 6px 0 10px; font-size: 36px; letter-spacing: -0.02em; color: var(--ink); }
+        .hero h1 { margin: 6px 0 10px; font-size: 30px; letter-spacing: -0.02em; color: var(--ink); }
         .lead { margin: 0 0 12px; color: #1f2937; }
         .benefits { margin: 0 0 14px; padding-left: 18px; color: #0f172a; }
         .benefits li { margin: 4px 0; }
@@ -260,6 +378,7 @@ export default function Page() {
         }
         .categoryTitle { margin: 0; font-size: 22px; letter-spacing: -.01em; color: var(--ink); }
         .categoryDesc { margin: 6px 0 0; color: #5b6b7a; font-size: 14px; max-width: 60ch; }
+
         .chips { display: flex; gap: 8px; flex-wrap: wrap; }
         .chip {
           color: #065f46;
@@ -267,9 +386,13 @@ export default function Page() {
           border: 1px solid rgba(5,150,105,.35);
           border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 600;
         }
-        .chip.alt { /* mismo estilo, por si luego agregas otra variante */ }
 
         .categoryBody { padding: 10px 12px 14px; }
+
+        .faq { margin-top: 28px; }
+        .faq h2 { font-size: 20px; margin-bottom: 10px; color: var(--ink); }
+        .faq details { background: rgba(255,255,255,.82); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 10px; }
+        .faq summary { cursor: pointer; font-weight: 600; }
 
         .ctaBar {
           display: flex; gap: 12px; flex-wrap: wrap;
