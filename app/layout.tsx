@@ -74,10 +74,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.ico' },
-      { url: '/icons/icon-32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
     ],
-    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180' }],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
   manifest: '/site.webmanifest',
   verification: {
@@ -110,7 +110,7 @@ export default function RootLayout({
     '@type': 'HomeAndConstructionBusiness',
     name: 'LimpiaBien',
     url: 'https://limpiabien.cl',
-    logo: 'https://limpiabien.cl/logo.png',
+    logo: 'https://limpiabien.cl/logo-512.png',
     image: 'https://limpiabien.cl/logo.png',
     telephone: '+56977515193', // reemplaza
     sameAs: ['https://www.instagram.com/limpiabien.cl'],
