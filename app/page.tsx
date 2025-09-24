@@ -51,7 +51,7 @@ export default function Page() {
   const itemListLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Catálogo de servicios de limpieza',
+    name: 'LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio',
     itemListOrder: 'https://schema.org/ItemListOrderAscending',
     itemListElement: CATEGORIES.map((cat, idx) => ({
       '@type': 'ListItem',
@@ -153,7 +153,7 @@ export default function Page() {
             <div className="heroInner">
               <div className="heroText">
                 <span className="eyebrow">Higiene & Confort</span>
-                <h1 id="hero-title">Limpieza de tapices, sillones y alfombras a domicilio</h1>
+                <h1 id="hero-title">LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio</h1>
                 <p className="lead">
                   Servicio profesional con equipos de inyección–extracción. Eliminamos manchas, ácaros y olores.
                   Atención en Nancagua, Santa Cruz, San Fernando, Chimbarongo y Chépica.

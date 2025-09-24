@@ -187,7 +187,7 @@ export default function CalculatorPage() {
       </main>
 
       <footer>
-        © {new Date().getFullYear()} LimpiaBien • Rancagua, Santa Cruz, San Fernando, Chimbarongo y más
+        © {new Date().getFullYear()} LimpiaBien • Nancagua, Santa Cruz, San Fernando, Chimbarongo, Chépica y más
       </footer>
     </>
   );
