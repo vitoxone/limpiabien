@@ -11,9 +11,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://limpiabien.cl'),
-  title: 'LimpiaBien — Servicios & Calculadora',
+  title: 'LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio',
   description:
-    'Selección de servicios para cotización por WhatsApp y calculadora interna con descuentos. Limpieza profesional de tapices, colchones y alfombras.',
+    'Selección de servicios para cotización por WhatsApp e Instagram. Limpieza profesional de tapices, colchones y alfombras.',
   applicationName: 'LimpiaBien',
   generator: 'Next.js',
   keywords: [
@@ -22,9 +22,12 @@ export const metadata: Metadata = {
     'limpieza de colchones',
     'lavado de alfombras',
     'limpieza a domicilio',
-    'Santiago',
-    'Rancagua',
-    'O’Higgins',
+    'San Fernando',
+    'Santa Cruz',
+    'Chimbarongo',
+    'Chépica',
+    'Nancagua',
+    'Región de O’Higgins',
   ],
   authors: [{ name: 'LimpiaBien' }],
   creator: 'LimpiaBien',
@@ -124,6 +127,10 @@ export default function RootLayout({
       {
         '@type': 'Offer',
         itemOffered: { '@type': 'Service', name: 'Limpieza de sillones' },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: 'Limpieza de tapiz automotriz' },
       },
       {
         '@type': 'Offer',
