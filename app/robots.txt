@@ -3,15 +3,12 @@ import type { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
   const base = 'https://limpiabien.cl';
-
   return {
-    rules: [
-      {
-        userAgent: '*',
-        allow: ['/', '/#catalogo', '/#cat-*', '/blog', '/contacto'],
-        disallow: ['/api/', '/admin/', '/cart/', '/_next/'],
-      },
-    ],
+    rules: [{
+      userAgent: '*',
+      allow: ['/', '/servicios', '/servicios/tapices', '/servicios/colchones', '/servicios/alfombras'],
+      disallow: ['/api/', '/admin/', '/cart/', '/_next/'],
+    }],
     sitemap: `${base}/sitemap.xml`,
     host: base,
   };
