@@ -38,15 +38,17 @@ export default function Page() {
 
   const waHref = useMemo(() => buildWaLink(message), [message]);
 
-  // ======= JSON-LD =======
+
+    // ======= JSON-LD actualizado (sin #) =======
   const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://limpiabien.cl/' },
-      { '@type': 'ListItem', position: 2, name: 'Servicios', item: 'https://limpiabien.cl/#catalogo' },
+      { '@type': 'ListItem', position: 2, name: 'Servicios', item: 'https://limpiabien.cl/servicios' },
     ],
   };
+
 
   const itemListLd = {
     '@context': 'https://schema.org',
@@ -122,6 +124,10 @@ export default function Page() {
       />
 
       <header className="siteHeader" role="banner">
+        <link rel="apple-touch-icon" sizes="180x180" href="public/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="public/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="public/favicon-16x16.png" />
+        <link rel="manifest" href="public/site.webmanifest" />
         <div className="wrap headerWrap">
           <div className="logo" aria-label="LimpiaBien">
             <div className="logoMark">
@@ -138,6 +144,10 @@ export default function Page() {
               <strong className="brandName">LimpiaBien.cl</strong>
               {/* <span className="brandTag">.cl • Limpieza a domicilio</span> */}
             </div>
+
+          <div style={{ display: 'flex', gap: 10 }}>
+            <Link className="btn ghost" href="/servicios">Servicios</Link>
+          </div>
           </div>
 
           <Link className="btn ghost" href={waHref} target="_blank" rel="noopener nofollow sponsored" aria-label="Pedir cotización por WhatsApp">
