@@ -37,6 +37,7 @@ export const CATEGORIES: CatalogCategory[] = [
       { id: 'colchon-1.5-plaza', title: 'Colchón 1.5 plaza (ambas cara)', price: 22000 },
       { id: 'colchon-2-plazas', title: 'Colchón 2 plazas (ambas caras)', price: 25000 },
       { id: 'colchon-queen-king', title: 'Colchón Queen/King (ambas caras)', price: 30000 },
+      { id: 'colchon-super-king', title: 'super King (ambas caras)', price: 40000 },
     ],
   },
   {
