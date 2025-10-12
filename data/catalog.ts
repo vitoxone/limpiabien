@@ -33,11 +33,11 @@ export const CATEGORIES: CatalogCategory[] = [
     domicilio: true,
     description: 'Higienización completa en ambas caras con productos hipoalergénicos. Eliminamos ácaros y manchas para un descanso más saludable.',
     items: [
-      { id: 'colchon-1-plaza', title: 'Colchón 1 plaza (ambas cara)', price: 20000 },
-      { id: 'colchon-1.5-plaza', title: 'Colchón 1.5 plaza (ambas cara)', price: 22000 },
-      { id: 'colchon-2-plazas', title: 'Colchón 2 plazas (ambas caras)', price: 25000 },
-      { id: 'colchon-queen-king', title: 'Colchón Queen/King (ambas caras)', price: 30000 },
-      { id: 'colchon-super-king', title: 'super King (ambas caras)', price: 40000 },
+      { id: 'colchon-1-plaza', title: 'Colchón 1 plaza (ambas cara)', price: 22000 },
+      { id: 'colchon-1.5-plaza', title: 'Colchón 1.5 plaza (ambas cara)', price: 25000 },
+      { id: 'colchon-2-plazas', title: 'Colchón 2 plazas (ambas caras)', price: 30000 },
+      { id: 'colchon-queen-king', title: 'Colchón Queen/King (ambas caras)', price: 35000 },
+      { id: 'colchon-super-king', title: 'super King (ambas caras)', price: 45000 },
     ],
   },
   {
@@ -95,6 +95,9 @@ export const CATEGORIES: CatalogCategory[] = [
     domicilio: true,
     description: 'Lavado de sillas tapizadas y sitiales. Eliminamos manchas y suciedad acumulada en pocos minutos con secado rápido.',
     items: [
+      { id: 'silla-asiento', title: 'Silla semi tapizada 1', price: 5000 },
+      { id: 'silla-asiento', title: 'Silla semi tapizada 2', price: 6000 },
+      { id: 'silla-asiento', title: 'Silla semi tapizada 3', price: 7000 },
       { id: 'silla-tapizada', title: 'Silla tapizada', price: 10000 },
       { id: 'sitial', title: 'Sitial', price: 15000 },
     ],
