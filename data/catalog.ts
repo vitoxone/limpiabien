@@ -108,9 +108,9 @@ export const CATEGORIES: CatalogCategory[] = [
     domicilio: true,
     description: 'Higienización de respaldos tapizados. Eliminamos polvo y manchas para mejorar la estética y prolongar la vida útil del mueble.',
     items: [
-      { id: 'respaldo-1', title: 'Resp. 1 plaza', price: 12000 },
-      { id: 'respaldo-2', title: 'Resp. 2 plazas', price: 16000 },
-      { id: 'respaldo-queen', title: 'Resp. Queen/King', price: 20000 },
+      { id: 'respaldo-1', title: 'Resp. 1 plaza', price: 15000 },
+      { id: 'respaldo-2', title: 'Resp. 2 plazas', price: 18000 },
+      { id: 'respaldo-queen', title: 'Resp. Queen/King', price: 22000 },
     ],
   },
     {
