@@ -21,7 +21,7 @@ export const CATEGORIES: CatalogCategory[] = [
     description: 'Limpieza profunda de sillones y seccionales con sistema de inyección-extracción. Eliminamos manchas, ácaros y olores, dejando tus muebles frescos y con secado rápido.',
     items: [
       { id: 'sillon-1-cuerpo', title: 'Sillón 1 cuerpo', price: 20000 },
-      { id: 'sillon-2-cuerpos', title: 'Sillón 2 cuerpos', price: 23000 },
+      { id: 'sillon-2-cuerpos', title: 'Sillón 2 cuerpos', price: 30000 },
       { id: 'sillon-3-cuerpos', title: 'Sillón 3 cuerpos', price: 35000 },
       { id: 'sillon-4-cuerpos', title: 'Sillón 4 cuerpos (seccional)', price: 45000 },
       { id: 'sillon-5-cuerpos', title: 'Sillón 5 cuerpos (seccional)', price: 55000 },
