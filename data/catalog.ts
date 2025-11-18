@@ -34,9 +34,13 @@ export const CATEGORIES: CatalogCategory[] = [
     description: 'Higienización completa en ambas caras con productos hipoalergénicos. Eliminamos ácaros y manchas para un descanso más saludable.',
     items: [
       { id: 'colchon-1-plaza', title: 'Colchón 1 plaza (ambas cara)', price: 22000 },
+      { id: 'colchon-1.5-plaza', title: 'Colchón 1.5 plaza una car', price: 20000 },
       { id: 'colchon-1.5-plaza', title: 'Colchón 1.5 plaza (ambas cara)', price: 25000 },
+      { id: 'colchon-2-plazas-1cara', title: 'Colchón 2 plazas una cara', price: 25000 },
       { id: 'colchon-2-plazas', title: 'Colchón 2 plazas (ambas caras)', price: 30000 },
+      { id: 'colchon-queen-king-1-cara', title: 'Colchón Queen/King una cara ', price: 30000 },
       { id: 'colchon-queen-king', title: 'Colchón Queen/King (ambas caras)', price: 35000 },
+      { id: 'colchon-super-king-1-cara', title: 'super King una cara', price: 40000 },
       { id: 'colchon-super-king', title: 'super King (ambas caras)', price: 45000 },
     ],
   },
