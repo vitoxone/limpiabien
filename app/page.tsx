@@ -3,15 +3,26 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useMemo, useState } from 'react';
 import { CATEGORIES } from '@/data/catalog';
 import Category from '@/components/Category';
 import { buildWaLink } from '@/lib/wa';
+import { useCallback, useMemo, useState, useEffect
+ } from 'react';
 
 type Cart = Record<string, { section: string; title: string; qty: number }>;
 
 export default function Page() {
   const [cart, setCart] = useState<Cart>({});
+
+  const [origin, setOrigin] = useState("web");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get("origin") || "web";
+    setOrigin(value);
+  }, []);
 
   const getQty = useCallback((key: string) => cart[key]?.qty ?? 0, [cart]);
 
@@ -28,21 +39,20 @@ export default function Page() {
     });
   }, []);
 
-  const params = new URLSearchParams(window.location.search);
-  const origin = params.get("origin") || "web";
+
 
   const items = useMemo(() => Object.values(cart).filter(i => i.qty > 0), [cart]);
 
   const mensaje = `Hola! Quiero cotizar un servicio de limpieza. (${origin})`;
 
-
   const message = useMemo(() => {
     if (items.length === 0) return mensaje;
     const lines = items.map(i => `• ${i.section} — ${i.title} × ${i.qty}`);
     return `${mensaje}\n${lines.join('\n')}`;
-  }, [items]);
+  }, [items, mensaje]); // 👈 agrega mensaje como dependencia
 
   const waHref = useMemo(() => buildWaLink(message), [message]);
+
 
 
     // ======= JSON-LD actualizado (sin #) =======
