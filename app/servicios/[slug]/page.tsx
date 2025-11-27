@@ -157,7 +157,7 @@ export default function ServicioPage({ params }: PageProps) {
     '@type': 'Service',
     serviceType: cfg.h1,
     provider: { '@type': 'Organization', name: 'LimpiaBien', url: 'https://limpiabien.cl', logo: 'https://limpiabien.cl/logo-512.png' },
-    areaServed: ['Nancagua', 'Santa Cruz', 'San Fernando', 'Chimbarongo', 'Chépica'],
+    areaServed: ['Nancagua','Placilla', 'Santa Cruz', 'San Fernando', 'Chimbarongo', 'Chépica'],
     description: cfg.seoDesc,
   };
 

@@ -28,12 +28,18 @@ export default function Page() {
     });
   }, []);
 
+  const params = new URLSearchParams(window.location.search);
+  const origin = params.get("origin") || "web";
+
   const items = useMemo(() => Object.values(cart).filter(i => i.qty > 0), [cart]);
 
+  const mensaje = `Hola! Quiero cotizar un servicio de limpieza. (${origin})`;
+
+
   const message = useMemo(() => {
-    if (items.length === 0) return 'Hola, quiero cotizar:';
+    if (items.length === 0) return mensaje;
     const lines = items.map(i => `• ${i.section} — ${i.title} × ${i.qty}`);
-    return `Hola, quiero cotizar:\n${lines.join('\n')}`;
+    return `${mensaje}\n${lines.join('\n')}`;
   }, [items]);
 
   const waHref = useMemo(() => buildWaLink(message), [message]);
