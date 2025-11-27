@@ -27,6 +27,9 @@ export default function Category({
         <div role="rowgroup">
           {category.items.map((item) => {
             const key = `${category.name} — ${item.title}`;
+            if(item.show_public === false) {
+              return null;
+            }
             return (
               <SelectorRow
                 key={item.id}
