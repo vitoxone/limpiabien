@@ -54,7 +54,7 @@ export const CATEGORIES: CatalogCategory[] = [
       { id: 'auto-sedan', title: 'Auto sedán/hatchback (interior)', price: 35000, show_public: true },
       { id: 'suv-mediana', title: 'SUV Mediana', price: 45000, show_public: true },
       { id: 'Camioneta', title: 'Camioneta', price: 45000, show_public: true },
-      { id: 'suv-grande', title: 'SUV 3 corridas asientos', price: 55.000, show_public: true },
+      { id: 'suv-grande', title: 'SUV 3 corridas asientos', price: 55000, show_public: true },
       { id: 'butaca-infantil', title: 'Asiento infantil', price: 6000, show_public: true },
     ],
   },
