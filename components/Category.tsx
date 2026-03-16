@@ -1,4 +1,3 @@
-// components/Category.tsx
 'use client';
 
 import type { CatalogCategory } from '@/data/catalog';
@@ -10,29 +9,42 @@ type QtySetter = (key: string, qty: number) => void;
 export default function Category({
   category,
   showPrice,
+  publicOnly = false,
   getQty,
   setQty,
 }: {
   category: CatalogCategory;
   showPrice?: boolean;
+  publicOnly?: boolean;
   getQty: QtyGetter;
   setQty: QtySetter;
 }) {
+  const isDomicilio = category.domicilio !== false;
+
   return (
-    <section id={category.slug} className="section">
-      <header className="section-head">
-        <h2>{category.name}</h2>
+    <article className="cat-card" id={`cat-${category.slug}`} itemScope itemType="https://schema.org/Service">
+      <header className="cat-head">
+        <div className="cat-head-left">
+          <h3 className="cat-name" itemProp="name">{category.name}</h3>
+          {category.description && (
+            <p className="cat-desc" itemProp="description">{category.description}</p>
+          )}
+        </div>
+        <div className="cat-meta">
+          <span className={`cat-badge ${isDomicilio ? 'badge-home' : 'badge-pick'}`}>
+            {isDomicilio ? 'A domicilio' : 'Retiro'}
+          </span>
+        </div>
       </header>
-      <div role="table" className="table">
-        <div role="rowgroup">
+
+      <div className="cat-body">
+        <div className="svc-rows">
           {category.items.map((item) => {
+            if (publicOnly && item.show_public === false) return null;
             const key = `${category.name} — ${item.title}`;
-            if(item.show_public === false) {
-              return null;
-            }
             return (
               <SelectorRow
-                key={item.id}
+                key={`${item.id}-${item.title}`}
                 id={item.id}
                 title={item.title}
                 price={showPrice ? item.price : undefined}
@@ -43,6 +55,6 @@ export default function Category({
           })}
         </div>
       </div>
-    </section>
+    </article>
   );
 }

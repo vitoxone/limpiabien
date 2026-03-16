@@ -1,37 +1,52 @@
-// app/page.tsx
 'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { CATEGORIES } from '@/data/catalog';
 import Category from '@/components/Category';
+import LeadForm from '@/components/LeadForm';
 import { buildWaLink } from '@/lib/wa';
-import { useCallback, useMemo, useState, useEffect
- } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 
 type Cart = Record<string, { section: string; title: string; qty: number }>;
 
+/* ── Smooth scroll helper ──────────────────────────────── */
+function scrollTo(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── WhatsApp icon ─────────────────────────────────────── */
+const WaIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+);
+
+/* ── Instagram icon ────────────────────────────────────── */
+const IgIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+  </svg>
+);
+
 export default function Page() {
   const [cart, setCart] = useState<Cart>({});
-
-  const [origin, setOrigin] = useState("web");
+  const [origin, setOrigin] = useState('web');
+  const [fullName, setFullName] = useState('');
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
+    if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
-    const value = params.get("origin") || "web";
-    setOrigin(value);
+    setOrigin(params.get('origin') || 'web');
   }, []);
 
   const getQty = useCallback((key: string) => cart[key]?.qty ?? 0, [cart]);
-
   const setQty = useCallback((key: string, qty: number) => {
     setCart((prev) => {
       const next = { ...prev };
-      if (qty <= 0) {
-        delete next[key];
-      } else {
+      if (qty <= 0) { delete next[key]; }
+      else {
         const [section, title] = key.split(' — ');
         next[key] = { section, title, qty };
       }
@@ -39,444 +54,264 @@ export default function Page() {
     });
   }, []);
 
-
-
   const items = useMemo(() => Object.values(cart).filter(i => i.qty > 0), [cart]);
-
-  const mensaje = `Hola! Quiero cotizar un servicio de limpieza. (${origin})`;
+  const totalItems = useMemo(() => items.reduce((a, b) => a + b.qty, 0), [items]);
 
   const message = useMemo(() => {
-    if (items.length === 0) return mensaje;
+    const saludo = fullName.trim()
+      ? `Hola, soy ${fullName.trim()}! Quiero cotizar un servicio de limpieza. (${origin})`
+      : `Hola! Quiero cotizar un servicio de limpieza. (${origin})`;
+    if (items.length === 0) return saludo;
     const lines = items.map(i => `• ${i.section} — ${i.title} × ${i.qty}`);
-    return `${mensaje}\n${lines.join('\n')}`;
-  }, [items, mensaje]); // 👈 agrega mensaje como dependencia
+    return `${saludo}\n${lines.join('\n')}`;
+  }, [items, fullName, origin]);
 
   const waHref = useMemo(() => buildWaLink(message), [message]);
-
-
-
-    // ======= JSON-LD actualizado (sin #) =======
-  const breadcrumbLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://limpiabien.cl/' },
-      { '@type': 'ListItem', position: 2, name: 'Servicios', item: 'https://limpiabien.cl/servicios' },
-    ],
-  };
-
-
-  const itemListLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio',
-    itemListOrder: 'https://schema.org/ItemListOrderAscending',
-    itemListElement: CATEGORIES.map((cat, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      url: `https://limpiabien.cl/#cat-${cat.slug}`,
-      name: cat.name,
-      description: 'description' in cat ? (cat as any).description : undefined,
-    })),
-  };
 
   const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
-      {
-        '@type': 'Question',
-        name: '¿Cada cuánto tiempo conviene limpiar sillones y colchones?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text:
-            'Recomendamos una mantención cada 6 a 12 meses, o antes si hay manchas visibles, alérgenos o mascotas.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: '¿Trabajan a domicilio en Nancagua, Santa Cruz y San Fernando?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text:
-            'Sí. Atendemos a domicilio en Nancagua, Santa Cruz, San Fernando, Chimbarongo, Chépica y alrededores.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: '¿Qué método usan para la limpieza de tapices y alfombras?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text:
-            'Usamos equipos de inyección–extracción con productos hipoalergénicos y biodegradables. Realizamos desmanchado focalizado.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: '¿Puedo cotizar por WhatsApp?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text:
-            'Claro. Selecciona tus servicios, ajusta cantidades y envíanos la cotización por WhatsApp para coordinar fecha y hora.',
-        },
-      },
+      { '@type': 'Question', name: '¿Cada cuánto tiempo conviene limpiar sillones y colchones?', acceptedAnswer: { '@type': 'Answer', text: 'Recomendamos una mantención cada 6 a 12 meses, o antes si hay manchas visibles, alérgenos o mascotas.' } },
+      { '@type': 'Question', name: '¿Trabajan a domicilio en Nancagua, Santa Cruz y San Fernando?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Atendemos en Nancagua, Santa Cruz, San Fernando, Chimbarongo, Chépica y alrededores.' } },
+      { '@type': 'Question', name: '¿Qué método usan para la limpieza de tapices y alfombras?', acceptedAnswer: { '@type': 'Answer', text: 'Usamos equipos de inyección–extracción con productos hipoalergénicos y biodegradables.' } },
     ],
   };
 
   return (
     <>
-      {/* JSON-LD para rich results */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
 
-      <header className="siteHeader" role="banner">
-        <link rel="apple-touch-icon" sizes="180x180" href="public/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="public/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="public/favicon-16x16.png" />
-        <link rel="manifest" href="public/site.webmanifest" />
-        <div className="wrap headerWrap">
-          <div className="logo" aria-label="LimpiaBien">
-            <div className="logoMark">
-              <Image
-                src="/logo.png"
-                width={44}
-                height={44}
-                alt="LimpiaBien — limpieza profesional"
-                className="logoImg"
-                priority
-              />
+      {/* ── HEADER ─────────────────────────────────── */}
+      <header className="site-header" role="banner">
+        <div className="header-inner">
+          {/* Logo — fondo blanco + imagen nueva */}
+          <div className="logo-wrap">
+            <div className="logo-mark-white">
+              <Image src="/logo.png" width={48} height={48} alt="LimpiaBien logo" priority />
             </div>
-            <div className="brand">
-              <strong className="brandName">LimpiaBien.cl</strong>
-              {/* <span className="brandTag">.cl • Limpieza a domicilio</span> */}
+            <div>
+              <div className="logo-name">LimpiaBien</div>
+              <div className="logo-tagline">Limpieza profesional · Chile</div>
             </div>
-
-          <div style={{ display: 'flex', gap: 10 }}>
-            <Link className="btn ghost" href="/servicios">Servicios</Link>
-          </div>
           </div>
 
-          <Link className="btn ghost" href={waHref} target="_blank" rel="noopener nofollow sponsored" aria-label="Pedir cotización por WhatsApp">
-            Pedir cotización
-          </Link>
+          <nav className="header-nav" aria-label="Navegación">
+            {/* "Nuestros trabajos" → scroll suave a #ig-section */}
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={() => scrollTo('ig-section')}
+            >
+              Nuestros trabajos
+            </button>
+            <Link
+              className="btn btn-dark btn-sm"
+              href={waHref}
+              target="_blank"
+              rel="noopener nofollow sponsored"
+            >
+              <WaIcon />
+              Cotizar{totalItems > 0 ? ` (${totalItems})` : ''}
+            </Link>
+          </nav>
         </div>
       </header>
 
-      <main className="pageBg" role="main">
-        <div className="container">
-          {/* HERO */}
-          <section className="hero" aria-labelledby="hero-title">
-            <div className="heroInner">
-              <div className="heroText">
-                <span className="eyebrow">Higiene & Confort</span>
-                <h1 id="hero-title">LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio</h1>
-                <p className="lead">
-                  Servicio profesional con equipos de inyección–extracción. Eliminamos manchas, ácaros y olores.
-                  Atención en Nancagua, Santa Cruz, San Fernando, Chimbarongo y Chépica.
+      <main role="main">
+
+        {/* ── BANDA BLANCA: Hero + Mosaico ───────────── */}
+        <div className="band-white">
+          <div className="band-inner">
+
+            <section className="hero-top" aria-labelledby="hero-title">
+              <div className="hero-top-text">
+                <div className="hero-label">Limpieza profesional a domicilio</div>
+                <h1 id="hero-title" className="hero-title">
+                  Limpieza de tapices<br />y colchones <em>a domicilio</em>
+                </h1>
+                <p className="hero-body">
+                  Sillones, colchones, alfombras y vehículos — inyección–extracción profesional
+                  con productos hipoalergénicos. Atendemos en Santa Cruz, San Fernando, Chimbarongo, Chépica, Nancagua, Palmilla y alrededores.
                 </p>
-                <ul className="benefits">
-                  <li>Productos hipoalergénicos y biodegradables</li>
-                  <li>Desmanchado focalizado y secado más rápido</li>
-                  <li>Cotización inmediata por WhatsApp</li>
-                </ul>
-                <div className="heroCtas">
-                  <Link className="btn primary" href={waHref} target="_blank" rel="noopener nofollow sponsored">
+                <div className="hero-actions">
+                  {/* <Link className="btn btn-dark btn-lg" href={waHref} target="_blank" rel="noopener nofollow sponsored">
+                    <WaIcon />
                     Consultar por WhatsApp
-                  </Link>
-                  <a className="btn ghost" href="#catalogo">Ver catálogo</a>
-                </div>
-                <p className="helper">
-                  Selecciona lo que necesitas, ajusta la cantidad y envíanos tu pedido.
-                </p>
-              </div>
-              <div className="heroBadge" aria-label="Sello de confianza">
-                <div className="badgeCard">
-                  <span className="badgeTitle">Atención Personalizada</span>
-                  <span className="badgeNote">Nos ajustamos a tus horarios</span>
-                </div>
-                <div className="badgeCard">
-                  <span className="badgeTitle">Eco-friendly</span>
-                  <span className="badgeNote">Hipoalergénico</span>
+                  </Link> */}
+                  <button className="btn btn-outline" onClick={() => scrollTo('catalogo')}>
+                    Ver servicios
+                  </button>
                 </div>
               </div>
+            </section>
+
+            <div className="mosaic" aria-label="Galería de servicios" role="img">
+
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-tapices')}>
+                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/tapices.jpg')", backgroundPosition: 'center 30%' }} />
+                <div className="mosaic-overlay" />
+                <div className="mosaic-label">
+                  <span className="mosaic-tag">Tapices</span>
+                  <span className="mosaic-sub">Sillones · Seccionales</span>
+                </div>
+              </button>
+
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-colchones')}>
+                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }} />
+                <div className="mosaic-overlay" />
+                <div className="mosaic-label">
+                  <span className="mosaic-tag">Colchones</span>
+                  <span className="mosaic-sub">1 plaza · Queen · King</span>
+                </div>
+              </button>
+
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-vehiculos')}>
+                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_5942.jpg')" }} />
+                <div className="mosaic-overlay" />
+                <div className="mosaic-label">
+                  <span className="mosaic-tag">Vehículos</span>
+                  <span className="mosaic-sub">Autos · SUV · Camionetas</span>
+                </div>
+              </button>
+
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-alfombras-muro')}>
+                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_5673.jpg')" }} />
+                <div className="mosaic-overlay" />
+                <div className="mosaic-label">
+                  <span className="mosaic-tag">Alfombras</span>
+                  <span className="mosaic-sub">Decorativas · Muro a muro</span>
+                </div>
+              </button>
+
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-sillas')}>
+                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_3507.jpg')" }} />
+                <div className="mosaic-overlay" />
+                <div className="mosaic-label">
+                  <span className="mosaic-tag">Sillas</span>
+                  <span className="mosaic-sub">Tapizadas · Sitiales</span>
+                </div>
+              </button>
+
             </div>
-          </section>
 
-          {/* CATEGORÍAS */}
-          <section id="catalogo" className="catalog" aria-labelledby="catalogo-title">
-            <h2 id="catalogo-title" className="sr-only">Nuestros Servicios</h2>
+          </div>
+        </div>
 
-            {CATEGORIES.map(cat => (
-              <article key={cat.slug} className="categoryCard" id={`cat-${cat.slug}`} itemScope itemType="https://schema.org/Service">
-                <header className="categoryHeader">
-                  <div className="categoryTitleSide">
-                    <h3 className="categoryTitle" itemProp="name">{cat.name}</h3>
-                    {'description' in cat && (cat as any).description ? (
-                      <p className="categoryDesc" itemProp="description">
-                        {(cat as any).description}
-                      </p>
-                    ) : null}
-                  </div>
-                  <div className="chips">
-                    {'domicilio' in cat && (cat as any).domicilio === false ? (
-                      <span className="chip alt" aria-label="Retiro en taller">Retiro</span>
-                    ) : (
-                      <span className="chip alt" aria-label="Servicio a domicilio">Domicilio</span>
-                    )}
-                  </div>
-                </header>
+        {/* ── BANDA CELESTE: Catálogo ─────────────────── */}
+        <div className="band-sky" id="catalogo">
+          <div className="band-inner band-catalog">
 
-                <div className="categoryBody">
+            <section aria-labelledby="cat-title">
+              <div className="section-label" id="cat-title">Selecciona tus servicios</div>
+              <div className="catalog">
+                {CATEGORIES.map(cat => (
                   <Category
                     key={cat.slug}
                     category={cat}
                     showPrice={false}
+                    publicOnly
                     getQty={getQty}
                     setQty={setQty}
                   />
-                </div>
-              </article>
-            ))}
-          </section>
+                ))}
+              </div>
 
-          {/* FAQ SEO */}
-          <section aria-labelledby="faq-title" className="faq">
-            <h2 id="faq-title">Preguntas frecuentes</h2>
-            <details>
-              <summary>¿Cada cuánto tiempo conviene limpiar sillones y colchones?</summary>
-              <p>Recomendamos cada 6–12 meses o antes si hay manchas, alérgenos o mascotas.</p>
-            </details>
-            <details>
-              <summary>¿Trabajan a domicilio en Nancagua, Santa Cruz y San Fernando?</summary>
-              <p>Sí. También en Chimbarongo, Chépica y alrededores.</p>
-            </details>
-            <details>
-              <summary>¿Qué método usan para tapices y alfombras?</summary>
-              <p>Inyección–extracción con productos hipoalergénicos y biodegradables, más desmanchado focalizado.</p>
-            </details>
-            <details>
-              <summary>¿Puedo cotizar por WhatsApp?</summary>
-              <p>Claro. Selecciona tus servicios, ajusta cantidades y envíanos la cotización para coordinar.</p>
-            </details>
-          </section>
+              <div className="catalog-cta">
+                {totalItems > 0 ? (
+                  <LeadForm
+                    items={items}
+                    waHref={waHref}
+                    fullName={fullName}
+                    onNameChange={setFullName}
+                    onClear={() => setCart({})}
+                  />
+                ) : (
+                  <Link
+                    className="btn btn-dark btn-lg"
+                    href={waHref}
+                    target="_blank"
+                    rel="noopener nofollow sponsored"
+                  >
+                    <WaIcon />
+                    Consultar por WhatsApp
+                  </Link>
+                )}
+              </div>
+            </section>
 
-          {/* CTA */}
-          <div className="ctaBar" role="region" aria-label="Acciones rápidas">
-            <Link className="btn ghost" href={waHref} target="_blank" rel="noopener nofollow sponsored">
-              Consultar por WhatsApp
-            </Link>
-            <button className="btn secondary" onClick={() => setCart({})} aria-label="Limpiar selección de servicios">
-              Limpiar selección
-            </button>
           </div>
         </div>
+
+        {/* ── INSTAGRAM (fondo oscuro propio) ────────── */}
+        <div className="band-white">
+          <div className="band-inner band-ig">
+            <section id="ig-section" className="ig-section" aria-labelledby="ig-title">
+              <div className="ig-inner">
+                <div className="ig-text">
+                  <div className="hero-label" style={{ marginBottom: 12 }}>Síguenos</div>
+                  <h2 id="ig-title" className="ig-title">
+                    Mira nuestros<br /><em>trabajos reales</em>
+                  </h2>
+                  <p className="ig-body">
+                    Antes y después, resultados reales de clientes en la Región de O&apos;Higgins.
+                    Todo en nuestro Instagram.
+                  </p>
+                  <a
+                    className="btn btn-dark btn-lg ig-btn"
+                    href="https://www.instagram.com/limpiabien.cl/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <IgIcon />
+                    @limpiabien.cl
+                  </a>
+                </div>
+                <div className="ig-preview" aria-hidden="true">
+                  <div className="ig-card ig-card-1">
+                    <div className="ig-card-img" style={{ backgroundImage: "url('/servicios/tapices.jpg')" }} />
+                  </div>
+                  <div className="ig-card ig-card-2">
+                    <div className="ig-card-img" style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }} />
+                  </div>
+                  <div className="ig-card ig-card-3">
+                    <div className="ig-card-img" style={{ backgroundImage: "url('/servicios/IMG_5942.jpg')" }} />
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        {/* ── BANDA CELESTE: FAQ ──────────────────────── */}
+        <div className="band-sky">
+          <div className="band-inner band-faq">
+            <section className="faq" aria-labelledby="faq-title">
+              <h2 className="faq-head" id="faq-title">Preguntas frecuentes</h2>
+              {[
+                { q: '¿Cada cuánto tiempo conviene limpiar sillones y colchones?', a: 'Recomendamos una mantención cada 6 a 12 meses, o antes si hay manchas visibles, alérgenos o mascotas en el hogar.' },
+                { q: '¿Trabajan a domicilio en Nancagua, Santa Cruz y San Fernando?', a: 'Sí. También atendemos en Chimbarongo, Chépica y alrededores de la Región de O\'Higgins.' },
+                { q: '¿Qué método usan para tapices y alfombras?', a: 'Usamos equipos de inyección–extracción con productos hipoalergénicos y biodegradables, más desmanchado focalizado donde sea necesario.' },
+                { q: '¿Cómo funciona la cotización por WhatsApp?', a: 'Selecciona los servicios en este cotizador, ajusta las cantidades y presiona "Cotizar". Se abrirá WhatsApp con un mensaje ya preparado listo para enviar.' },
+              ].map(({ q, a }) => (
+                <details key={q} className="faq-item">
+                  <summary>
+                    {q}
+                    <span className="faq-toggle" aria-hidden="true">+</span>
+                  </summary>
+                  <p className="faq-answer">{a}</p>
+                </details>
+              ))}
+            </section>
+          </div>
+        </div>
+
       </main>
 
-      <footer className="siteFooter" role="contentinfo">
-        © {new Date().getFullYear()} LimpiaBien • Nancagua, Santa Cruz, San Fernando, Chimbarongo, Chépica y alrededores
+      <footer className="site-footer" role="contentinfo">
+        <span className="footer-brand">LimpiaBien</span>
+        <span>Nancagua · Santa Cruz · San Fernando · Chimbarongo · Chépica</span>
+        <span>© {new Date().getFullYear()} LimpiaBien</span>
       </footer>
-
-      {/* GLOBAL: variables */}
-      <style jsx global>{`
-        :root {
-          --ink: #0f172a;
-          --muted: #6b7280;
-          --line: #e6eef5;
-
-          --brand: #0ea5e9;
-          --brand-2: #06b6d4;
-          --brand-3: #22d3ee;
-
-          --bg-hero-a: #e0f7ff;
-          --bg-hero-b: #f8fdff;
-
-          --radius-lg: 16px;
-          --radius-md: 12px;
-          --shadow-sm: 0 6px 16px rgba(2, 132, 199, 0.10);
-          --shadow-lg: 0 18px 50px rgba(14, 165, 233, 0.18);
-        }
-        .sr-only {
-          position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-          overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
-        }
-      `}</style>
-
-      {/* SCOPED */}
-      <style jsx>{`
-        .wrap { max-width: 1100px; margin: 0 auto; padding: 12px 16px; }
-        .headerWrap { display: flex; align-items: center; justify-content: space-between; }
-
-        .siteHeader {
-          position: sticky; top: 0; z-index: 40;
-          background: rgba(255,255,255,.75);
-          backdrop-filter: saturate(140%) blur(10px);
-          border-bottom: 1px solid var(--line);
-        }
-
-        .logo { display: flex; align-items: center; gap: 12px; }
-        .logoMark {
-          width: 48px; height: 48px; border-radius: 14px;
-          background: radial-gradient(120% 120% at 0% 0%, var(--brand-3) 0%, #fff 60%);
-          display: grid; place-items: center; box-shadow: var(--shadow-sm);
-        }
-        .logoImg { border-radius: 10px; }
-        .brand { display: flex; flex-direction: column; line-height: 1.1; }
-        .brandName { font-size: 18px; color: var(--ink); letter-spacing: .2px; }
-
-        .pageBg {
-          background:
-            radial-gradient(1000px 600px at 10% -10%, rgba(34, 211, 238, .10), transparent 60%),
-            radial-gradient(900px 500px at 110% 0%, rgba(14, 165, 233, .10), transparent 60%);
-        }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
-
-        .hero {
-          border-radius: var(--radius-lg);
-          padding: 0; margin: 14px 0 28px;
-          background: linear-gradient(140deg, var(--bg-hero-a) 0%, var(--bg-hero-b) 60%);
-          border: 1px solid var(--line);
-          overflow: hidden;
-          box-shadow: var(--shadow-lg);
-        }
-        .heroInner {
-          display: grid; grid-template-columns: 1.2fr .8fr; gap: 12px;
-          align-items: stretch;
-        }
-        .heroText { padding: 28px 24px; }
-        .eyebrow {
-          display: inline-block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
-          color: #0284c7; background: rgba(14,165,233,.08); border: 1px solid rgba(14,165,233,.2);
-          padding: 6px 10px; border-radius: 999px; margin-bottom: 8px;
-        }
-        .hero h1 { margin: 6px 0 10px; font-size: 30px; letter-spacing: -0.02em; color: var(--ink); }
-        .lead { margin: 0 0 12px; color: #1f2937; }
-        .benefits { margin: 0 0 14px; padding-left: 18px; color: #0f172a; }
-        .benefits li { margin: 4px 0; }
-        .heroCtas { display: flex; gap: 10px; flex-wrap: wrap; margin: 8px 0 6px; }
-        .helper { margin: 8px 0 0; color: #5b6b7a; font-size: 14px; }
-
-        .heroBadge {
-          background:
-            radial-gradient(600px 300px at 70% 0%, rgba(34,211,238,.22), transparent 60%),
-            linear-gradient(180deg, rgba(255,255,255,.65) 0%, rgba(255,255,255,.35) 100%);
-          border-left: 1px solid var(--line);
-          display: grid; align-content: center; gap: 12px; padding: 24px;
-        }
-        .badgeCard {
-          background: rgba(255,255,255,.65);
-          border: 1px solid rgba(14,165,233,.22);
-          border-radius: 14px; padding: 14px 16px;
-          box-shadow: var(--shadow-sm);
-        }
-        .badgeTitle { font-weight: 700; color: #0369a1; }
-        .badgeNote { display: block; color: #0f172a; opacity: .7; font-size: 13px; }
-
-        .catalog { display: grid; gap: 18px; }
-        .categoryCard {
-          background: rgba(255,255,255,.82);
-          backdrop-filter: blur(6px);
-          border: 1px solid var(--line);
-          border-radius: var(--radius-lg);
-          box-shadow: var(--shadow-sm);
-          transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
-        }
-        .categoryCard:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 10px 26px rgba(2,132,199,.10);
-          border-color: rgba(14,165,233,.35);
-        }
-
-        .categoryHeader {
-          display: flex; align-items: start; justify-content: space-between;
-          gap: 10px; padding: 16px 16px 8px 16px;
-          border-bottom: 1px dashed var(--line);
-        }
-        .categoryTitle { margin: 0; font-size: 22px; letter-spacing: -.01em; color: var(--ink); }
-        .categoryDesc { margin: 6px 0 0; color: #5b6b7a; font-size: 14px; max-width: 60ch; }
-
-        .chips { display: flex; gap: 8px; flex-wrap: wrap; }
-        .chip {
-          color: #065f46;
-          background: linear-gradient(180deg, rgba(16,185,129,.16), rgba(5,150,105,.12));
-          border: 1px solid rgba(5,150,105,.35);
-          border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 600;
-        }
-
-        .categoryBody { padding: 10px 12px 14px; }
-
-        .faq { margin-top: 28px; }
-        .faq h2 { font-size: 20px; margin-bottom: 10px; color: var(--ink); }
-        .faq details { background: rgba(255,255,255,.82); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 10px; }
-        .faq summary { cursor: pointer; font-weight: 600; }
-
-        .ctaBar {
-          display: flex; gap: 12px; flex-wrap: wrap;
-          margin: 20px 0 0;
-        }
-
-        .btn {
-          display: inline-flex; align-items: center; justify-content: center;
-          gap: 8px; padding: 10px 14px;
-          border-radius: 12px; font-weight: 700;
-          text-decoration: none; cursor: pointer; border: 1px solid transparent;
-          transition: transform .1s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-        }
-        .btn:active { transform: translateY(1px) scale(.99); }
-
-        .btn.primary {
-          color: white;
-          background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 45%, var(--brand-3) 100%);
-          box-shadow: 0 10px 26px rgba(14,165,233,.25);
-        }
-        .btn.primary:hover { box-shadow: 0 14px 34px rgba(14,165,233,.3); }
-
-        .btn.secondary {
-          color: #0f172a;
-          background: #f0f9ff;
-          border-color: rgba(14,165,233,.35);
-        }
-        .btn.secondary:hover { background: #e6f6ff; }
-
-        .btn.ghost {
-          color: #0369a1;
-          background: rgba(230,246,255,.85);
-          border: 1px solid rgba(14,165,233,.35);
-        }
-        .btn.ghost:hover { background: #e6f6ff; }
-
-        .siteFooter {
-          margin: 36px auto 22px;
-          text-align: center;
-          color: #8aa0b4;
-          font-size: 13px;
-        }
-
-        @media (max-width: 900px) {
-          .heroInner { grid-template-columns: 1fr; }
-          .heroBadge { border-left: none; border-top: 1px solid var(--line); }
-        }
-        @media (max-width: 640px) {
-          .ctaBar {
-            position: sticky; bottom: 0; left: 0; right: 0;
-            background: rgba(255,255,255,.9);
-            backdrop-filter: blur(8px);
-            padding: 10px 12px;
-            border-top: 1px solid var(--line);
-            margin: 24px -16px -16px;
-          }
-        }
-      `}</style>
     </>
   );
 }

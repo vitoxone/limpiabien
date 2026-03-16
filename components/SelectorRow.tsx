@@ -5,31 +5,37 @@ import { currency } from '@/lib/format';
 type Props = {
   id: string;
   title: string;
-  price?: number; // show price if provided
+  price?: number;
   qty: number;
   onQtyChange: (qty: number) => void;
 };
 
 export default function SelectorRow({ id, title, price, qty, onQtyChange }: Props) {
-  const inputId = `srv-${id}`;
+  const inputId = `svc-${id}-${title.slice(0, 6)}`;
+  const selected = qty > 0;
+
   return (
-    <div role="row" className="table-row">
-      <div role="cell" className="cell-title">
-        <label htmlFor={inputId} className="check">
-          <input
-            id={inputId}
-            type="checkbox"
-            checked={qty > 0}
-            onChange={(e) => onQtyChange(e.target.checked ? 1 : 0)}
-          />
-          <span/>
-        </label>
-        <strong>{title}</strong>
-      </div>
-      <div role="cell" className="cell-price">
-        {typeof price === 'number' ? currency(price) : null}
-      </div>
-      <div role="cell" className="cell-actions">
+    <div className={`svc-row${selected ? ' selected' : ''}`}>
+      <label className="chk" htmlFor={inputId} aria-label={`Seleccionar ${title}`}>
+        <input
+          id={inputId}
+          type="checkbox"
+          checked={selected}
+          onChange={(e) => onQtyChange(e.target.checked ? 1 : 0)}
+        />
+        <span className="chk-box">
+          <span className="chk-tick" />
+        </span>
+      </label>
+
+      <label htmlFor={inputId} className="svc-label">{title}</label>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        {typeof price === 'number' && (
+          <span style={{ fontSize: 13, color: 'var(--muted)', fontWeight: 500, whiteSpace: 'nowrap' }}>
+            {currency(price)}
+          </span>
+        )}
         <div className="qty">
           <button className="qty-btn" onClick={() => onQtyChange(Math.max(0, qty - 1))} aria-label="Restar">−</button>
           <input
@@ -38,6 +44,7 @@ export default function SelectorRow({ id, title, price, qty, onQtyChange }: Prop
             min={0}
             value={qty}
             onChange={(e) => onQtyChange(Math.max(0, parseInt(e.target.value || '0', 10)))}
+            aria-label={`Cantidad de ${title}`}
           />
           <button className="qty-btn" onClick={() => onQtyChange(qty + 1)} aria-label="Sumar">+</button>
         </div>

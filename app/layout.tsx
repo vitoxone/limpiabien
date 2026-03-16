@@ -1,63 +1,64 @@
 // app/layout.tsx
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Outfit } from 'next/font/google';
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-outfit',
+  weight: ['300', '400', '500', '600'],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://limpiabien.cl'),
-  title: 'LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio',
+  title: {
+    default: "LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio | Región de O'Higgins",
+    template: '%s | LimpiaBien',
+  },
   description:
-    'Selección de servicios para cotización por WhatsApp e Instagram. Limpieza profesional de tapices, colchones y alfombras.',
+    "Limpieza profesional de sillones, colchones, alfombras y tapices de vehículos a domicilio en Nancagua, Santa Cruz, San Fernando, Chimbarongo y Chépica. Cotiza al instante por WhatsApp.",
   applicationName: 'LimpiaBien',
-  generator: 'Next.js',
   keywords: [
     'limpieza de tapices',
     'lavado de sillones',
     'limpieza de colchones',
     'lavado de alfombras',
     'limpieza a domicilio',
-    'San Fernando',
-    'Santa Cruz',
-    'Chimbarongo',
-    'Chépica',
-    'Nancagua',
-    'Región de O’Higgins',
+    'limpieza tapices San Fernando',
+    'lavado sillones Santa Cruz',
+    'limpieza colchones Nancagua',
+    'limpieza tapices Chimbarongo',
+    'lavado alfombras Chépica',
+    "Región de O'Higgins",
   ],
   authors: [{ name: 'LimpiaBien' }],
   creator: 'LimpiaBien',
   publisher: 'LimpiaBien',
-  alternates: {
-    canonical: '/',
-  },
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
-    url: '/',
-    title: 'LimpiaBien — Limpieza de Tapices y Alfombras',
+    url: 'https://limpiabien.cl',
+    title: 'LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio',
     description:
-      'Servicio profesional de limpieza de tapices, sillones, colchones y alfombras a domicilio. Cotiza por WhatsApp en minutos.',
+      "Limpieza profesional de sillones, colchones, alfombras y tapices de vehículos a domicilio en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
     siteName: 'LimpiaBien',
     images: [
       {
-        url: '/og/cover.jpg', // prepara esta imagen (1200x630)
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'LimpiaBien — Tapices y Alfombras Impecables',
+        alt: "LimpiaBien — Limpieza profesional de tapices y alfombras a domicilio en la Región de O'Higgins",
       },
     ],
     locale: 'es_CL',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LimpiaBien — Limpieza de Tapices y Alfombras',
+    title: 'LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio',
     description:
-      'Cotiza por WhatsApp y obtén descuentos por cantidad. Servicio a domicilio.',
-    images: ['/og/cover.jpg'],
+      "Limpieza profesional a domicilio en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
+    images: ['/og-image.jpg'],
   },
   robots: {
     index: true,
@@ -70,25 +71,23 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
     },
   },
-  category: 'home',
+  category: 'home services',
   icons: {
     icon: [
       { url: '/favicon.ico' },
-      { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
     ],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
   manifest: '/site.webmanifest',
   verification: {
-    // Completa si usas verificación
     // google: 'TU_TOKEN_DE_VERIFICACION',
   },
   referrer: 'strict-origin-when-cross-origin',
-  // Útil si tienes temas claros/oscuro
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0B1220' },
+    { media: '(prefers-color-scheme: dark)', color: '#0ea5e9' },
   ],
 };
 
@@ -99,88 +98,64 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  // JSON-LD para SEO local (ajusta name/url/logo/sameAs/areaServed)
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'HomeAndConstructionBusiness',
+    '@type': 'LocalBusiness',
+    '@id': 'https://limpiabien.cl/#business',
     name: 'LimpiaBien',
     url: 'https://limpiabien.cl',
     logo: 'https://limpiabien.cl/logo-512.png',
-    image: 'https://limpiabien.cl/logo.png',
-    telephone: '+56977515193', // reemplaza
+    image: 'https://limpiabien.cl/og-image.jpg',
+    telephone: '+56977515193',
     sameAs: ['https://www.instagram.com/limpiabien.cl'],
-    areaServed: ['Nancagua', 'San Fernando', 'Santa Cruz', 'Chimbarongo', 'Chépica', 'Región de O’Higgins'],
+    areaServed: [
+      { '@type': 'City', name: 'Nancagua' },
+      { '@type': 'City', name: 'Santa Cruz' },
+      { '@type': 'City', name: 'San Fernando' },
+      { '@type': 'City', name: 'Chimbarongo' },
+      { '@type': 'City', name: 'Chépica' },
+      { '@type': 'AdministrativeArea', name: "Región de O'Higgins" },
+    ],
     priceRange: '$$',
     description:
-      'Limpieza profesional de tapices, sillones, colchones y alfombras a domicilio. Cotiza por WhatsApp.',
+      "Limpieza profesional de sillones, colchones, alfombras y tapices de vehículos a domicilio en la Región de O'Higgins.",
     address: {
       '@type': 'PostalAddress',
+      addressLocality: 'Nancagua',
+      addressRegion: "O'Higgins",
       addressCountry: 'CL',
-      addressRegion: 'O’Higgins',
     },
-    makesOffer: [
-      {
-        '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: 'Limpieza de sillones' },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: 'Limpieza de tapiz automotriz' },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: 'Lavado de alfombras' },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: 'Limpieza de colchones' },
-      },
-    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Servicios de limpieza',
+      itemListElement: [
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de sillones y tapices', url: 'https://limpiabien.cl/servicios/tapices' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de colchones', url: 'https://limpiabien.cl/servicios/colchones' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Lavado de alfombras', url: 'https://limpiabien.cl/servicios/alfombras' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de tapices de vehículos' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de escaleras alfombradas' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de sillas tapizadas' } },
+      ],
+    },
   };
 
   return (
     <html lang="es" dir="ltr">
       <head>
-        {/* Pre-carga de fuentes/ DNS si fuese necesario */}
-        {/* <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" /> */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body
-        className={`${inter.variable} antialiased min-h-dvh bg-white text-slate-900`}
-      >
-        {/* Enlace de salto para accesibilidad */}
+      <body className={`${outfit.variable} antialiased min-h-dvh`}>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:m-2 focus:rounded-md focus:bg-black/80 focus:px-3 focus:py-2 focus:text-white"
         >
+          Ir al contenido principal
         </a>
-
-        {/* Contenido */}
         <main id="main">{children}</main>
-
-        {/* (Opcional) Google Analytics / Meta Pixel — agrega tu ID si lo usas */}
-        {/*
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX`}
-          strategy="afterInteractive"
-        />
-        <Script id="ga" strategy="afterInteractive">
-          {`
-           window.dataLayer = window.dataLayer || [];
-           function gtag(){dataLayer.push(arguments);}
-           gtag('js', new Date());
-           gtag('config', 'G-XXXXXXXX', { anonymize_ip: true });
-          `}
-        </Script>
-        */}
       </body>
     </html>
   );

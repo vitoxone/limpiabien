@@ -6,7 +6,7 @@ import s from './styles.module.css';
 export const metadata: Metadata = {
   title: 'Servicios de Limpieza de Tapices | LimpiaBien',
   description:
-    'Limpieza de sillones, colchones y alfombras a domicilio en Nancagua, Santa Cruz, San Fernando, Chimbarongo y Chépica.',
+    'Limpieza de sillones, colchones y alfombras a domicilio en Santa Cruz, San Fernando, Chimbarongo, Chépica, Nancagua, Palmilla y alrededores.',
   alternates: { canonical: '/servicios' },
   robots: { index: true, follow: true },
 };
