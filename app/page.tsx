@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { CATEGORIES } from '@/data/catalog';
 import Category from '@/components/Category';
 import LeadForm from '@/components/LeadForm';
-import Testimonios from '@/components/Testimonios';
 import { buildWaLink } from '@/lib/wa';
 import { useCallback, useMemo, useState, useEffect } from 'react';
 
@@ -35,6 +34,7 @@ export default function Page() {
   const [cart, setCart] = useState<Cart>({});
   const [origin, setOrigin] = useState('web');
   const [fullName, setFullName] = useState('');
+  const [specialRequest, setSpecialRequest] = useState('');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -62,10 +62,11 @@ export default function Page() {
     const saludo = fullName.trim()
       ? `Hola, soy ${fullName.trim()}! Quiero cotizar un servicio de limpieza. (${origin})`
       : `Hola! Quiero cotizar un servicio de limpieza. (${origin})`;
-    if (items.length === 0) return saludo;
     const lines = items.map(i => `• ${i.section} — ${i.title} × ${i.qty}`);
-    return `${saludo}\n${lines.join('\n')}`;
-  }, [items, fullName, origin]);
+    const extra = specialRequest.trim() ? `• Pedido especial: ${specialRequest.trim()}` : '';
+    const body = [...lines, extra].filter(Boolean).join('\n');
+    return body ? `${saludo}\n${body}` : saludo;
+  }, [items, fullName, origin, specialRequest]);
 
   const waHref = useMemo(() => buildWaLink(message), [message]);
 
@@ -105,7 +106,7 @@ export default function Page() {
             >
               Nuestros trabajos
             </button>
-            <Link
+            {/* <Link
               className="btn btn-dark btn-sm"
               href={waHref}
               target="_blank"
@@ -113,7 +114,7 @@ export default function Page() {
             >
               <WaIcon />
               Cotizar{totalItems > 0 ? ` (${totalItems})` : ''}
-            </Link>
+            </Link> */}
           </nav>
         </div>
       </header>
@@ -213,6 +214,8 @@ export default function Page() {
                     publicOnly
                     getQty={getQty}
                     setQty={setQty}
+                    specialRequest={specialRequest}
+                    onSpecialRequestChange={setSpecialRequest}
                   />
                 ))}
               </div>
@@ -225,6 +228,7 @@ export default function Page() {
                     fullName={fullName}
                     onNameChange={setFullName}
                     onClear={() => setCart({})}
+                    specialRequest={specialRequest}
                   />
                 ) : (
                   <Link
@@ -282,15 +286,7 @@ export default function Page() {
             </section>
           </div>
         </div>
-        {/* ── BANDA BLANCA: Testimonios ────────────────── */}
-        <div className="band-white">
-          <div className="band-inner">
-            <Testimonios />
-          </div>
-        </div>
 
-        {/* ── BANDA CELESTE: FAQ ──────────────────────── */}
-        <div className="band-sky"></div>
         {/* ── BANDA CELESTE: FAQ ──────────────────────── */}
         <div className="band-sky">
           <div className="band-inner band-faq">
