@@ -819,3 +819,38 @@ button { font-family: inherit; }
     display: block !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────
+   PEDIDOS ESPECIALES
+   ───────────────────────────────────────────────────────── */
+.special-request-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0 8px;
+}
+.special-request-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--stone-900);
+}
+.special-request-input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--stone-900);
+  background: var(--white);
+  resize: vertical;
+  line-height: 1.5;
+  transition: border-color .15s;
+}
+.special-request-input:focus {
+  outline: none;
+  border-color: var(--sky);
+}
+.special-request-input::placeholder {
+  color: var(--muted);
+}

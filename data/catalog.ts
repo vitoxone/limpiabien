@@ -121,12 +121,10 @@ export const CATEGORIES: CatalogCategory[] = [
     ],
   },
     {
-    slug: 'extras',
-    name: 'Extras',
+    slug: 'pedidos-especiales',
+    name: 'Pedidos especiales',
     domicilio: true,
-    description: 'Higienización de respaldos tapizados. Eliminamos polvo y manchas para mejorar la estética y prolongar la vida útil del mueble.',
-    items: [
-      { id: 'cojin-1', title: 'Cojín', price: 5000, show_public: true }
-    ],
+    description: 'Cuéntanos lo que necesitas y te cotizamos.',
+    items: [],
   },
 ];

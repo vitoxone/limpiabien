@@ -10,6 +10,7 @@ interface Props {
   fullName: string;
   onNameChange: (name: string) => void;
   onClear: () => void;
+  specialRequest?: string;
 }
 
 const WaIcon = () => (
@@ -20,7 +21,7 @@ const WaIcon = () => (
 
 type Step = 'form' | 'sending' | 'done' | 'error';
 
-export default function LeadForm({ items, waHref, fullName, onNameChange, onClear }: Props) {
+export default function LeadForm({ items, waHref, fullName, onNameChange, onClear, specialRequest = '' }: Props) {
   const [phone, setPhone] = useState('');
   const [honeypot, setHoneypot] = useState(''); // nunca debe tener valor
   const [step, setStep] = useState<Step>('form');
@@ -42,6 +43,7 @@ export default function LeadForm({ items, waHref, fullName, onNameChange, onClea
             phone: phone.trim(),
             channel: 'web',
               website: honeypot,
+            ...(specialRequest.trim() && { needs: specialRequest.trim() }),
             items: items.map((i) => ({
               serviceSlug: i.section.toLowerCase().replace(/\s+/g, '-'),
               serviceTitle: i.title,
