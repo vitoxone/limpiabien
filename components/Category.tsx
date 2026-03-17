@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import type { CatalogCategory } from '@/data/catalog';
 import SelectorRow from '@/components/SelectorRow';
 
@@ -20,10 +21,28 @@ export default function Category({
   setQty: QtySetter;
 }) {
   const isDomicilio = category.domicilio !== false;
+  const [open, setOpen] = useState(false);
+
+  const visibleItems = category.items.filter(
+    (item) => !(publicOnly && item.show_public === false)
+  );
 
   return (
-    <article className="cat-card" id={`cat-${category.slug}`} itemScope itemType="https://schema.org/Service">
-      <header className="cat-head">
+    <article
+      className={`cat-card${open ? ' cat-open' : ''}`}
+      id={`cat-${category.slug}`}
+      itemScope
+      itemType="https://schema.org/Service"
+    >
+      {/* Header — clickeable solo en mobile */}
+      <header
+        className="cat-head"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => e.key === 'Enter' && setOpen((v) => !v)}
+      >
         <div className="cat-head-left">
           <h3 className="cat-name" itemProp="name">{category.name}</h3>
           {category.description && (
@@ -34,13 +53,16 @@ export default function Category({
           <span className={`cat-badge ${isDomicilio ? 'badge-home' : 'badge-pick'}`}>
             {isDomicilio ? 'A domicilio' : 'Retiro'}
           </span>
+          {/* Chevron visible solo en mobile */}
+          <span className="cat-chevron" aria-hidden="true">
+            {open ? '▲' : '▼'}
+          </span>
         </div>
       </header>
 
       <div className="cat-body">
         <div className="svc-rows">
-          {category.items.map((item) => {
-            if (publicOnly && item.show_public === false) return null;
+          {visibleItems.map((item) => {
             const key = `${category.name} — ${item.title}`;
             return (
               <SelectorRow

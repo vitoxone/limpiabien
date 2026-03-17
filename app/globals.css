@@ -343,7 +343,7 @@ button { font-family: inherit; }
 .badge-home { background: var(--teal-light); color: var(--teal); }
 .badge-pick { background: var(--stone-100);  color: var(--stone-600); }
 
-.cat-body { padding: 8px 28px 20px; }
+.cat-body { padding: 8px 28px 20px; display: block; }
 
 /* ─────────────────────────────────────────────────────────
    SERVICE ROW
@@ -784,4 +784,38 @@ button { font-family: inherit; }
   font-size: .78rem;
   color: var(--stone-600);
   margin-top: 1px;
+}
+
+/* ─────────────────────────────────────────────────────────
+   ACORDEÓN MOBILE — categorías
+   ───────────────────────────────────────────────────────── */
+.cat-chevron { display: none; }
+
+@media (max-width: 767px) {
+  .cat-chevron {
+    display: inline-block;
+    font-size: 10px;
+    color: var(--sky);
+    margin-left: 8px;
+  }
+
+  .cat-head {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* Cerrado por defecto */
+  .cat-body {
+    display: none !important;
+  }
+
+  /* Abierto cuando tiene clase cat-open */
+  .cat-open .cat-body {
+    display: block !important;
+  }
+
+  /* Si hay ítems seleccionados, mostrar igual */
+  .cat-card:has(.svc-row.selected) .cat-body {
+    display: block !important;
+  }
 }
