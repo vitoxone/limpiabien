@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { CATEGORIES } from '@/data/catalog';
 import Category from '@/components/Category';
 import LeadForm from '@/components/LeadForm';
+import Testimonios from '@/components/Testimonios';
 import { buildWaLink } from '@/lib/wa';
 import { useCallback, useMemo, useState, useEffect } from 'react';
 
@@ -281,7 +282,15 @@ export default function Page() {
             </section>
           </div>
         </div>
+        {/* ── BANDA BLANCA: Testimonios ────────────────── */}
+        <div className="band-white">
+          <div className="band-inner">
+            <Testimonios />
+          </div>
+        </div>
 
+        {/* ── BANDA CELESTE: FAQ ──────────────────────── */}
+        <div className="band-sky"></div>
         {/* ── BANDA CELESTE: FAQ ──────────────────────── */}
         <div className="band-sky">
           <div className="band-inner band-faq">
