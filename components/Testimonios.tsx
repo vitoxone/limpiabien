@@ -1,13 +1,13 @@
 const TESTIMONIOS = [
   {
-    nombre: 'María González',
+    nombre: 'Claudia Ruiz',
     ciudad: 'Santa Cruz',
     texto: 'Quedé encantada con el resultado. El sillón parecía nuevo y el olor desapareció completamente. Super recomendado.',
     servicio: 'Tapiz sillón',
     estrellas: 5,
   },
   {
-    nombre: 'Carlos Pérez',
+    nombre: 'Marcelo Bahamondes',
     ciudad: 'San Fernando',
     texto: 'Muy profesionales y puntuales. Limpiaron los tapices del auto y los colchones de dos piezas en una sola visita.',
     servicio: 'Tapices auto + colchones',
@@ -21,7 +21,7 @@ const TESTIMONIOS = [
     estrellas: 5,
   },
   {
-    nombre: 'Roberto Silva',
+    nombre: 'Nicole Rubio',
     ciudad: 'Chimbarongo',
     texto: 'Rápido, limpio y a buen precio. Vinieron el mismo día que llamé. El seccional quedó como recién comprado.',
     servicio: 'Sillón seccional',
