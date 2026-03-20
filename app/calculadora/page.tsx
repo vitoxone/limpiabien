@@ -14,9 +14,8 @@ type Cart = Record<string, Item>;
 const DISCOUNTS = [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5];
 const VISIT_FEE = 2000;
 
-export default function CalculatorPage() {
-  // ── Auth gate ─────────────────────────────────────────
-  const [authed, setAuthed] = useState(false);
+// ── Gate de contraseña ────────────────────────────────────
+function PasswordGate({ onSuccess }: { onSuccess: () => void }) {
   const [pw, setPw] = useState('');
   const [pwError, setPwError] = useState(false);
   const [pwLoading, setPwLoading] = useState(false);
@@ -29,7 +28,7 @@ export default function CalculatorPage() {
     const ok = await verificarClave(pw);
     setPwLoading(false);
     if (ok) {
-      setAuthed(true);
+      onSuccess();
     } else {
       setPwError(true);
       setPw('');
@@ -37,62 +36,62 @@ export default function CalculatorPage() {
     }
   }
 
-  if (!authed) {
-    return (
-      <div style={{
-        minHeight: '100vh', display: 'flex', alignItems: 'center',
-        justifyContent: 'center', background: 'var(--surface, #f8fafc)',
+  return (
+    <div style={{
+      minHeight: '100vh', display: 'flex', alignItems: 'center',
+      justifyContent: 'center', background: 'var(--surface, #f8fafc)',
+    }}>
+      <form onSubmit={handleLogin} style={{
+        background: 'white', borderRadius: 16, padding: '40px 36px',
+        boxShadow: '0 4px 24px rgba(0,0,0,.08)', width: '100%', maxWidth: 360,
+        display: 'flex', flexDirection: 'column', gap: 16,
       }}>
-        <form onSubmit={handleLogin} style={{
-          background: 'white', borderRadius: 16, padding: '40px 36px',
-          boxShadow: '0 4px 24px rgba(0,0,0,.08)', width: '100%', maxWidth: 360,
-          display: 'flex', flexDirection: 'column', gap: 16,
-        }}>
-          <div style={{ textAlign: 'center', marginBottom: 4 }}>
-            <Image src="/logo.png" width={48} height={48} alt="LimpiaBien" style={{ margin: '0 auto 12px' }} />
-            <h1 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--ink, #1a1a2e)', marginBottom: 4 }}>
-              Calculadora interna
-            </h1>
-            <p style={{ fontSize: '.85rem', color: 'var(--muted, #6b7280)' }}>
-              Ingresa la contraseña para acceder
-            </p>
-          </div>
+        <div style={{ textAlign: 'center', marginBottom: 4 }}>
+          <Image src="/logo.png" width={48} height={48} alt="LimpiaBien" style={{ margin: '0 auto 12px' }} />
+          <h1 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--ink, #1a1a2e)', marginBottom: 4 }}>
+            Calculadora interna
+          </h1>
+          <p style={{ fontSize: '.85rem', color: 'var(--muted, #6b7280)' }}>
+            Ingresa la contraseña para acceder
+          </p>
+        </div>
 
-          <input
-            ref={pwRef}
-            type="password"
-            value={pw}
-            onChange={e => { setPw(e.target.value); setPwError(false); }}
-            placeholder="Contraseña"
-            autoFocus
-            style={{
-              width: '100%', padding: '11px 14px',
-              border: `1.5px solid ${pwError ? '#ef4444' : 'var(--border, #e2e8f0)'}`,
-              borderRadius: 8, fontSize: '.95rem', outline: 'none',
-              fontFamily: 'inherit', transition: 'border-color .2s',
-            }}
-          />
+        <input
+          ref={pwRef}
+          type="password"
+          value={pw}
+          onChange={e => { setPw(e.target.value); setPwError(false); }}
+          placeholder="Contraseña"
+          autoFocus
+          style={{
+            width: '100%', padding: '11px 14px',
+            border: `1.5px solid ${pwError ? '#ef4444' : 'var(--border, #e2e8f0)'}`,
+            borderRadius: 8, fontSize: '.95rem', outline: 'none',
+            fontFamily: 'inherit', transition: 'border-color .2s',
+          }}
+        />
 
-          {pwError && (
-            <p style={{ fontSize: '.8rem', color: '#ef4444', marginTop: -8 }}>
-              Contraseña incorrecta. Intenta de nuevo.
-            </p>
-          )}
+        {pwError && (
+          <p style={{ fontSize: '.8rem', color: '#ef4444', marginTop: -8 }}>
+            Contraseña incorrecta. Intenta de nuevo.
+          </p>
+        )}
 
-          <button
-            type="submit"
-            disabled={!pw.trim() || pwLoading}
-            className="btn btn-dark btn-lg"
-            style={{ width: '100%', opacity: (!pw.trim() || pwLoading) ? 0.5 : 1 }}
-          >
-            {pwLoading ? 'Verificando…' : 'Entrar'}
-          </button>
-        </form>
-      </div>
-    );
-  }
+        <button
+          type="submit"
+          disabled={!pw.trim() || pwLoading}
+          className="btn btn-dark btn-lg"
+          style={{ width: '100%', opacity: (!pw.trim() || pwLoading) ? 0.5 : 1 }}
+        >
+          {pwLoading ? 'Verificando…' : 'Entrar'}
+        </button>
+      </form>
+    </div>
+  );
+}
 
-  // ── Calculadora ───────────────────────────────────────
+// ── Calculadora ───────────────────────────────────────────
+function Calculadora() {
   const [cart, setCart] = useState<Cart>({});
   const [discount, setDiscount] = useState(0);
   const [includeVisit, setIncludeVisit] = useState(false);
@@ -168,7 +167,6 @@ export default function CalculatorPage() {
         </div>
 
         <div className="calc-layout">
-          {/* Categories */}
           <div>
             <div className="catalog">
               {CATEGORIES.map(cat => (
@@ -177,7 +175,6 @@ export default function CalculatorPage() {
             </div>
           </div>
 
-          {/* Sidebar */}
           <aside className="calc-sidebar">
             <div className="sidebar-title">
               Resumen
@@ -205,7 +202,6 @@ export default function CalculatorPage() {
               <strong style={{ fontSize: 18 }}>{currency(total)}</strong>
             </div>
 
-            {/* Discount */}
             <div>
               <div className="disc-label">Descuento</div>
               <div className="disc-chips">
@@ -217,7 +213,6 @@ export default function CalculatorPage() {
               </div>
             </div>
 
-            {/* Visit */}
             <label className="visit-row">
               <input type="checkbox" checked={includeVisit} onChange={e => setIncludeVisit(e.target.checked)} />
               <span>Agregar cargo por visita ({currency(VISIT_FEE)})</span>
@@ -267,4 +262,12 @@ export default function CalculatorPage() {
       </footer>
     </>
   );
+}
+
+// ── Page principal — orquesta gate + calculadora ──────────
+export default function CalculatorPage() {
+  const [authed, setAuthed] = useState(false);
+
+  if (!authed) return <PasswordGate onSuccess={() => setAuthed(true)} />;
+  return <Calculadora />;
 }
