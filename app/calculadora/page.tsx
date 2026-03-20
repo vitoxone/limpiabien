@@ -152,10 +152,10 @@ export default function CalculatorPage() {
                 <span style={{ fontWeight: 600, color: '#b91c1c' }}>− {currency(discAmt)}</span>
               </div>
             )}
-            <div className="total-row">
-              <span>Con descuento</span>
+            {/* <div className="total-row">
+              <span>Total</span>
               <strong>{currency(afterDisc)}</strong>
-            </div>
+            </div> */}
             {includeVisit && (
               <>
                 <div className="total-row" style={{ fontSize: 13 }}>
