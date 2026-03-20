@@ -46,11 +46,11 @@ export default function CalculatorPage() {
   const output = useMemo(() => {
     if (!items.length) return 'Cotización interna:';
     const lines = items.map(i => `• ${i.section} — ${i.title} × ${i.qty} = ${currency(i.subtotal)}`);
-    const out = ['Cotización interna:', ...lines,
-      `Total: ${currency(total)}`,
-      `Descuento: ${pct}% (${currency(discAmt)})`,
-      `Total con descuento: ${currency(afterDisc)}`,
-    ];
+    const out = ['Cotización interna:', ...lines, `Total: ${currency(total)}`];
+    if (pct > 0) {
+      out.push(`Descuento: ${pct}% (${currency(discAmt)})`);
+      out.push(`Total con descuento: ${currency(afterDisc)}`);
+    }
     if (includeVisit) { out.push(`Cargo por visita: ${currency(visitAmt)}`); out.push(`Total final: ${currency(grand)}`); }
     return out.join('\n');
   }, [items, total, pct, discAmt, afterDisc, includeVisit, visitAmt, grand]);
