@@ -170,7 +170,6 @@ export default function CalculatorPage() {
               </>
             )}
 
-            <hr className="sep" />
 
             <div>
               <div className="out-label">Texto para copiar</div>
