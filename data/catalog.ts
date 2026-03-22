@@ -36,13 +36,15 @@ export const CATEGORIES: CatalogCategory[] = [
     items: [
       { id: 'colchon-1-plaza', title: 'Colchón 1 plaza (ambas cara)', price: 22000, show_public: true },
       { id: 'colchon-1.5-plaza', title: 'Colchón 1.5 plaza una car', price: 20000, show_public: true },
-      { id: 'colchon-1.5-plaza', title: 'Colchón 1.5 plaza (ambas cara)', price: 25000, show_public: true },
+      { id: 'colchon-1.5-plaza-2caras', title: 'Colchón 1.5 plaza (ambas cara)', price: 25000, show_public: true },
       { id: 'colchon-2-plazas-1cara', title: 'Colchón 2 plazas una cara', price: 30000, show_public: true },
       { id: 'colchon-2-plazas', title: 'Colchón 2 plazas (ambas caras)', price: 35000, show_public: true },
       { id: 'colchon-queen-king-1-cara', title: 'Colchón Queen/King una cara ', price: 35000, show_public: true },
       { id: 'colchon-queen-king', title: 'Colchón Queen/King (ambas caras)', price: 35000, show_public: false },
       { id: 'colchon-super-king-1-cara', title: 'Colchón super King una cara', price: 45000, show_public: true },
       { id: 'colchon-super-king', title: 'Colchón Super King (ambas caras)', price: 50000, show_public: false },
+      { id: 'base-cama-1.5', title: 'Base cama 1.5 plazas', price: 20000, show_public: false },
+      { id: 'base-cama-2plazas', title: 'Base cama 2 plazas', price: 25000, show_public: false },
     ],
   },
   {
@@ -64,9 +66,9 @@ export const CATEGORIES: CatalogCategory[] = [
     domicilio: false,
     description: 'Lavado en profundidad que reaviva colores y texturas. Eliminamos suciedad incrustada, manchas y olores en alfombras de diferentes tamaños.',
     items: [
-      { id: 'alfombra-pequena', title: 'Alfombra pequeña (hasta 2 m²)', price: 8000, show_public: true },
-      { id: 'alfombra-mediana', title: 'Alfombra mediana (2–4 m²)', price: 20000, show_public: true },
-      { id: 'alfombra-grande', title: 'Alfombra grande (4–6 m²)', price: 25000, show_public: true },
+      { id: 'alfombra-pequena', title: 'Alfombra pequeña (hasta 2 m²)', price: 12000, show_public: true },
+      { id: 'alfombra-mediana', title: 'Alfombra mediana (2–4 m²)', price: 25000, show_public: true },
+      { id: 'alfombra-grande', title: 'Alfombra grande (4–6 m²)', price: 30000, show_public: true },
     ],
   },
   {
