@@ -66,7 +66,7 @@ export const CATEGORIES: CatalogCategory[] = [
     domicilio: false,
     description: 'Lavado en profundidad que reaviva colores y texturas. Eliminamos suciedad incrustada, manchas y olores en alfombras de diferentes tamaños.',
     items: [
-      { id: 'alfombra-pequena', title: 'Alfombra pequeña (hasta 2 m²)', price: 12000, show_public: true },
+      { id: 'alfombra-pequena', title: 'Alfombra pequeña (hasta 2 m²)', price: 20000, show_public: true },
       { id: 'alfombra-mediana', title: 'Alfombra mediana (2–4 m²)', price: 25000, show_public: true },
       { id: 'alfombra-grande', title: 'Alfombra grande (4–6 m²)', price: 30000, show_public: true },
     ],
