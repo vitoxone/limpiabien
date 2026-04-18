@@ -129,7 +129,7 @@ interface DocProps {
   coverage: string; payMethod: string; notes: string;
 }
 
-function CotizacionDoc({ docRef, ...p }: DocProps & { docRef: React.RefObject<HTMLDivElement | null> }) {
+function CotizacionDoc({ docRef, ...p }: DocProps & { docRef: React.Ref<HTMLDivElement> }) {
   const totalBase = p.items.reduce((a, b) => a + b.subtotal, 0);
 
   return (
