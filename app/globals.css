@@ -208,6 +208,30 @@ button { font-family: inherit; }
 /* ─────────────────────────────────────────────────────────
    MOSAICO DE SERVICIOS — 5 celdas iguales
    ───────────────────────────────────────────────────────── */
+.mosaic-hint {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 14px;
+  padding: 7px 14px;
+  background: var(--sky, #0ea5e9);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  letter-spacing: .01em;
+  box-shadow: 0 6px 18px rgba(14, 165, 233, .25);
+}
+.mosaic-hint-pulse {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, .9);
+  animation: mosaic-pulse 1.6s ease-out infinite;
+}
+@keyframes mosaic-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 255, 255, .9); }
+  70%  { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
 .mosaic {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -272,6 +296,23 @@ button { font-family: inherit; }
   transition: transform .3s ease; z-index: 3;
 }
 .mosaic-cell:hover::after { transform: scaleX(1); }
+
+/* chip "Toca para ver →" en cada celda — visible siempre */
+.mosaic-cta {
+  position: absolute; top: 10px; right: 10px; z-index: 3;
+  background: rgba(255, 255, 255, .95);
+  color: var(--ink, #1a1a2e);
+  font-size: 11px; font-weight: 600;
+  padding: 5px 10px; border-radius: 999px;
+  letter-spacing: .01em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+  transition: transform .25s ease, background .25s ease, color .25s ease;
+}
+.mosaic-cell:hover .mosaic-cta {
+  background: var(--sky, #0ea5e9);
+  color: #fff;
+  transform: translateX(2px);
+}
 
 @media (max-width: 900px) {
   .mosaic {

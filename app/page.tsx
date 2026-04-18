@@ -147,47 +147,57 @@ export default function Page() {
               </div>
             </section>
 
-            <div className="mosaic" aria-label="Galería de servicios" role="img">
+            <p className="mosaic-hint" aria-hidden="true">
+              <span className="mosaic-hint-pulse" />
+              Toca una categoría para ver los servicios
+            </p>
 
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-tapices')}>
+            <div className="mosaic" aria-label="Categorías de servicios — toca una para ver el detalle" role="group">
+
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-tapices')} aria-label="Ver servicios de Tapices">
                 <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/tapices.jpg')", backgroundPosition: 'center 30%' }} />
                 <div className="mosaic-overlay" />
+                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
                 <div className="mosaic-label">
                   <span className="mosaic-tag">Tapices</span>
                   <span className="mosaic-sub">Sillones · Seccionales</span>
                 </div>
               </button>
 
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-colchones')}>
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-colchones')} aria-label="Ver servicios de Colchones">
                 <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }} />
                 <div className="mosaic-overlay" />
+                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
                 <div className="mosaic-label">
                   <span className="mosaic-tag">Colchones</span>
                   <span className="mosaic-sub">1 plaza · Queen · King</span>
                 </div>
               </button>
 
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-vehiculos')}>
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-vehiculos')} aria-label="Ver servicios de Vehículos">
                 <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_5942.jpg')" }} />
                 <div className="mosaic-overlay" />
+                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
                 <div className="mosaic-label">
                   <span className="mosaic-tag">Vehículos</span>
                   <span className="mosaic-sub">Autos · SUV · Camionetas</span>
                 </div>
               </button>
 
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-alfombras-muro')}>
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-alfombras-muro')} aria-label="Ver servicios de Alfombras">
                 <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_5673.jpg')" }} />
                 <div className="mosaic-overlay" />
+                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
                 <div className="mosaic-label">
                   <span className="mosaic-tag">Alfombras</span>
                   <span className="mosaic-sub">Decorativas · Muro a muro</span>
                 </div>
               </button>
 
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-sillas')}>
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-sillas')} aria-label="Ver servicios de Sillas">
                 <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_3507.jpg')" }} />
                 <div className="mosaic-overlay" />
+                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
                 <div className="mosaic-label">
                   <span className="mosaic-tag">Sillas</span>
                   <span className="mosaic-sub">Tapizadas · Sitiales</span>
