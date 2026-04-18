@@ -105,9 +105,9 @@ export const CATEGORIES: CatalogCategory[] = [
     description: 'Lavado de sillas tapizadas y sitiales. Eliminamos manchas y suciedad acumulada en pocos minutos con secado rápido.',
     items: [
       { id: 'silla-asiento1', title: 'Silla semi tapizada 1', price: 5000, show_public: true },
-      { id: 'silla-asiento2', title: 'Silla semi tapizada 2', price: 6000, show_public: true },
-      { id: 'silla-asiento3', title: 'Silla semi tapizada 3', price: 7000, show_public: true },
-      { id: 'silla-tapizada', title: 'Silla tapizada', price: 10000, show_public: true },
+      { id: 'silla-asiento2', title: 'Silla semi tapizada 2', price: 6000, show_public: false },
+      { id: 'silla-asiento3', title: 'Silla semi tapizada 3', price: 7000, show_public: false },
+      { id: 'silla-tapizada', title: 'Silla tapizada', price: 10000, show_public: false },
       { id: 'sitial', title: 'Sitial', price: 15000, show_public: true },
     ],
   },
