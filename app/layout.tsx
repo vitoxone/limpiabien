@@ -85,10 +85,6 @@ export const metadata: Metadata = {
     // google: 'TU_TOKEN_DE_VERIFICACION',
   },
   referrer: 'strict-origin-when-cross-origin',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0ea5e9' },
-  ],
 };
 
 export const viewport: Viewport = {
@@ -96,6 +92,10 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: 'cover',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0ea5e9' },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
