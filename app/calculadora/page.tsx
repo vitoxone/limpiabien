@@ -132,74 +132,99 @@ interface DocProps {
 function CotizacionDoc({ docRef, ...p }: DocProps & { docRef: React.Ref<HTMLDivElement> }) {
   const totalBase = p.items.reduce((a, b) => a + b.subtotal, 0);
 
+  // Paleta sobria
+  const C = {
+    ink:      '#0f172a',
+    text:     '#334155',
+    muted:    '#64748b',
+    soft:     '#94a3b8',
+    line:     '#e2e8f0',
+    bg:       '#f8fafc',
+    accent:   '#0c4a6e',  // azul marino sobrio
+    accentBg: '#eff6ff',
+  };
+
+  const SectionTitle = ({ children }: { children: React.ReactNode }) => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+      <span style={{ width: 3, height: 16, background: C.accent }} />
+      <span style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 14, fontWeight: 700, color: C.ink, letterSpacing: '.01em' }}>
+        {children}
+      </span>
+      <div style={{ flex: 1, height: 1, background: C.line }} />
+    </div>
+  );
+
   return (
     <div ref={docRef} style={{
       width: 794, minHeight: 1123, background: '#fff',
-      fontFamily: "'Outfit', system-ui, sans-serif", color: '#1a1410',
+      fontFamily: "'Outfit', system-ui, sans-serif", color: C.text,
       fontSize: 13, lineHeight: 1.55,
     }}>
-      {/* Top band */}
-      <div style={{ height: 8, background: 'linear-gradient(90deg,#0284c7 0%,#0ea5e9 50%,#38bdf8 100%)' }} />
+      {/* Top band sobria */}
+      <div style={{ height: 4, background: C.accent }} />
 
-      <div style={{ padding: '30px 36px 32px' }}>
+      <div style={{ padding: '36px 44px 32px' }}>
 
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 20, paddingBottom: 22, borderBottom: '1.5px solid #e2ddd6', marginBottom: 24 }}>
-          <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-            <div style={{ width: 48, height: 48, background: 'linear-gradient(135deg,#0ea5e9,#0284c7)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7 21h10M12 21V11M5 11l7-7 7 7" /><path d="M9 21V15a3 3 0 016 0v6" />
-              </svg>
-            </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 24, paddingBottom: 24, borderBottom: `1px solid ${C.line}`, marginBottom: 28 }}>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+            <img
+              src="/logo.png"
+              alt="LimpiaBien"
+              width={64}
+              height={64}
+              style={{ width: 64, height: 64, objectFit: 'contain', flexShrink: 0 }}
+              crossOrigin="anonymous"
+            />
             <div>
-              <div style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 24, fontWeight: 700, color: '#0284c7', lineHeight: 1.1 }}>LimpiaBien.cl</div>
-              <div style={{ fontSize: 11.5, color: '#6b6059', marginTop: 3, lineHeight: 1.5 }}>Lavado profesional de tapices, colchones, alfombras y pisos a domicilio.</div>
-              <div style={{ marginTop: 6 }}>
-                {['+56 9 7751 5193', '@limpiabien.cl', 'www.limpiabien.cl'].map(t => (
-                  <span key={t} style={{ display: 'inline-flex', alignItems: 'center', fontSize: 10.5, color: '#0284c7', background: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: 20, padding: '2px 9px', fontWeight: 500, marginRight: 5, marginTop: 3 }}>{t}</span>
-                ))}
+              <div style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 26, fontWeight: 700, color: C.ink, lineHeight: 1.1, letterSpacing: '-.01em' }}>LimpiaBien</div>
+              <div style={{ fontSize: 11, color: C.muted, marginTop: 4, lineHeight: 1.5, maxWidth: 320 }}>
+                Lavado profesional de tapices, colchones, alfombras y vehículos a domicilio.
+              </div>
+              <div style={{ marginTop: 10, fontSize: 11, color: C.muted, lineHeight: 1.7 }}>
+                <div>+56 9 7751 5193 &nbsp;·&nbsp; @limpiabien.cl</div>
+                <div>www.limpiabien.cl</div>
               </div>
             </div>
           </div>
-          <div style={{ minWidth: 210, background: 'linear-gradient(135deg,#f0f9ff,#fff)', border: '1.5px solid #bae6fd', borderRadius: 14, padding: '16px 18px', textAlign: 'right' }}>
-            <div style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 12, fontStyle: 'italic', color: '#a89f92', marginBottom: 8 }}>Documento de Cotización</div>
-            <div style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 22, fontWeight: 700, color: '#0284c7', marginBottom: 8 }}>{p.cotNum || 'LB-2026-001'}</div>
-            <div style={{ fontSize: 12, color: '#6b6059', marginBottom: 3 }}><strong>Fecha:</strong> {p.cotDate}</div>
-            <div style={{ fontSize: 12, color: '#6b6059' }}><strong>Válida hasta:</strong> {p.cotExpiry}</div>
+          <div style={{ minWidth: 220, textAlign: 'right' }}>
+            <div style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 11, fontStyle: 'italic', color: C.soft, letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 6 }}>Cotización</div>
+            <div style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 24, fontWeight: 700, color: C.accent, marginBottom: 10, letterSpacing: '.01em' }}>{p.cotNum || 'LB-2026-001'}</div>
+            <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.7 }}>
+              <div><span style={{ color: C.soft }}>Emisión:</span> &nbsp;<strong style={{ color: C.text, fontWeight: 600 }}>{p.cotDate}</strong></div>
+              <div><span style={{ color: C.soft }}>Válida hasta:</span> &nbsp;<strong style={{ color: C.text, fontWeight: 600 }}>{p.cotExpiry}</strong></div>
+            </div>
           </div>
         </div>
 
-        {/* Sección helper */}
+        {/* Secciones de datos */}
         {([
-          ['👤 Datos del Cliente', [
+          ['Datos del Cliente', [
             ['Nombre completo', p.clientName || '—'],
             ['Teléfono', p.clientPhone || '—'],
             ['Correo', p.clientEmail || '—'],
             ['Comuna / Ciudad', p.clientComune || '—'],
           ], p.clientAddress],
-          ['🏢 Datos del Proveedor', [
+          ['Datos del Proveedor', [
             ['Empresa / Marca', 'LimpiaBien.cl'],
             ['WhatsApp / Contacto', '+56 9 7751 5193'],
             ['Cobertura', p.coverage],
             ['Forma de pago', p.payMethod],
           ], null],
         ] as [string, [string, string][], string | null][]).map(([title, fields, extra]) => (
-          <div key={title} style={{ marginBottom: 22 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 12 }}>
-              <span style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 13, fontWeight: 700, color: '#0284c7' }}>{title}</span>
-              <div style={{ flex: 1, height: 1, background: '#e2ddd6' }} />
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 9 }}>
+          <div key={title} style={{ marginBottom: 24 }}>
+            <SectionTitle>{title}</SectionTitle>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               {fields.map(([k, v]) => (
-                <div key={k} style={{ border: '1px solid #e2ddd6', background: '#faf9f7', borderRadius: 9, padding: '10px 13px' }}>
-                  <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: '#a89f92', marginBottom: 3 }}>{k}</div>
-                  <div style={{ fontSize: 13, color: '#1a1410', fontWeight: 500 }}>{v}</div>
+                <div key={k} style={{ border: `1px solid ${C.line}`, borderRadius: 6, padding: '10px 14px', background: '#fff' }}>
+                  <div style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: '.10em', textTransform: 'uppercase', color: C.soft, marginBottom: 4 }}>{k}</div>
+                  <div style={{ fontSize: 13, color: C.ink, fontWeight: 500 }}>{v}</div>
                 </div>
               ))}
               {extra !== null && (
-                <div style={{ gridColumn: '1 / -1', border: '1px solid #e2ddd6', background: '#faf9f7', borderRadius: 9, padding: '10px 13px' }}>
-                  <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: '#a89f92', marginBottom: 3 }}>Dirección del servicio</div>
-                  <div style={{ fontSize: 13, color: '#1a1410', fontWeight: 500 }}>{extra || '—'}</div>
+                <div style={{ gridColumn: '1 / -1', border: `1px solid ${C.line}`, borderRadius: 6, padding: '10px 14px', background: '#fff' }}>
+                  <div style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: '.10em', textTransform: 'uppercase', color: C.soft, marginBottom: 4 }}>Dirección del servicio</div>
+                  <div style={{ fontSize: 13, color: C.ink, fontWeight: 500 }}>{extra || '—'}</div>
                 </div>
               )}
             </div>
@@ -207,74 +232,71 @@ function CotizacionDoc({ docRef, ...p }: DocProps & { docRef: React.Ref<HTMLDivE
         ))}
 
         {/* Tabla de servicios */}
-        <div style={{ marginBottom: 22 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 12 }}>
-            <span style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 13, fontWeight: 700, color: '#0284c7' }}>📋 Detalle del Servicio</span>
-            <div style={{ flex: 1, height: 1, background: '#e2ddd6' }} />
-          </div>
-          <div style={{ border: '1px solid #e2ddd6', borderRadius: 12, overflow: 'hidden' }}>
+        <div style={{ marginBottom: 24 }}>
+          <SectionTitle>Detalle del Servicio</SectionTitle>
+          <div style={{ border: `1px solid ${C.line}`, borderRadius: 6, overflow: 'hidden' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr style={{ background: 'linear-gradient(90deg,#0284c7,#0ea5e9)' }}>
+                <tr style={{ background: C.ink }}>
                   {['#', 'Descripción', 'Cant.', 'Valor unit.', 'Subtotal'].map((h, i) => (
-                    <th key={h} style={{ padding: '9px 13px', fontSize: 10.5, fontWeight: 700, letterSpacing: '.07em', textTransform: 'uppercase', color: 'white', textAlign: i === 0 ? 'left' : i === 1 ? 'left' : 'right', width: i === 0 ? 36 : i === 2 ? 70 : i === 3 ? 105 : i === 4 ? 115 : undefined }}>{h}</th>
+                    <th key={h} style={{ padding: '11px 14px', fontSize: 10, fontWeight: 600, letterSpacing: '.10em', textTransform: 'uppercase', color: '#fff', textAlign: i === 0 ? 'left' : i === 1 ? 'left' : 'right', width: i === 0 ? 36 : i === 2 ? 70 : i === 3 ? 105 : i === 4 ? 115 : undefined }}>{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {p.items.length === 0 ? (
-                  <tr><td colSpan={5} style={{ padding: '14px', textAlign: 'center', color: '#a89f92', fontSize: 12 }}>Sin ítems seleccionados</td></tr>
+                  <tr><td colSpan={5} style={{ padding: '16px', textAlign: 'center', color: C.soft, fontSize: 12 }}>Sin ítems seleccionados</td></tr>
                 ) : p.items.map((it, i) => (
-                  <tr key={`${it.section}${it.title}`} style={{ background: i % 2 === 0 ? '#fff' : '#faf9f7' }}>
-                    <td style={{ padding: '10px 13px', borderBottom: '1px solid #f0ede8', fontSize: 11, fontWeight: 700, color: '#a89f92' }}>{i + 1}</td>
-                    <td style={{ padding: '10px 13px', borderBottom: '1px solid #f0ede8' }}>
-                      <strong style={{ fontSize: 13 }}>{it.title}</strong><br />
-                      <span style={{ fontSize: 11, color: '#6b6059' }}>{it.section}</span>
+                  <tr key={`${it.section}${it.title}`} style={{ background: i % 2 === 0 ? '#fff' : C.bg }}>
+                    <td style={{ padding: '11px 14px', borderBottom: `1px solid ${C.line}`, fontSize: 11, fontWeight: 600, color: C.soft }}>{i + 1}</td>
+                    <td style={{ padding: '11px 14px', borderBottom: `1px solid ${C.line}` }}>
+                      <strong style={{ fontSize: 13, color: C.ink, fontWeight: 600 }}>{it.title}</strong><br />
+                      <span style={{ fontSize: 10.5, color: C.muted, letterSpacing: '.02em' }}>{it.section}</span>
                     </td>
-                    <td style={{ padding: '10px 13px', borderBottom: '1px solid #f0ede8', textAlign: 'right' }}>{it.qty}</td>
-                    <td style={{ padding: '10px 13px', borderBottom: '1px solid #f0ede8', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{currency(it.price)}</td>
-                    <td style={{ padding: '10px 13px', borderBottom: '1px solid #f0ede8', textAlign: 'right', fontWeight: 600 }}>{currency(it.subtotal)}</td>
+                    <td style={{ padding: '11px 14px', borderBottom: `1px solid ${C.line}`, textAlign: 'right', color: C.text, fontVariantNumeric: 'tabular-nums' }}>{it.qty}</td>
+                    <td style={{ padding: '11px 14px', borderBottom: `1px solid ${C.line}`, textAlign: 'right', color: C.text, fontVariantNumeric: 'tabular-nums' }}>{currency(it.price)}</td>
+                    <td style={{ padding: '11px 14px', borderBottom: `1px solid ${C.line}`, textAlign: 'right', fontWeight: 600, color: C.ink, fontVariantNumeric: 'tabular-nums' }}>{currency(it.subtotal)}</td>
                   </tr>
                 ))}
                 {p.includeVisit && (
-                  <tr style={{ background: '#faf9f7' }}>
-                    <td style={{ padding: '10px 13px', fontSize: 11, fontWeight: 700, color: '#a89f92' }}>{p.items.length + 1}</td>
-                    <td style={{ padding: '10px 13px' }}><strong>Cargo por visita / traslado</strong></td>
-                    <td style={{ padding: '10px 13px', textAlign: 'right' }}>1</td>
-                    <td style={{ padding: '10px 13px', textAlign: 'right' }}>{currency(p.visitAmt)}</td>
-                    <td style={{ padding: '10px 13px', textAlign: 'right', fontWeight: 600 }}>{currency(p.visitAmt)}</td>
+                  <tr style={{ background: C.bg }}>
+                    <td style={{ padding: '11px 14px', fontSize: 11, fontWeight: 600, color: C.soft }}>{p.items.length + 1}</td>
+                    <td style={{ padding: '11px 14px' }}><strong style={{ color: C.ink, fontWeight: 600 }}>Cargo por visita / traslado</strong></td>
+                    <td style={{ padding: '11px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>1</td>
+                    <td style={{ padding: '11px 14px', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{currency(p.visitAmt)}</td>
+                    <td style={{ padding: '11px 14px', textAlign: 'right', fontWeight: 600, color: C.ink, fontVariantNumeric: 'tabular-nums' }}>{currency(p.visitAmt)}</td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 14 }}>
-            <div style={{ minWidth: 250, border: '1px solid #e2ddd6', borderRadius: 12, overflow: 'hidden' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 16px', fontSize: 13, borderBottom: '1px solid #f0ede8', color: '#6b6059' }}>
-                <span>Subtotal</span><span style={{ fontWeight: 600, color: '#1a1410' }}>{currency(totalBase)}</span>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 16 }}>
+            <div style={{ minWidth: 280 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: 12.5, borderBottom: `1px solid ${C.line}`, color: C.muted }}>
+                <span>Subtotal</span><span style={{ fontWeight: 500, color: C.text, fontVariantNumeric: 'tabular-nums' }}>{currency(totalBase)}</span>
               </div>
               {p.discount > 0 && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 16px', fontSize: 13, borderBottom: '1px solid #f0ede8', color: '#6b6059' }}>
-                  <span>Descuento ({p.pct}%)</span><span style={{ fontWeight: 600, color: '#b91c1c' }}>− {currency(p.discAmt)}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: 12.5, borderBottom: `1px solid ${C.line}`, color: C.muted }}>
+                  <span>Descuento ({p.pct}%)</span><span style={{ fontWeight: 500, color: '#b91c1c', fontVariantNumeric: 'tabular-nums' }}>− {currency(p.discAmt)}</span>
                 </div>
               )}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: 'linear-gradient(90deg,#0284c7,#0ea5e9)' }}>
-                <span style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,.85)', letterSpacing: '.04em', textTransform: 'uppercase' }}>Total a pagar</span>
-                <span style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 20, fontWeight: 700, color: 'white' }}>{currency(p.grand)}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '14px 0 4px' }}>
+                <span style={{ fontSize: 11, fontWeight: 600, color: C.muted, letterSpacing: '.10em', textTransform: 'uppercase' }}>Total a pagar</span>
+                <span style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 24, fontWeight: 700, color: C.accent, fontVariantNumeric: 'tabular-nums' }}>{currency(p.grand)}</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Observaciones + Condiciones */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 22 }}>
+        <div data-pdf-break-before="true" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
           <div>
-            <div style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 13, fontWeight: 700, color: '#0284c7', marginBottom: 10 }}>💬 Observaciones</div>
-            <div style={{ fontSize: 11.5, color: '#6b6059', lineHeight: 1.7, whiteSpace: 'pre-line', background: '#faf9f7', border: '1px solid #e2ddd6', borderRadius: 9, padding: '12px 14px' }}>{p.notes}</div>
+            <SectionTitle>Observaciones</SectionTitle>
+            <div style={{ fontSize: 11.5, color: C.text, lineHeight: 1.75, whiteSpace: 'pre-line', padding: '4px 2px' }}>{p.notes}</div>
           </div>
           <div>
-            <div style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 13, fontWeight: 700, color: '#0284c7', marginBottom: 10 }}>✅ Condiciones</div>
-            <ol style={{ fontSize: 11.5, color: '#6b6059', lineHeight: 1.7, background: '#faf9f7', border: '1px solid #e2ddd6', borderRadius: 9, padding: '12px 14px 12px 30px', margin: 0 }}>
+            <SectionTitle>Condiciones</SectionTitle>
+            <ol style={{ fontSize: 11.5, color: C.text, lineHeight: 1.75, padding: '4px 2px 4px 22px', margin: 0 }}>
               <li>La cotización tiene vigencia dentro del plazo indicado.</li>
               <li>Los valores están expresados en pesos chilenos.</li>
               <li>La reserva se confirma coordinando fecha y horario por WhatsApp.</li>
@@ -284,16 +306,15 @@ function CotizacionDoc({ docRef, ...p }: DocProps & { docRef: React.Ref<HTMLDivE
         </div>
 
         {/* Firmas */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 28, marginTop: 36 }}>
           {['Firma / Aceptación Cliente', 'LimpiaBien.cl'].map(label => (
-            <div key={label} style={{ borderTop: '2px solid #e2ddd6', paddingTop: 10, textAlign: 'center', fontSize: 10.5, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: '#a89f92' }}>{label}</div>
+            <div key={label} style={{ borderTop: `1px solid ${C.ink}`, paddingTop: 10, textAlign: 'center', fontSize: 10, fontWeight: 600, letterSpacing: '.10em', textTransform: 'uppercase', color: C.muted }}>{label}</div>
           ))}
         </div>
 
         {/* Footer */}
-        <div style={{ borderTop: '1px solid #e2ddd6', paddingTop: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ fontSize: 10.5, color: '#a89f92', fontStyle: 'italic' }}>Documento generado por LimpiaBien.cl · Tamaño A4</div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 10, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: '#0284c7', background: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: 20, padding: '3px 11px' }}>✓ Cotización Oficial</div>
+        <div style={{ borderTop: `1px solid ${C.line}`, paddingTop: 12, fontSize: 10, color: C.soft, fontStyle: 'italic', textAlign: 'center' }}>
+          Documento generado por LimpiaBien.cl · Tamaño A4
         </div>
 
       </div>
@@ -343,32 +364,112 @@ function CotizacionModal({ items, discount, discAmt, includeVisit, visitAmt, gra
     load('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
   }, []);
 
+  async function waitForLibs() {
+    for (let i = 0; i < 60; i++) {
+      if ((window as any).jspdf && (window as any).html2canvas) return;
+      await new Promise(r => setTimeout(r, 100));
+    }
+    throw new Error('Librerías PDF no cargaron a tiempo');
+  }
+
   async function handleExport() {
     if (!docRef.current) return;
     setExporting(true);
-    await new Promise(r => setTimeout(r, 100));
     try {
+      await waitForLibs();
+      // Esperar a que Outfit y Playfair Display terminen de cargar — sin esto,
+      // html2canvas captura con métricas de fallback y los textos se solapan.
+      const fonts = (document as any).fonts;
+      if (fonts?.ready) await fonts.ready;
+
+      // El preview vive dentro de un contenedor con `transform: scale(0.70)`,
+      // que rompe el cálculo de layout de html2canvas. Clonamos el doc a un
+      // contenedor off-screen sin transform y al ancho real (794px).
+      const clone = docRef.current.cloneNode(true) as HTMLElement;
+      const stage = document.createElement('div');
+      stage.style.cssText = 'position:fixed;left:-10000px;top:0;width:794px;background:#fff;';
+      stage.appendChild(clone);
+      document.body.appendChild(stage);
+      await new Promise(r => setTimeout(r, 60)); // dejar que pinte
+
       const { jsPDF } = (window as any).jspdf;
-      const canvas = await (window as any).html2canvas(docRef.current, {
+      const canvas = await (window as any).html2canvas(clone, {
         scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff',
+        windowWidth: 794,
       });
-      const imgData = canvas.toDataURL('image/jpeg', 0.97);
+
+      // Posiciones (en px del canvas) donde se debe forzar salto de página.
+      // Se calculan a partir de los elementos marcados con data-pdf-break-before.
+      const cloneH = clone.offsetHeight;
+      const yScale = canvas.height / cloneH;
+      const cloneTop = clone.getBoundingClientRect().top;
+      const forcedBreaks: number[] = Array.from(
+        clone.querySelectorAll<HTMLElement>('[data-pdf-break-before]')
+      )
+        .map(el => Math.round((el.getBoundingClientRect().top - cloneTop) * yScale))
+        .filter(y => y > 20)
+        .sort((a, b) => a - b);
+
+      document.body.removeChild(stage);
+
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-      const pdfW = pdf.internal.pageSize.getWidth();
-      const pdfH = pdf.internal.pageSize.getHeight();
-      const imgH = pdfW * (canvas.height / canvas.width);
-      if (imgH <= pdfH) {
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, imgH);
-      } else {
-        let page = 0, remaining = imgH;
-        while (remaining > 0) {
-          if (page > 0) pdf.addPage();
-          pdf.addImage(imgData, 'JPEG', 0, -page * pdfH, pdfW, imgH);
-          remaining -= pdfH; page++;
+      const pdfW = pdf.internal.pageSize.getWidth();   // 210mm
+      const pdfH = pdf.internal.pageSize.getHeight();  // 297mm
+      const pxPerMm = canvas.width / pdfW;
+      // Margen superior aplicado solo a partir de la página 2.
+      const TOP_MARGIN_MM = 14;
+      const pageHpx = Math.floor(pdfH * pxPerMm);
+      const continuationPageHpx = Math.floor((pdfH - TOP_MARGIN_MM) * pxPerMm);
+
+      const ctx = canvas.getContext('2d')!;
+      const findWhiteRow = (fromY: number, toY: number) => {
+        // De fromY hacia toY (arriba), busca una fila casi totalmente blanca/clara.
+        for (let y = fromY; y >= toY; y--) {
+          const row = ctx.getImageData(0, y, canvas.width, 1).data;
+          let blank = true;
+          for (let i = 0; i < row.length; i += 4) {
+            const r = row[i], g = row[i + 1], b = row[i + 2], a = row[i + 3];
+            if (a < 10) continue;
+            if (r < 240 || g < 240 || b < 240) { blank = false; break; }
+          }
+          if (blank) return y;
         }
+        return -1;
+      };
+
+      let y = 0;
+      let first = true;
+      while (y < canvas.height) {
+        // En páginas de continuación (2+) la altura útil es menor por el margen superior.
+        const availPx = first ? pageHpx : continuationPageHpx;
+        let endY = Math.min(y + availPx, canvas.height);
+        // 1. Salto forzado: si hay una marca data-pdf-break-before dentro del
+        //    rango (y, y+availPx], cortar justo antes (mayor prioridad).
+        const forced = forcedBreaks.find(b => b > y + Math.floor(availPx * 0.3) && b <= y + availPx);
+        if (forced) {
+          endY = forced;
+        } else if (endY < canvas.height) {
+          // 2. Heurística: retroceder hasta 25% de la página buscando una fila
+          //    blanca para no cortar texto a la mitad.
+          const minY = Math.max(y + Math.floor(availPx * 0.6), endY - Math.floor(availPx * 0.25));
+          const whiteY = findWhiteRow(endY, minY);
+          if (whiteY > 0) endY = whiteY;
+        }
+        const sliceH = endY - y;
+        const slice = document.createElement('canvas');
+        slice.width = canvas.width;
+        slice.height = sliceH;
+        slice.getContext('2d')!.drawImage(canvas, 0, y, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+        const sliceMmH = sliceH / pxPerMm;
+        if (!first) pdf.addPage();
+        const offsetY = first ? 0 : TOP_MARGIN_MM;
+        first = false;
+        pdf.addImage(slice.toDataURL('image/jpeg', 0.97), 'JPEG', 0, offsetY, pdfW, sliceMmH);
+        y = endY;
       }
       pdf.save(`LimpiaBien_${cotNum.replace(/[^a-zA-Z0-9-]/g, '')}.pdf`);
-    } catch {
+    } catch (e) {
+      console.error('[calculadora] export PDF', e);
       alert('Error al generar el PDF. Usa Ctrl+P para imprimir como PDF.');
     } finally {
       setExporting(false);
