@@ -703,27 +703,29 @@ function Calculadora() {
 
             {/* ── Acciones ── */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {/* Botón amarillo — Generar PDF */}
-              <button
-                onClick={() => setShowModal(true)}
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9,
-                  width: '100%', padding: '13px 20px',
-                  background: '#f5c800', color: '#1a1410',
-                  border: 'none', borderRadius: 10,
-                  fontFamily: 'var(--ff-sans)', fontWeight: 700, fontSize: 15,
-                  cursor: 'pointer', boxShadow: '0 4px 18px rgba(245,200,0,.38)',
-                  transition: 'background .15s, transform .1s',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.background = '#d4ac00')}
-                onMouseLeave={e => (e.currentTarget.style.background = '#f5c800')}
-              >
-                <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 11v6m0 0l-2-2m2 2l2-2"/>
-                </svg>
-                Generar cotización PDF
-              </button>
+              {/* Botón amarillo — Generar PDF (oculto temporalmente) */}
+              {false && (
+                <button
+                  onClick={() => setShowModal(true)}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9,
+                    width: '100%', padding: '13px 20px',
+                    background: '#f5c800', color: '#1a1410',
+                    border: 'none', borderRadius: 10,
+                    fontFamily: 'var(--ff-sans)', fontWeight: 700, fontSize: 15,
+                    cursor: 'pointer', boxShadow: '0 4px 18px rgba(245,200,0,.38)',
+                    transition: 'background .15s, transform .1s',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.background = '#d4ac00')}
+                  onMouseLeave={e => (e.currentTarget.style.background = '#f5c800')}
+                >
+                  <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 11v6m0 0l-2-2m2 2l2-2"/>
+                  </svg>
+                  Generar cotización PDF
+                </button>
+              )}
 
               {/* Botón copiar */}
               <button
