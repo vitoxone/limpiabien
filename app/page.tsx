@@ -127,16 +127,16 @@ export default function HomePage() {
                 </div>
                 <div className="hero-stats">
                   <div>
-                    <div className="hero-stat-value">+5 años</div>
-                    <div className="hero-stat-label">de experiencia</div>
+                    <div className="hero-stat-value">+150</div>
+                    <div className="hero-stat-label">servicios realizados</div>
                   </div>
                   <div>
-                    <div className="hero-stat-value">+800</div>
-                    <div className="hero-stat-label">clientes felices</div>
+                    <div className="hero-stat-value">100%</div>
+                    <div className="hero-stat-label">a domicilio</div>
                   </div>
                   <div>
                     <div className="hero-stat-value">6 comunas</div>
-                    <div className="hero-stat-label">a domicilio</div>
+                    <div className="hero-stat-label">en O&apos;Higgins</div>
                   </div>
                 </div>
               </div>
