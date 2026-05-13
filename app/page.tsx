@@ -1,75 +1,88 @@
-'use client';
-
-import Image from 'next/image';
 import Link from 'next/link';
-import { CATEGORIES } from '@/data/catalog';
-import Category from '@/components/Category';
-import LeadForm from '@/components/LeadForm';
-import { buildWaLink } from '@/lib/wa';
-import { useCallback, useMemo, useState, useEffect } from 'react';
+import SiteHeader from '@/components/SiteHeader';
+import Testimonios from '@/components/Testimonios';
+import InstagramSection from '@/components/InstagramSection';
 
-type Cart = Record<string, { section: string; title: string; qty: number }>;
-
-/* ── Smooth scroll helper ──────────────────────────────── */
-function scrollTo(id: string) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-/* ── WhatsApp icon ─────────────────────────────────────── */
 const WaIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
 );
 
-/* ── Instagram icon ────────────────────────────────────── */
-const IgIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-  </svg>
-);
+const SERVICES = [
+  {
+    slug: 'tapices',
+    name: 'Tapices y sillones',
+    desc: 'Sillones, seccionales y butacas con inyección–extracción profesional.',
+    img: '/servicios/tapices.jpg',
+    badge: 'Más solicitado',
+  },
+  {
+    slug: 'colchones',
+    name: 'Colchones',
+    desc: '1 plaza, queen y king. Higienización completa con productos hipoalergénicos.',
+    img: '/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg',
+  },
+  {
+    slug: 'vehiculos',
+    name: 'Vehículos',
+    desc: 'Limpieza interior de autos, camionetas y SUVs. Quitamos manchas y olores.',
+    img: '/servicios/IMG_5942.jpg',
+  },
+  {
+    slug: 'alfombras',
+    name: 'Alfombras',
+    desc: 'Decorativas y muro a muro. Recuperamos el color y eliminamos ácaros.',
+    img: '/servicios/IMG_5673.jpg',
+  },
+  {
+    slug: 'sillas',
+    name: 'Sillas tapizadas',
+    desc: 'Sillas de comedor, sitiales y banquetas tapizadas — limpieza unidad por unidad.',
+    img: '/servicios/IMG_3507.jpg',
+  },
+];
 
-export default function Page() {
-  const [cart, setCart] = useState<Cart>({});
-  const [origin, setOrigin] = useState('web');
-  const [fullName, setFullName] = useState('');
-  const [specialRequest, setSpecialRequest] = useState('');
+const WHY_US = [
+  {
+    title: 'Equipos profesionales',
+    desc: 'Inyección–extracción Kärcher para una limpieza profunda real.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243z" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Productos seguros',
+    desc: 'Hipoalergénicos y biodegradables, seguros para niños y mascotas.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Atención a domicilio',
+    desc: "Llegamos donde estés. Cubrimos toda la Región de O'Higgins.",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Cotización al instante',
+    desc: 'Arma tu pedido en 30 segundos y recibe tu cotización por WhatsApp.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+  },
+];
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const params = new URLSearchParams(window.location.search);
-    setOrigin(params.get('origin') || 'web');
-  }, []);
-
-  const getQty = useCallback((key: string) => cart[key]?.qty ?? 0, [cart]);
-  const setQty = useCallback((key: string, qty: number) => {
-    setCart((prev) => {
-      const next = { ...prev };
-      if (qty <= 0) { delete next[key]; }
-      else {
-        const [section, title] = key.split(' — ');
-        next[key] = { section, title, qty };
-      }
-      return next;
-    });
-  }, []);
-
-  const items = useMemo(() => Object.values(cart).filter(i => i.qty > 0), [cart]);
-  const totalItems = useMemo(() => items.reduce((a, b) => a + b.qty, 0), [items]);
-
-  const message = useMemo(() => {
-    const saludo = fullName.trim()
-      ? `Hola, soy ${fullName.trim()}! Quiero cotizar un servicio de limpieza. (${origin})`
-      : `Hola! Quiero cotizar un servicio de limpieza. (${origin})`;
-    const lines = items.map(i => `• ${i.section} — ${i.title} × ${i.qty}`);
-    const extra = specialRequest.trim() ? `• Pedido especial: ${specialRequest.trim()}` : '';
-    const body = [...lines, extra].filter(Boolean).join('\n');
-    return body ? `${saludo}\n${body}` : saludo;
-  }, [items, fullName, origin, specialRequest]);
-
-  const waHref = useMemo(() => buildWaLink(message), [message]);
-
+export default function HomePage() {
   const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -84,242 +97,168 @@ export default function Page() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
 
-      {/* ── HEADER ─────────────────────────────────── */}
-      <header className="site-header" role="banner">
-        <div className="header-inner">
-          {/* Logo — fondo blanco + imagen nueva */}
-          <div className="logo-wrap">
-            <div className="logo-mark-white">
-              <Image src="/logo.png" width={48} height={48} alt="LimpiaBien logo" priority />
-            </div>
-            <div>
-              <div className="logo-name">LimpiaBien</div>
-              <div className="logo-tagline">Limpieza profesional · Chile</div>
-            </div>
-          </div>
-
-          <nav className="header-nav" aria-label="Navegación">
-            {/* "Nuestros trabajos" → scroll suave a #ig-section */}
-            <button
-              className="btn btn-ghost btn-sm"
-              onClick={() => scrollTo('ig-section')}
-            >
-              Nuestros trabajos
-            </button>
-            {/* <Link
-              className="btn btn-dark btn-sm"
-              href={waHref}
-              target="_blank"
-              rel="noopener nofollow sponsored"
-            >
-              <WaIcon />
-              Cotizar{totalItems > 0 ? ` (${totalItems})` : ''}
-            </Link> */}
-          </nav>
-        </div>
-      </header>
+      <SiteHeader active="inicio" />
 
       <main role="main">
-
-        {/* ── BANDA BLANCA: Hero + Mosaico ───────────── */}
-        <div className="band-white">
+        {/* HERO LANDING */}
+        <section className="hero-landing" aria-labelledby="hero-title">
           <div className="band-inner">
-
-            <section className="hero-top" aria-labelledby="hero-title">
-              <div className="hero-top-text">
-                <div className="hero-label">Limpieza profesional a domicilio</div>
-                <h1 id="hero-title" className="hero-title">
-                  Limpieza de tapices<br />y colchones <em>a domicilio</em>
+            <div className="hero-landing-grid">
+              <div>
+                <span className="hero-pill">
+                  <span className="hero-pill-dot" aria-hidden="true" />
+                  Limpieza profesional · Región de O&apos;Higgins
+                </span>
+                <h1 id="hero-title" className="hero-landing-title">
+                  Tu hogar fresco<br />y <em>como nuevo</em>
                 </h1>
-                <p className="hero-body">
-                  Sillones, colchones, alfombras y vehículos — inyección–extracción profesional
-                  con productos hipoalergénicos. Atendemos en Santa Cruz, San Fernando, Chimbarongo, Chépica, Nancagua, Palmilla y alrededores.
+                <p className="hero-landing-sub">
+                  Limpieza profesional de sillones, colchones, alfombras y tapices de vehículos —
+                  inyección–extracción a domicilio con productos hipoalergénicos. Cotiza en 30 segundos.
                 </p>
-                <div className="hero-actions">
-                  {/* <Link className="btn btn-dark btn-lg" href={waHref} target="_blank" rel="noopener nofollow sponsored">
+                <div className="hero-landing-actions">
+                  <Link className="btn btn-cta btn-lg" href="/cotizar">
                     <WaIcon />
-                    Consultar por WhatsApp
-                  </Link> */}
-                  <button className="btn btn-outline" onClick={() => scrollTo('catalogo')}>
-                    Ver servicios
-                  </button>
-                </div>
-              </div>
-            </section>
-
-            <p className="mosaic-hint" aria-hidden="true">
-              <span className="mosaic-hint-pulse" />
-              Toca una categoría para ver los servicios
-            </p>
-
-            <div className="mosaic" aria-label="Categorías de servicios — toca una para ver el detalle" role="group">
-
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-tapices')} aria-label="Ver servicios de Tapices">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/tapices.jpg')", backgroundPosition: 'center 30%' }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Tapices</span>
-                  <span className="mosaic-sub">Sillones · Seccionales</span>
-                </div>
-              </button>
-
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-colchones')} aria-label="Ver servicios de Colchones">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Colchones</span>
-                  <span className="mosaic-sub">1 plaza · Queen · King</span>
-                </div>
-              </button>
-
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-vehiculos')} aria-label="Ver servicios de Vehículos">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_5942.jpg')" }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Vehículos</span>
-                  <span className="mosaic-sub">Autos · SUV · Camionetas</span>
-                </div>
-              </button>
-
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-alfombras-muro')} aria-label="Ver servicios de Alfombras">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_5673.jpg')" }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Alfombras</span>
-                  <span className="mosaic-sub">Decorativas · Muro a muro</span>
-                </div>
-              </button>
-
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-sillas')} aria-label="Ver servicios de Sillas">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_3507.jpg')" }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Sillas</span>
-                  <span className="mosaic-sub">Tapizadas · Sitiales</span>
-                </div>
-              </button>
-
-            </div>
-
-          </div>
-        </div>
-
-        {/* ── BANDA CELESTE: Catálogo ─────────────────── */}
-        <div className="band-sky" id="catalogo">
-          <div className="band-inner band-catalog">
-
-            <section aria-labelledby="cat-title">
-              <div className="section-label" id="cat-title">Selecciona tus servicios</div>
-              <div className="catalog">
-                {CATEGORIES.map(cat => (
-                  <Category
-                    key={cat.slug}
-                    category={cat}
-                    showPrice={false}
-                    publicOnly
-                    getQty={getQty}
-                    setQty={setQty}
-                    specialRequest={specialRequest}
-                    onSpecialRequestChange={setSpecialRequest}
-                  />
-                ))}
-              </div>
-
-              <div className="catalog-cta">
-                {totalItems > 0 ? (
-                  <LeadForm
-                    items={items}
-                    waHref={waHref}
-                    fullName={fullName}
-                    onNameChange={setFullName}
-                    onClear={() => setCart({})}
-                    specialRequest={specialRequest}
-                  />
-                ) : (
-                  <Link
-                    className="btn btn-dark btn-lg"
-                    href={waHref}
-                    target="_blank"
-                    rel="noopener nofollow sponsored"
-                  >
-                    <WaIcon />
-                    Consultar por WhatsApp
+                    Cotizar ahora
                   </Link>
-                )}
-              </div>
-            </section>
-
-          </div>
-        </div>
-
-        {/* ── INSTAGRAM (fondo oscuro propio) ────────── */}
-        <div className="band-white">
-          <div className="band-inner band-ig">
-            <section id="ig-section" className="ig-section" aria-labelledby="ig-title">
-              <div className="ig-inner">
-                <div className="ig-text">
-                  <div className="hero-label" style={{ marginBottom: 12 }}>Síguenos</div>
-                  <h2 id="ig-title" className="ig-title">
-                    Mira nuestros<br /><em>trabajos reales</em>
-                  </h2>
-                  <p className="ig-body">
-                    Antes y después, resultados reales de clientes en la Región de O&apos;Higgins.
-                    Todo en nuestro Instagram.
-                  </p>
-                  <a
-                    className="btn btn-dark btn-lg ig-btn"
-                    href="https://www.instagram.com/limpiabien.cl/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <IgIcon />
-                    @limpiabien.cl
-                  </a>
+                  <Link className="btn btn-outline btn-lg" href="/servicios">
+                    Ver servicios
+                  </Link>
                 </div>
-                <div className="ig-preview" aria-hidden="true">
-                  <div className="ig-card ig-card-1">
-                    <div className="ig-card-img" style={{ backgroundImage: "url('/servicios/tapices.jpg')" }} />
+                <div className="hero-stats">
+                  <div>
+                    <div className="hero-stat-value">+5 años</div>
+                    <div className="hero-stat-label">de experiencia</div>
                   </div>
-                  <div className="ig-card ig-card-2">
-                    <div className="ig-card-img" style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }} />
+                  <div>
+                    <div className="hero-stat-value">+800</div>
+                    <div className="hero-stat-label">clientes felices</div>
                   </div>
-                  <div className="ig-card ig-card-3">
-                    <div className="ig-card-img" style={{ backgroundImage: "url('/servicios/IMG_5942.jpg')" }} />
+                  <div>
+                    <div className="hero-stat-value">6 comunas</div>
+                    <div className="hero-stat-label">a domicilio</div>
                   </div>
                 </div>
               </div>
-            </section>
-          </div>
-        </div>
 
-        {/* ── BANDA CELESTE: FAQ ──────────────────────── */}
-        <div className="band-sky">
-          <div className="band-inner band-faq">
-            <section className="faq" aria-labelledby="faq-title">
-              <h2 className="faq-head" id="faq-title">Preguntas frecuentes</h2>
-              {[
-                { q: '¿Cada cuánto tiempo conviene limpiar sillones y colchones?', a: 'Recomendamos una mantención cada 6 a 12 meses, o antes si hay manchas visibles, alérgenos o mascotas en el hogar.' },
-                { q: '¿Trabajan a domicilio en Nancagua, Santa Cruz y San Fernando?', a: 'Sí. También atendemos en Chimbarongo, Chépica y alrededores de la Región de O\'Higgins.' },
-                { q: '¿Qué método usan para tapices y alfombras?', a: 'Usamos equipos de inyección–extracción con productos hipoalergénicos y biodegradables, más desmanchado focalizado donde sea necesario.' },
-                { q: '¿Cómo funciona la cotización por WhatsApp?', a: 'Selecciona los servicios en este cotizador, ajusta las cantidades y presiona "Cotizar". Se abrirá WhatsApp con un mensaje ya preparado listo para enviar.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="faq-item">
-                  <summary>
-                    {q}
-                    <span className="faq-toggle" aria-hidden="true">+</span>
-                  </summary>
-                  <p className="faq-answer">{a}</p>
-                </details>
+              <div className="hero-collage" aria-hidden="true">
+                <div>
+                  <div className="hero-collage-img hero-collage-img-tall" style={{ backgroundImage: "url('/servicios/tapices.jpg')" }} />
+                </div>
+                <div className="hero-collage-col-2">
+                  <div className="hero-collage-img hero-collage-img-square" style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }} />
+                </div>
+                <div className="glass-card hero-floating-card">
+                  <div className="hero-floating-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="hero-floating-text">
+                    <strong>Reserva en línea</strong>
+                    <span>WhatsApp directo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SERVICIOS */}
+        <section className="services-section band-white" id="servicios">
+          <div className="band-inner">
+            <div className="section-head">
+              <span className="section-eyebrow">Lo que hacemos</span>
+              <h2 className="section-title">
+                Servicios <em>profesionales</em> a domicilio
+              </h2>
+            </div>
+            <div className="services-grid">
+              {SERVICES.map(svc => (
+                <Link key={svc.slug} href={`/servicios/${svc.slug}`} className="service-card">
+                  <div className="service-card-img" style={{ backgroundImage: `url('${svc.img}')` }}>
+                    {svc.badge && <span className="service-card-badge">{svc.badge}</span>}
+                  </div>
+                  <div className="service-card-body">
+                    <div className="service-card-title">{svc.name}</div>
+                    <p className="service-card-desc">{svc.desc}</p>
+                    <span className="service-card-link">Ver detalle →</span>
+                  </div>
+                </Link>
               ))}
-            </section>
+            </div>
           </div>
-        </div>
+        </section>
 
+        {/* WHY US */}
+        <section className="whyus-section">
+          <div className="band-inner">
+            <div className="section-head">
+              <span className="section-eyebrow">Por qué elegirnos</span>
+              <h2 className="section-title">
+                Resultados <em>visibles</em> desde la primera visita
+              </h2>
+            </div>
+            <div className="whyus-grid">
+              {WHY_US.map(item => (
+                <div key={item.title} className="whyus-item">
+                  <div className="whyus-icon">{item.icon}</div>
+                  <div className="whyus-title">{item.title}</div>
+                  <p className="whyus-desc">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* TESTIMONIOS */}
+        <section className="band-white services-section">
+          <div className="band-inner">
+            <div className="section-head">
+              <span className="section-eyebrow">Testimonios</span>
+              <h2 className="section-title">
+                Lo que dicen <em>nuestros clientes</em>
+              </h2>
+            </div>
+            <Testimonios />
+          </div>
+        </section>
+
+        {/* TRABAJOS REALES — Instagram */}
+        <InstagramSection />
+
+        {/* CTA FINAL */}
+        <section className="cta-final" aria-labelledby="cta-title">
+          <h2 id="cta-title" className="cta-final-title">
+            ¿Listo para tu próxima<br /><em>limpieza profesional?</em>
+          </h2>
+          <p className="cta-final-sub">
+            Arma tu cotización en menos de un minuto. Te respondemos por WhatsApp y coordinamos día y hora.
+          </p>
+          <div className="cta-final-actions">
+            <Link className="btn btn-cta btn-lg" href="/cotizar">
+              <WaIcon />
+              Cotizar ahora
+            </Link>
+            <Link className="btn btn-outline btn-lg" href="/contacto">
+              Contáctanos
+            </Link>
+          </div>
+          <div className="cta-final-trust">
+            <span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+              Productos seguros
+            </span>
+            <span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+              Sin cargo por visita
+            </span>
+            <span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+              Respuesta rápida
+            </span>
+          </div>
+        </section>
       </main>
 
       <footer className="site-footer" role="contentinfo">

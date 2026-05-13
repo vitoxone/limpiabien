@@ -26,36 +26,37 @@ export default function LeadForm({ items, waHref, fullName, onNameChange, onClea
   const [honeypot, setHoneypot] = useState(''); // nunca debe tener valor
   const [step, setStep] = useState<Step>('form');
 
-  const apiBase = process.env.NEXT_PUBLIC_API_URL ?? '';
+  // const apiBase = process.env.NEXT_PUBLIC_API_URL ?? '';
   const totalQty = items.reduce((a, b) => a + b.qty, 0);
 
   async function handleSubmit() {
     if (!fullName.trim() || !phone.trim()) return;
     setStep('sending');
 
-    try {
-      if (apiBase) {
-        await fetch(`${apiBase}/api/v1/public/quote`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            fullName: fullName.trim(),
-            phone: phone.trim(),
-            channel: 'web',
-              website: honeypot,
-            ...(specialRequest.trim() && { needs: specialRequest.trim() }),
-            items: items.map((i) => ({
-              serviceSlug: i.section.toLowerCase().replace(/\s+/g, '-'),
-              serviceTitle: i.title,
-              unitPrice: 0,
-              quantity: i.qty,
-            })),
-          }),
-        });
-      }
-    } catch {
-      // Silencioso — WhatsApp siempre funciona igual
-    }
+    // Llamada a la API externa desactivada — sólo flujo WhatsApp.
+    // try {
+    //   if (apiBase) {
+    //     await fetch(`${apiBase}/api/v1/public/quote`, {
+    //       method: 'POST',
+    //       headers: { 'Content-Type': 'application/json' },
+    //       body: JSON.stringify({
+    //         fullName: fullName.trim(),
+    //         phone: phone.trim(),
+    //         channel: 'web',
+    //         website: honeypot,
+    //         ...(specialRequest.trim() && { needs: specialRequest.trim() }),
+    //         items: items.map((i) => ({
+    //           serviceSlug: i.section.toLowerCase().replace(/\s+/g, '-'),
+    //           serviceTitle: i.title,
+    //           unitPrice: 0,
+    //           quantity: i.qty,
+    //         })),
+    //       }),
+    //     });
+    //   }
+    // } catch {
+    //   // Silencioso — WhatsApp siempre funciona igual
+    // }
 
     setStep('done');
     setTimeout(() => window.open(waHref, '_blank', 'noopener,noreferrer'), 300);

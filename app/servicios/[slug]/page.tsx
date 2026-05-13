@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { buildWaLink } from '@/lib/wa';
+import SiteHeader from '@/components/SiteHeader';
 import s from './styles.module.css';
 
 const SLUGS = {
@@ -162,6 +163,8 @@ export default function ServicioPage({ params }: PageProps) {
   };
 
   return (
+    <>
+      <SiteHeader />
     <main className={s.svc}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }} />
 
@@ -257,5 +260,6 @@ export default function ServicioPage({ params }: PageProps) {
         </div>
       </section>
     </main>
+    </>
   );
 }

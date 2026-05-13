@@ -1,6 +1,7 @@
 // app/servicios/page.tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SiteHeader from '@/components/SiteHeader';
 import s from './styles.module.css';
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
+      <SiteHeader />
       {/* HERO */}
       <section className={s.hero}>
         <div className={s.wrap}>
@@ -26,7 +28,7 @@ export default function Page() {
                 equipos de inyección–succión.
               </p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 8 }}>
-                <Link className={s.btnPrimary} href="/#catalogo">Ver catálogo</Link>
+                <Link className={s.btnPrimary} href="/cotizar">Cotizar ahora</Link>
                 <Link className={s.btnGhost} href="/contacto">Contáctanos</Link>
               </div>
             </div>

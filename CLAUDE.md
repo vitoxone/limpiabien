@@ -31,10 +31,40 @@ No hay framework de tests configurado. El `lint` es la única validación automa
 ```env
 NEXT_PUBLIC_WHATSAPP_PHONE=+56977515193     # destino del wa.me — fallback "+56912345678"
 NEXT_PUBLIC_API_URL=https://...             # opcional — si está vacío, LeadForm NO postea (ver más abajo)
-CALCULADORA_PASSWORD=...                    # gate de /calculadora; usado por server action
+CALCULADORA_PASSWORD=...                    # gate de /calculadora Y /admin (mismo server action)
+
+# Google Sheets — sólo necesarias para /admin/servicios/nuevo y /admin/gastos/nuevo
+GOOGLE_SHEET_ID=...
+GOOGLE_SERVICE_ACCOUNT_EMAIL=...
+GOOGLE_SERVICE_ACCOUNT_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+
+# Instagram Basic Display API — para sección "Trabajos reales" en /
+IG_TOKEN=IGQWR...                           # long-lived token (60 días). Si vacío → fallback estático.
+CRON_SECRET=...                             # secreto que Vercel Cron envía como Bearer al endpoint de refresh
 ```
 
-`CALCULADORA_PASSWORD` se valida desde `app/calculadora/actions.ts` (server action, no se expone al cliente).
+### Instagram (sección "Trabajos reales") — `lib/instagram.ts`
+
+La home `/` muestra los 3 últimos posts de `@limpiabien.cl` vía la **Instagram Basic Display API**. Si `IG_TOKEN` no está seteado o la llamada falla, el componente usa imágenes estáticas como fallback (no rompe la página).
+
+**Setup inicial (una vez):**
+
+1. En [developers.facebook.com](https://developers.facebook.com), crear una app tipo *Consumer*, agregar el producto *Instagram Basic Display* y registrar `@limpiabien.cl` como tester.
+2. Generar un **short-lived token** desde *User Token Generator*.
+3. Cambiarlo a **long-lived** (60 días) con:
+   ```bash
+   curl "https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=APP_SECRET&access_token=SHORT_LIVED_TOKEN"
+   ```
+4. Guardar el resultado en `IG_TOKEN` (Vercel → Project Settings → Environment Variables).
+5. Generar un secreto random para `CRON_SECRET` (ej: `openssl rand -hex 32`) y guardarlo en Vercel.
+
+**Auto-refresh (Vercel Cron):**
+
+`vercel.json` registra un cron mensual (`0 6 1 * *`) que llama a `/api/instagram/refresh` con `Authorization: Bearer ${CRON_SECRET}`. El endpoint llama `graph.instagram.com/refresh_access_token` y **loguea el nuevo token** en los logs de Vercel. **El nuevo token se debe copiar manualmente** a la env var `IG_TOKEN` (Vercel no permite mutar env vars desde el runtime sin un Personal Access Token). Si te olvidás, el token caduca y el componente cae al fallback estático.
+
+> Si esta carga manual mensual molesta, la alternativa es persistir el token en Vercel KV / Upstash y leerlo desde ahí en runtime — requiere un cambio adicional.
+
+`CALCULADORA_PASSWORD` se valida desde `app/calculadora/actions.ts` (server action, no se expone al cliente). Tanto `/calculadora` como `/admin` (vía `AdminGate`) llaman al mismo `verificarClave`.
 
 ---
 
@@ -71,9 +101,15 @@ Detalles clave:
 |---|---|
 | `/` (`app/page.tsx`) | Cotizador público + landing |
 | `/calculadora` | Herramienta interna password-gated — genera PDF de cotización con jsPDF |
+| `/admin` | Panel interno — hub a `/admin/servicios/nuevo` y `/admin/gastos/nuevo` (registran filas en Google Sheets vía `lib/sheets.ts`). Gate por `AdminGate` con misma password. |
 | `/servicios` y `/servicios/[slug]` | Landings SEO por categoría |
 | `/blog`, `/contacto` | Páginas estáticas |
 | `/sitemap.xml`, `/robots.txt` | Generados por `app/sitemap.ts` y `app/robots.txt` |
+
+### Google Sheets (admin) — `lib/sheets.ts`
+- `appendServicio` / `appendGasto` insertan filas con **fórmulas literales** en columnas calculadas (`Total`, `Mes`, `Año`, `Semana`). Si cambias el orden de columnas o renombras hojas, hay que ajustar tanto el array como el `range` (`Servicios!A:Q`, `Gastos!A:H`).
+- `lastServicios` / `lastGastos` leen las últimas N filas en orden inverso para previews del admin.
+- Marcado `import 'server-only'` — nunca lo importes desde un client component.
 
 ### SEO / structured data
 `app/layout.tsx` inyecta JSON-LD `LocalBusiness` con `OfferCatalog` apuntando a `/servicios/<slug>`. `app/page.tsx` añade un JSON-LD `FAQPage`. **Si agregas/quitas servicios, actualiza también:**
@@ -112,3 +148,5 @@ docs/spec-cotizador.md   ← detalle del cotizador público
 docs/spec-leads.md       ← flujo lead → quote → booking (incluye contrato con la API externa)
 docs/spec-api.md         ← describe la API externa NestJS (vive en otro repo)
 ```
+
+> **`README.md` está desactualizado** — referencia archivos legacy (`data/prices.ts`, `components/PriceCard.tsx`, `components/WhatsAppFloat.tsx`) que ya no existen. Confía en este `CLAUDE.md` y en `data/catalog.ts` como fuentes de verdad.
