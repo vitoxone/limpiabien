@@ -27,11 +27,25 @@ export default function CotizarPage() {
   const [fullName, setFullName] = useState('');
   const [specialRequest, setSpecialRequest] = useState('');
 
+  // Categoría destino indicada por el hash (#cat-<slug>) al venir desde el home.
+  // Se lee de forma síncrona para que la categoría arranque abierta.
+  const [targetSlug] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const h = window.location.hash;
+    return h.startsWith('#cat-') ? h.slice('#cat-'.length) : null;
+  });
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
     setOrigin(params.get('origin') || 'web');
   }, []);
+
+  // Scroll a la categoría destino una vez montado el catálogo.
+  useEffect(() => {
+    if (!targetSlug) return;
+    requestAnimationFrame(() => scrollTo(`cat-${targetSlug}`));
+  }, [targetSlug]);
 
   const getQty = useCallback((key: string) => cart[key]?.qty ?? 0, [cart]);
   const setQty = useCallback((key: string, qty: number) => {
@@ -151,6 +165,7 @@ export default function CotizarPage() {
                     category={cat}
                     showPrice={false}
                     publicOnly
+                    defaultOpen={cat.slug === targetSlug}
                     getQty={getQty}
                     setQty={setQty}
                     specialRequest={specialRequest}

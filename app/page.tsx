@@ -121,7 +121,7 @@ export default function HomePage() {
                     <WaIcon />
                     Cotizar ahora
                   </Link>
-                  <Link className="btn btn-outline btn-lg" href="/servicios">
+                  <Link className="btn btn-outline btn-lg" href="#servicios">
                     Ver servicios
                   </Link>
                 </div>
@@ -175,7 +175,7 @@ export default function HomePage() {
             </div>
             <div className="services-grid">
               {SERVICES.map(svc => (
-                <Link key={svc.slug} href={`/servicios/${svc.slug}`} className="service-card">
+                <Link key={svc.slug} href={`/cotizar#cat-${svc.slug}`} className="service-card">
                   <div className="service-card-img" style={{ backgroundImage: `url('${svc.img}')` }}>
                     {svc.badge && <span className="service-card-badge">{svc.badge}</span>}
                   </div>

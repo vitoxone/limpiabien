@@ -11,6 +11,7 @@ export default function Category({
   category,
   showPrice,
   publicOnly = false,
+  defaultOpen = false,
   getQty,
   setQty,
   specialRequest = '',
@@ -19,13 +20,14 @@ export default function Category({
   category: CatalogCategory;
   showPrice?: boolean;
   publicOnly?: boolean;
+  defaultOpen?: boolean;
   getQty: QtyGetter;
   setQty: QtySetter;
   specialRequest?: string;
   onSpecialRequestChange?: (v: string) => void;
 }) {
   const isDomicilio = category.domicilio !== false;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const isSpecial = category.slug === 'pedidos-especiales';
 
   const visibleItems = category.items.filter(
