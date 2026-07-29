@@ -150,12 +150,22 @@ export default function HomePage() {
               </div>
 
               <div className="hero-collage" aria-hidden="true">
-                <div>
-                  <div className="hero-collage-img hero-collage-img-tall" style={{ backgroundImage: "url('/servicios/tapices.jpg')" }} />
-                </div>
-                <div className="hero-collage-col-2">
-                  <div className="hero-collage-img hero-collage-img-square" style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }} />
-                </div>
+                <div
+                  className="hero-collage-img hero-collage-img-main"
+                  style={{ backgroundImage: "url('/servicios/tapices.jpg')" }}
+                />
+                <div
+                  className="hero-collage-img hero-collage-img-top"
+                  style={{ backgroundImage: "url('/servicios/IMG_9245.jpg')" }}
+                />
+                <div
+                  className="hero-collage-img hero-collage-img-bl"
+                  style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }}
+                />
+                <div
+                  className="hero-collage-img hero-collage-img-br"
+                  style={{ backgroundImage: "url('/servicios/IMG_8836.jpg')" }}
+                />
                 <div className="glass-card hero-floating-card">
                   <div className="hero-floating-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">

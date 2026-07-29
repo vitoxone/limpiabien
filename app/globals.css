@@ -1180,14 +1180,17 @@ button { font-family: inherit; }
 /* Collage de imágenes lado derecho del hero */
 .hero-collage {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.25fr 1fr 1fr;
+  grid-template-rows: 1.15fr 1fr;
+  grid-template-areas:
+    "main top top"
+    "main bl  br";
   gap: 14px;
   position: relative;
+  aspect-ratio: 1 / 1;
 }
-.hero-collage > div { position: relative; }
-.hero-collage-col-2 { padding-top: 36px; }
 .hero-collage-img {
-  width: 100%;
+  width: 100%; height: 100%;
   border-radius: 20px;
   overflow: hidden;
   background-size: cover; background-position: center;
@@ -1195,8 +1198,10 @@ button { font-family: inherit; }
   transition: transform .4s ease;
 }
 .hero-collage-img:hover { transform: translateY(-4px) scale(1.01); }
-.hero-collage-img-tall   { aspect-ratio: 3 / 4; }
-.hero-collage-img-square { aspect-ratio: 1 / 1; }
+.hero-collage-img-main { grid-area: main; }
+.hero-collage-img-top  { grid-area: top; }
+.hero-collage-img-bl   { grid-area: bl; }
+.hero-collage-img-br   { grid-area: br; }
 
 .hero-floating-card {
   position: absolute;
@@ -1218,7 +1223,7 @@ button { font-family: inherit; }
 @media (max-width: 900px) {
   .hero-landing { padding: 56px 0 64px; }
   .hero-landing-grid { grid-template-columns: 1fr; gap: 40px; }
-  .hero-collage { max-width: 480px; }
+  .hero-collage { max-width: 460px; margin: 0 auto; }
   .hero-floating-card { left: 0; bottom: -14px; }
 }
 
