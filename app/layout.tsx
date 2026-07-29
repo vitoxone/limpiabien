@@ -24,6 +24,8 @@ export const metadata: Metadata = {
     'lavado de sillones',
     'limpieza de colchones',
     'lavado de alfombras',
+    'limpieza de oficinas',
+    'pisos alfombrados oficinas',
     'limpieza a domicilio',
     'limpieza tapices San Fernando',
     'lavado sillones Santa Cruz',
@@ -39,25 +41,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://limpiabien.cl',
-    title: 'LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio',
+    title: 'LimpiaBien — Limpieza de sillones, colchones, alfombras y oficinas',
     description:
-      "Limpieza profesional de sillones, colchones, alfombras y tapices de vehículos a domicilio en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
+      "Limpieza profesional de sillones, colchones, alfombras muro a muro, oficinas y tapices de vehículos a domicilio en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
     siteName: 'LimpiaBien',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: "LimpiaBien — Limpieza profesional de tapices y alfombras a domicilio en la Región de O'Higgins",
+        alt: "LimpiaBien — Limpieza profesional de tapices, alfombras y oficinas en la Región de O'Higgins",
       },
     ],
     locale: 'es_CL',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio',
+    title: 'LimpiaBien — Limpieza de sillones, colchones, alfombras y oficinas',
     description:
-      "Limpieza profesional a domicilio en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
+      "Limpieza profesional a domicilio y empresas en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
     images: ['/og-image.jpg'],
   },
   robots: {
@@ -119,7 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     ],
     priceRange: '$$',
     description:
-      "Limpieza profesional de sillones, colchones, alfombras y tapices de vehículos a domicilio en la Región de O'Higgins.",
+      "Limpieza profesional de sillones, colchones, alfombras y tapices de vehículos a domicilio y en oficinas en la Región de O'Higgins.",
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Nancagua',
@@ -132,7 +134,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       itemListElement: [
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de sillones y tapices', url: 'https://limpiabien.cl/servicios/tapices' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de colchones', url: 'https://limpiabien.cl/servicios/colchones' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Lavado de alfombras', url: 'https://limpiabien.cl/servicios/alfombras' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Lavado de alfombras decorativas', url: 'https://limpiabien.cl/servicios/alfombras' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de pisos alfombrados y oficinas', url: 'https://limpiabien.cl/servicios/alfombras-muro' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de tapices de vehículos' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de escaleras alfombradas' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de sillas tapizadas' } },

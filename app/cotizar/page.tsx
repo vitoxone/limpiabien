@@ -131,13 +131,13 @@ export default function CotizarPage() {
                 </div>
               </button>
 
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-alfombras-muro')} aria-label="Ver servicios de Alfombras">
+              <button className="mosaic-cell" onClick={() => scrollTo('cat-alfombras-muro')} aria-label="Ver servicios de Oficinas y Alfombras">
                 <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_5673.jpg')" }} />
                 <div className="mosaic-overlay" />
                 <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
                 <div className="mosaic-label">
-                  <span className="mosaic-tag">Alfombras</span>
-                  <span className="mosaic-sub">Decorativas · Muro a muro</span>
+                  <span className="mosaic-tag">Oficinas y Alfombras</span>
+                  <span className="mosaic-sub">Muro a muro · Decorativas</span>
                 </div>
               </button>
 

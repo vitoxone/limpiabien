@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LimpiaBien — Cotizador</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --c:#0891B2;--cl:#22D3EE;--cbg:#ECFEFF;--cd:#164E63;
+  --g:#22C55E;--gd:#15803D;
+  --t:#164E63;--tm:#4B7A8E;--tf:#8AAEBB;
+  --b:#BAE6FD;--bh:#7DD3FC;
+  --sf:#F0FEFF;--w:#fff;
+  --sh:0 1px 3px rgba(8,145,178,.08),0 4px 16px rgba(8,145,178,.06);
+  --r:14px;--rs:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lexend',sans-serif;background:var(--cbg);color:var(--t);padding-bottom:90px}
+/* Header */
+.hdr{background:var(--w);border-bottom:1px solid var(--b);padding:0 1.25rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(8,145,178,.06)}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo-mark{width:30px;height:30px;background:var(--c);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-text{font-size:16px;font-weight:600;color:var(--cd)}
+.cart-pill{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--cd);color:#fff;border:none;border-radius:20px;font-family:'Lexend',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.15s}
+.cart-pill:hover{background:#0e344a}
+.cart-count{background:var(--g);width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* Page */
+.page{max-width:780px;margin:0 auto;padding:1.25rem 1rem}
+.page-hero{margin-bottom:1.5rem}
+.page-hero h1{font-size:22px;font-weight:600;color:var(--cd)}
+.page-hero p{font-size:13px;color:var(--tm);font-weight:300;margin-top:4px}
+/* Category cards */
+.cat-card{background:var(--w);border:1px solid var(--b);border-radius:var(--r);margin-bottom:10px;box-shadow:var(--sh);transition:border-color .2s,box-shadow .2s;overflow:hidden}
+.cat-card.open{border-color:var(--bh);box-shadow:0 2px 12px rgba(8,145,178,.1)}
+.cat-hdr{display:flex;align-items:center;padding:.9rem 1.1rem;cursor:pointer;gap:12px;user-select:none;min-height:64px}
+.cat-icon{width:42px;height:42px;border-radius:10px;background:var(--cbg);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--c)}
+.cat-info{flex:1;min-width:0}
+.cat-name{font-size:14px;font-weight:500;color:var(--cd)}
+.cat-sub{font-size:11px;color:var(--tm);font-weight:300;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.cat-items-badge{background:var(--c);color:#fff;font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;display:none}
+.cat-chevron{color:var(--tf);transition:transform .25s;flex-shrink:0}
+.cat-card.open .cat-chevron{transform:rotate(180deg)}
+.cat-body{display:none;border-top:1px solid var(--b)}
+.cat-card.open .cat-body{display:block}
+/* Configurator */
+.config{display:grid;grid-template-columns:200px 1fr}
+@media(max-width:540px){.config{grid-template-columns:1fr}}
+.illus-wrap{background:#1a1a2e;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--b);min-height:200px;overflow:hidden;position:relative}
+@media(max-width:540px){.illus-wrap{border-right:none;border-bottom:1px solid var(--b);min-height:180px}}
+.illus-wrap img{width:100%;height:200px;object-fit:cover;display:block;transition:opacity .35s,transform .4s;opacity:1}
+.illus-wrap img.loading{opacity:0}
+.illus-wrap .img-label{position:absolute;bottom:0;left:0;right:0;padding:8px 12px;background:linear-gradient(transparent,rgba(22,78,99,.7));color:#fff;font-size:12px;font-weight:500;font-family:'Lexend',sans-serif}
+.illus-wrap .m2-overlay{position:absolute;top:10px;right:10px;background:rgba(8,145,178,.9);color:#fff;font-size:13px;font-weight:600;padding:5px 10px;border-radius:8px;font-family:'Lexend',sans-serif}
+.ctrl-area{padding:1.1rem 1.1rem 1rem}
+.ctrl-lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--tf);margin-bottom:7px}
+.opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.opt{padding:7px 13px;background:var(--sf);border:1px solid var(--b);border-radius:var(--rs);font-family:'Lexend',sans-serif;font-size:13px;color:var(--tm);cursor:pointer;transition:all .15s;line-height:1}
+.opt:hover{border-color:var(--bh);color:var(--cd)}
+.opt.sel{background:var(--c);border-color:var(--c);color:#fff;font-weight:500}
+.qty-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.qty-ctrl{display:flex;align-items:center;background:var(--sf);border:1px solid var(--b);border-radius:var(--rs);overflow:hidden;height:38px;flex-shrink:0}
+.qb{width:36px;height:100%;background:none;border:none;cursor:pointer;font-size:18px;color:var(--tm);display:flex;align-items:center;justify-content:center;transition:.15s;font-family:'Lexend',sans-serif}
+.qb:hover{background:#E0F2FE;color:var(--c)}
+.qv{min-width:28px;text-align:center;font-size:14px;font-weight:500;color:var(--cd);font-family:'Lexend',sans-serif}
+.qty-lbl{font-size:12px;color:var(--tm);font-weight:300}
+.dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.dfg label{font-size:11px;font-weight:500;color:var(--tm);display:block;margin-bottom:4px}
+.dfg input{width:100%;padding:8px;font-size:14px;font-family:'Lexend',sans-serif;color:var(--cd);background:var(--sf);border:1px solid var(--b);border-radius:var(--rs);text-align:center;-moz-appearance:textfield;transition:.15s}
+.dfg input::-webkit-inner-spin-button,.dfg input::-webkit-outer-spin-button{-webkit-appearance:none}
+.dfg input:focus{outline:none;border-color:var(--c);box-shadow:0 0 0 3px rgba(8,145,178,.1)}
+.m2-hint{font-size:11px;color:var(--c);font-weight:500;margin-bottom:10px}
+.price-row{display:flex;align-items:baseline;gap:6px;margin-bottom:12px}
+.price-amt{font-size:20px;font-weight:600;color:var(--cd)}
+.price-lbl{font-size:12px;color:var(--tf);font-weight:300}
+.add-btn{width:100%;padding:9px;background:var(--c);border:none;border-radius:var(--rs);color:#fff;font-family:'Lexend',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.15s}
+.add-btn:hover:not(:disabled){background:#0771A0}
+.add-btn:disabled{opacity:.35;cursor:default}
+/* Items in cart per cat */
+.cat-items{padding:.75rem 1.1rem;border-top:1px solid var(--b);background:var(--cbg);display:none}
+.ci-row{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;background:var(--w);border:1px solid var(--b);border-radius:var(--rs);margin-top:5px;font-size:12px}
+.ci-name{color:var(--cd);font-weight:400;flex:1}
+.ci-price{font-weight:500;color:var(--cd);margin-left:8px;white-space:nowrap}
+.ci-del{background:none;border:none;cursor:pointer;color:var(--tf);padding:3px;border-radius:4px;display:flex;flex-shrink:0;margin-left:4px;transition:.15s}
+.ci-del:hover{color:#DC2626;background:#FEF2F2}
+/* Domicilio tag */
+.dom-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 7px;border-radius:10px;background:#CFFAFE;color:#0E7490;border:1px solid #A5F3FC;font-weight:500;margin-left:6px}
+/* Sticky cart bar */
+.cart-bar{position:fixed;bottom:0;left:0;right:0;background:var(--cd);padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;z-index:200;box-shadow:0 -4px 20px rgba(22,78,99,.2)}
+.cart-info{display:flex;flex-direction:column;gap:1px}
+.cart-total-lbl{font-size:11px;color:#93C5D5;font-weight:300}
+.cart-total-amt{font-size:21px;font-weight:600;color:#fff}
+.wa-btn{display:flex;align-items:center;gap:7px;padding:10px 18px;background:var(--g);border:none;border-radius:10px;color:#fff;font-family:'Lexend',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:.15s;box-shadow:0 2px 8px rgba(34,197,94,.3)}
+.wa-btn:hover:not(:disabled){background:var(--gd)}
+.wa-btn:disabled{opacity:.4;cursor:default;box-shadow:none}
+.empty-state{text-align:center;padding:1.5rem;color:var(--tf);font-size:12px;font-weight:300}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <a class="logo" href="#">
+    <div class="logo-mark">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    </div>
+    <span class="logo-text">LimpiaBien</span>
+  </a>
+  <button class="cart-pill" id="cart-pill" onclick="scrollToCart()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    Mi pedido
+    <span class="cart-count" id="cart-count">0</span>
+  </button>
+</header>
+
+<main class="page">
+  <div class="page-hero">
+    <h1>Cotiza tu limpieza</h1>
+    <p>Elige los servicios, agrega al pedido y te contactamos por WhatsApp con el total.</p>
+  </div>
+  <div id="cats"></div>
+</main>
+
+<div class="cart-bar" id="cart-bar">
+  <div class="cart-info">
+    <span class="cart-total-lbl">Total estimado</span>
+    <span class="cart-total-amt" id="bar-total">$0</span>
+  </div>
+  <button class="wa-btn" id="wa-btn" disabled onclick="sendWa()">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Cotizar por WhatsApp
+  </button>
+</div>
+
+<script>
+/* ─── CART ─── */
+let cart = [];
+let itemId = 0;
+
+function fmt(n){ return '$'+Math.round(n).toLocaleString('es-CL'); }
+
+function addToCart(item){
+  cart.push({...item, id: ++itemId});
+  refreshCart();
+  refreshCatBadges();
+}
+
+function removeFromCart(id){
+  cart = cart.filter(i=>i.id!==id);
+  refreshCart();
+  refreshCatBadges();
+  renderCatItems();
+}
+
+function refreshCart(){
+  const total = cart.reduce((a,i)=>a+i.price,0);
+  document.getElementById('bar-total').textContent = total>0?fmt(total):'$0';
+  document.getElementById('cart-count').textContent = cart.length;
+  document.getElementById('wa-btn').disabled = cart.length===0;
+}
+
+function refreshCatBadges(){
+  document.querySelectorAll('.cat-card').forEach(card=>{
+    const slug = card.dataset.slug;
+    const count = cart.filter(i=>i.slug===slug).length;
+    const badge = card.querySelector('.cat-items-badge');
+    if(badge){ badge.style.display = count>0?'block':'none'; badge.textContent=count; }
+    const itemsDiv = card.querySelector('.cat-items');
+    if(itemsDiv) itemsDiv.style.display = count>0?'block':'none';
+  });
+}
+
+function renderCatItems(){
+  document.querySelectorAll('.cat-items').forEach(div=>{
+    const slug = div.dataset.slug;
+    const items = cart.filter(i=>i.slug===slug);
+    div.innerHTML = items.map(i=>`
+      <div class="ci-row">
+        <span class="ci-name">${i.label}</span>
+        <span class="ci-price">${fmt(i.price)}</span>
+        <button class="ci-del" onclick="removeFromCart(${i.id})" aria-label="Eliminar">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    `).join('');
+    div.style.display = items.length>0?'block':'none';
+  });
+}
+
+function sendWa(){
+  let msg = '¡Hola! Quisiera cotizar los siguientes servicios:\n\n';
+  cart.forEach(i=>{ msg+=`• ${i.label} — ${fmt(i.price)}\n`; });
+  const total = cart.reduce((a,i)=>a+i.price,0);
+  msg+=`\nTotal estimado: ${fmt(total)}`;
+  window.open('https://wa.me/56977515193?text='+encodeURIComponent(msg),'_blank');
+}
+
+function scrollToCart(){ window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}); }
+
+/* ─── PHOTO ILLUSTRATIONS ─── */
+const U='https://images.unsplash.com/photo-';
+const PHOTOS={
+  sofa:{
+    1: U+'1586023492125-27b2c045efd7?w=600&h=400&fit=crop&q=80',
+    2: U+'1550254478-ead58cc97b70?w=600&h=400&fit=crop&q=80',
+    3: U+'1555041469-a586c61ea9bc?w=600&h=400&fit=crop&q=80',
+    4: U+'1493663284031-b7e3aefcae8e?w=600&h=400&fit=crop&q=80',
+    5: U+'1616486338812-3dadae4b4ace?w=600&h=400&fit=crop&q=80'
+  },
+  mattress:{
+    '1pl':  U+'1522771739844-6a9f6d5f14af?w=600&h=400&fit=crop&q=80',
+    '1.5pl':U+'1522771739844-6a9f6d5f14af?w=600&h=400&fit=crop&q=80',
+    '2pl':  U+'1631049307264-da0ec9d70304?w=600&h=400&fit=crop&q=80',
+    'qk':   U+'1540518614846-7eded433c457?w=600&h=400&fit=crop&q=80',
+    'sk':   U+'1540518614846-7eded433c457?w=600&h=400&fit=crop&q=80'
+  },
+  car:{
+    sedan:     U+'1552519507-da3b142c6e3d?w=600&h=400&fit=crop&q=80',
+    suv:       U+'1533473359331-0135ef1b58bf?w=600&h=400&fit=crop&q=80',
+    camioneta: U+'1559416523-140ddc3d238c?w=600&h=400&fit=crop&q=80',
+    suv3:      U+'1549317661-be0a5e2c4b7c?w=600&h=400&fit=crop&q=80'
+  },
+  rug:    U+'1600166898405-ababb987eefa?w=600&h=400&fit=crop&q=80',
+  floor:  U+'1558618666-fcd25c85cd64?w=600&h=400&fit=crop&q=80',
+  stairs: U+'1580741870344-4ec4af24b56a?w=600&h=400&fit=crop&q=80',
+  chair:{
+    semi:     U+'1503602642458-232111a1226c?w=600&h=400&fit=crop&q=80',
+    tapizada: U+'1567538096630-e1e3a87d91f0?w=600&h=400&fit=crop&q=80',
+    sitial:   U+'1506439773649-6e0eb8cfb237?w=600&h=400&fit=crop&q=80'
+  },
+  headboard: U+'1616047006789-b7af5afb8c20?w=600&h=400&fit=crop&q=80'
+};
+
+function photoWrap(src, label, extra=''){
+  return `<img src="${src}" alt="${label}" loading="lazy"
+    style="width:100%;height:200px;object-fit:cover;display:block;transition:opacity .35s"
+    onerror="this.style.background='#1a3a4a';this.style.opacity='.5'">
+    <span class="img-label">${label}</span>${extra}`;
+}
+
+function sofaPhoto(n){
+  const labels={1:'Sillón 1 cuerpo',2:'Sillón 2 cuerpos',3:'Sillón 3 cuerpos',4:'Sillón 4 cuerpos',5:'Sillón seccional 5 cuerpos'};
+  return photoWrap(PHOTOS.sofa[n]||PHOTOS.sofa[3], labels[n]||'Sillón');
+}
+function mattressPhoto(k, bothSides){
+  const labels={'1pl':'Colchón 1 plaza','1.5pl':'Colchón 1½ plaza','2pl':'Colchón 2 plazas','qk':'Colchón Queen/King','sk':'Colchón Super King'};
+  const extra=bothSides?`<span class="m2-overlay">Ambas caras</span>`:'';
+  return photoWrap(PHOTOS.mattress[k]||PHOTOS.mattress['2pl'], labels[k]||'Colchón', extra);
+}
+function carPhoto(type, hasBaby){
+  const labels={sedan:'Sedán/Hatchback',suv:'SUV Mediana',camioneta:'Camioneta/Pickup',suv3:'SUV 3 corridas'};
+  const extra=hasBaby?`<span class="m2-overlay">+ Silla infantil</span>`:'';
+  return photoWrap(PHOTOS.car[type]||PHOTOS.car.sedan, labels[type]||'Vehículo', extra);
+}
+function rugPhoto(w,h){
+  const m2=(w&&h&&w>0&&h>0)?`<span class="m2-overlay">${(w*h).toFixed(2)} m²</span>`:'';
+  return photoWrap(PHOTOS.rug, 'Alfombra decorativa', m2);
+}
+function floorPhoto(m2){
+  const extra=m2?`<span class="m2-overlay">${m2} m²</span>`:'';
+  return photoWrap(PHOTOS.floor, 'Alfombra muro a muro', extra);
+}
+function stairsPhoto(steps){
+  return photoWrap(PHOTOS.stairs, `Escalera alfombrada — ${steps} peldaños`);
+}
+function chairPhoto(type){
+  const labels={semi:'Silla semi tapizada',tapizada:'Silla tapizada',sitial:'Sitial'};
+  return photoWrap(PHOTOS.chair[type]||PHOTOS.chair.tapizada, labels[type]||'Silla');
+}
+function headboardPhoto(size){
+  const labels={r1:'Respaldo 1 plaza',r15:'Respaldo 1½ plaza',r2:'Respaldo 2 plazas',rqk:'Respaldo Queen/King',rsk:'Respaldo Super King'};
+  return photoWrap(PHOTOS.headboard, labels[size]||'Respaldo');
+}
+
+/* ─── CATEGORY DEFINITIONS ─── */
+const CATS = [
+  {
+    slug:'tapices', name:'Tapices', icon:'sofa',
+    desc:'Sillones y seccionales a domicilio',
+    domicilio:true,
+    render: function(card){
+      return `
+        <div class="illus-wrap">${sofaPhoto(1)}</div>
+        <div class="ctrl-area">
+          <div class="ctrl-lbl">Cuerpos del sillón</div>
+          <div class="opt-row">
+            ${[1,2,3,4,5].map(n=>`<button class="opt${n===1?' sel':''}" data-val="${n}" onclick="catAction('tapices','cuerpos',${n},this)">${n} cuerpo${n>1?'s':''}</button>`).join('')}
+          </div>
+          <div class="ctrl-lbl">Cantidad</div>
+          <div class="qty-row">
+            <div class="qty-ctrl">
+              <button class="qb" onclick="catQty('tapices','tapices_qty',-1)">−</button>
+              <span class="qv" id="tapices_qty">1</span>
+              <button class="qb" onclick="catQty('tapices','tapices_qty',1)">+</button>
+            </div>
+            <span class="qty-lbl">sillones</span>
+          </div>
+          <div class="price-row"><span class="price-amt">${fmt(20000)}</span><span class="price-lbl">por sillón de 1 cuerpo</span></div>
+          <button class="add-btn" onclick="addCatItem('tapices')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar al pedido
+          </button>
+        </div>`;
+    },
+    getItem: function(card){
+      const c=+card.querySelector('.opt.sel').dataset.val;
+      const q=+card.querySelector('[id$="_qty"]').textContent;
+      const prices={1:20000,2:30000,3:35000,4:45000,5:55000};
+      return {slug:'tapices',label:`Sillón ${c} cuerpo${c>1?'s':''} × ${q}`,price:prices[c]*q};
+    }
+  },
+  {
+    slug:'colchones', name:'Colchones', icon:'bed',
+    desc:'Higienización a domicilio, ambas caras',
+    domicilio:true,
+    render: function(card){
+      const sizes=[
+        {k:'1pl',l:'1 plaza',p:22000},{k:'1.5pl',l:'1½ plaza',p:25000},
+        {k:'2pl',l:'2 plazas',p:35000},{k:'qk',l:'Queen/King',p:35000},{k:'sk',l:'Super King',p:50000}
+      ];
+      return `
+        <div class="illus-wrap">${mattressPhoto('2pl',true)}</div>
+        <div class="ctrl-area">
+          <div class="ctrl-lbl">Tamaño del colchón</div>
+          <div class="opt-row">
+            ${sizes.map((s,i)=>`<button class="opt${i===2?' sel':''}" data-key="${s.k}" data-price="${s.p}" data-label="${s.l}" onclick="catAction('colchones','size',this.dataset.key,this)">${s.l}</button>`).join('')}
+          </div>
+          <div class="ctrl-lbl">Caras a limpiar</div>
+          <div class="opt-row">
+            <button class="opt" data-faces="1" data-discount="-5000" onclick="catAction('colchones','faces','1',this)">1 cara</button>
+            <button class="opt sel" data-faces="2" data-discount="0" onclick="catAction('colchones','faces','2',this)">Ambas caras</button>
+          </div>
+          <div class="ctrl-lbl">Cantidad</div>
+          <div class="qty-row">
+            <div class="qty-ctrl">
+              <button class="qb" onclick="catQty('colchones','colchones_qty',-1)">−</button>
+              <span class="qv" id="colchones_qty">1</span>
+              <button class="qb" onclick="catQty('colchones','colchones_qty',1)">+</button>
+            </div>
+            <span class="qty-lbl">colchones</span>
+          </div>
+          <div class="price-row"><span class="price-amt">${fmt(35000)}</span><span class="price-lbl">2 plazas, ambas caras</span></div>
+          <button class="add-btn" onclick="addCatItem('colchones')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar al pedido
+          </button>
+        </div>`;
+    },
+    getItem: function(card){
+      const sBtn=card.querySelector('[data-key].sel');
+      const fBtn=card.querySelector('[data-faces].sel');
+      const q=+card.querySelector('[id$="_qty"]').textContent;
+      const basePrice=+(sBtn?.dataset.price||35000);
+      const discount=+(fBtn?.dataset.discount||0);
+      const price=(basePrice+discount)*q;
+      const label=`Colchón ${sBtn?.dataset.label||'2 plazas'} ${fBtn?.dataset.faces==='1'?'1 cara':'ambas caras'} × ${q}`;
+      return {slug:'colchones',label,price};
+    }
+  },
+  {
+    slug:'vehiculos', name:'Tapices vehículos', icon:'car',
+    desc:'Autos, SUVs y camionetas a domicilio',
+    domicilio:true,
+    render: function(card){
+      const types=[
+        {k:'sedan',l:'Sedán/Hatch',p:35000},{k:'suv',l:'SUV Mediana',p:45000},
+        {k:'camioneta',l:'Camioneta',p:45000},{k:'suv3',l:'SUV 3 corridas',p:55000}
+      ];
+      return `
+        <div class="illus-wrap">${carPhoto('sedan',false)}</div>
+        <div class="ctrl-area">
+          <div class="ctrl-lbl">Tipo de vehículo</div>
+          <div class="opt-row">
+            ${types.map((t,i)=>`<button class="opt${i===0?' sel':''}" data-key="${t.k}" data-price="${t.p}" data-label="${t.l}" onclick="catAction('vehiculos','type',this.dataset.key,this)">${t.l}</button>`).join('')}
+          </div>
+          <div class="ctrl-lbl">¿Incluye silla infantil?</div>
+          <div class="opt-row">
+            <button class="opt sel" data-baby="0" onclick="catAction('vehiculos','baby','0',this)">No</button>
+            <button class="opt" data-baby="1" onclick="catAction('vehiculos','baby','1',this)">Sí (+$6.000)</button>
+          </div>
+          <div class="price-row"><span class="price-amt">${fmt(35000)}</span><span class="price-lbl">Sedán/Hatchback</span></div>
+          <button class="add-btn" onclick="addCatItem('vehiculos')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar al pedido
+          </button>
+        </div>`;
+    },
+    getItem: function(card){
+      const tBtn=card.querySelector('[data-key].sel');
+      const bBtn=card.querySelector('[data-baby].sel');
+      const base=+(tBtn?.dataset.price||35000);
+      const extra=+(bBtn?.dataset.baby||0)*6000;
+      const label=`${tBtn?.dataset.label||'Sedán'}${extra?' + silla infantil':''}`;
+      return {slug:'vehiculos',label,price:base+extra};
+    }
+  },
+  {
+    slug:'alfombras', name:'Alfombras decorativas', icon:'rug',
+    desc:'Retiro a domicilio · lavado en profundidad',
+    domicilio:false,
+    render: function(card){
+      return `
+        <div class="illus-wrap">${rugPhoto(0,0)}</div>
+        <div class="ctrl-area">
+          <div class="ctrl-lbl">Medidas de la alfombra</div>
+          <div class="dim-grid">
+            <div class="dfg"><label for="alf_w">Ancho (m)</label>
+              <input id="alf_w" type="number" inputmode="decimal" min=".1" max="10" step=".01" placeholder="ej. 1.5" oninput="alfUpdate()"></div>
+            <div class="dfg"><label for="alf_h">Largo (m)</label>
+              <input id="alf_h" type="number" inputmode="decimal" min=".1" max="10" step=".01" placeholder="ej. 2.0" oninput="alfUpdate()"></div>
+          </div>
+          <div class="m2-hint" id="alf_m2hint">Ingresa medidas para calcular m²</div>
+          <div class="ctrl-lbl">Cantidad</div>
+          <div class="qty-row">
+            <div class="qty-ctrl">
+              <button class="qb" onclick="catQty('alfombras','alfombras_qty',-1)">−</button>
+              <span class="qv" id="alfombras_qty">1</span>
+              <button class="qb" onclick="catQty('alfombras','alfombras_qty',1)">+</button>
+            </div>
+            <span class="qty-lbl">alfombras</span>
+          </div>
+          <div class="price-row"><span class="price-amt" id="alf_price">—</span><span class="price-lbl" id="alf_lbl">ingresa medidas</span></div>
+          <button class="add-btn" id="alf_add" disabled onclick="addCatItem('alfombras')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar al pedido
+          </button>
+        </div>`;
+    },
+    getItem: function(card){
+      const w=parseFloat(document.getElementById('alf_w')?.value);
+      const h=parseFloat(document.getElementById('alf_h')?.value);
+      const m2=w*h;
+      const tiers=[{max:2,p:20000},{max:4,p:25000},{max:6,p:30000}];
+      const price=(tiers.find(t=>m2<=t.max)||{p:30000}).p;
+      const q=+card.querySelector('[id$="_qty"]').textContent;
+      return {slug:'alfombras',label:`Alfombra ${w}m × ${h}m (${m2.toFixed(2)} m²) × ${q}`,price:price*q};
+    }
+  },
+  {
+    slug:'muro', name:'Alfombras muro a muro', icon:'grid',
+    desc:'$2.600/m² · servicio a domicilio',
+    domicilio:true,
+    render: function(card){
+      return `
+        <div class="illus-wrap">${floorPhoto(0)}</div>
+        <div class="ctrl-area">
+          <div class="ctrl-lbl">Metros cuadrados a limpiar</div>
+          <div class="dim-grid" style="grid-template-columns:1fr">
+            <div class="dfg"><label for="muro_m2">Metros cuadrados (m²)</label>
+              <input id="muro_m2" type="number" inputmode="decimal" min="1" max="500" step=".5" placeholder="ej. 25" oninput="muroUpdate()"></div>
+          </div>
+          <div class="price-row"><span class="price-amt" id="muro_price">—</span><span class="price-lbl" id="muro_lbl">ingresa los m²</span></div>
+          <button class="add-btn" id="muro_add" disabled onclick="addCatItem('muro')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar al pedido
+          </button>
+        </div>`;
+    },
+    getItem: function(card){
+      const m2=parseFloat(document.getElementById('muro_m2')?.value)||0;
+      const price=Math.round(m2*2600);
+      return {slug:'muro',label:`Alfombra muro a muro ${m2} m²`,price};
+    }
+  },
+  {
+    slug:'escaleras', name:'Escaleras alfombradas', icon:'stairs',
+    desc:'Limpieza por peldaño a domicilio',
+    domicilio:true,
+    render: function(card){
+      const sizes=[
+        {k:'p',l:'Pequeña',steps:8,p:38000},{k:'m',l:'Mediana',steps:12,p:50000},
+        {k:'g',l:'Grande',steps:18,p:65000}
+      ];
+      return `
+        <div class="illus-wrap">${stairsPhoto(8)}</div>
+        <div class="ctrl-area">
+          <div class="ctrl-lbl">Tamaño de la escalera</div>
+          <div class="opt-row">
+            ${sizes.map((s,i)=>`<button class="opt${i===0?' sel':''}" data-key="${s.k}" data-steps="${s.steps}" data-price="${s.p}" data-label="${s.l}" onclick="catAction('escaleras','size',this.dataset.key,this)">${s.l}<br><span style="font-size:10px;opacity:.7">hasta ${s.k==='p'?'10':s.k==='m'?'15':'20'} peld.</span></button>`).join('')}
+          </div>
+          <div class="ctrl-lbl">Peldaños adicionales</div>
+          <div class="qty-row">
+            <div class="qty-ctrl">
+              <button class="qb" onclick="catQty('escaleras','esc_extra',-1,0)">−</button>
+              <span class="qv" id="esc_extra">0</span>
+              <button class="qb" onclick="catQty('escaleras','esc_extra',1)">+</button>
+            </div>
+            <span class="qty-lbl" style="font-size:11px">+$4.000 c/u</span>
+          </div>
+          <div class="price-row"><span class="price-amt">${fmt(38000)}</span><span class="price-lbl">Pequeña</span></div>
+          <button class="add-btn" onclick="addCatItem('escaleras')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar al pedido
+          </button>
+        </div>`;
+    },
+    getItem: function(card){
+      const sBtn=card.querySelector('[data-key].sel');
+      const extra=+document.getElementById('esc_extra').textContent;
+      const price=+(sBtn?.dataset.price||38000)+extra*4000;
+      const steps=+(sBtn?.dataset.steps||8)+extra;
+      return {slug:'escaleras',label:`Escalera ${sBtn?.dataset.label||'Pequeña'} (${steps} peld.)`,price};
+    }
+  },
+  {
+    slug:'sillas', name:'Sillas', icon:'chair',
+    desc:'Sillas tapizadas y sitiales a domicilio',
+    domicilio:true,
+    render: function(card){
+      const types=[
+        {k:'semi',l:'Semi tapizada',p:5000},{k:'tapizada',l:'Tapizada',p:10000},{k:'sitial',l:'Sitial',p:15000}
+      ];
+      return `
+        <div class="illus-wrap">${chairPhoto('tapizada')}</div>
+        <div class="ctrl-area">
+          <div class="ctrl-lbl">Tipo de silla</div>
+          <div class="opt-row">
+            ${types.map((t,i)=>`<button class="opt${i===1?' sel':''}" data-key="${t.k}" data-price="${t.p}" data-label="${t.l}" onclick="catAction('sillas','type',this.dataset.key,this)">${t.l}</button>`).join('')}
+          </div>
+          <div class="ctrl-lbl">Cantidad</div>
+          <div class="qty-row">
+            <div class="qty-ctrl">
+              <button class="qb" onclick="catQty('sillas','sillas_qty',-1)">−</button>
+              <span class="qv" id="sillas_qty">1</span>
+              <button class="qb" onclick="catQty('sillas','sillas_qty',1)">+</button>
+            </div>
+            <span class="qty-lbl">sillas</span>
+          </div>
+          <div class="price-row"><span class="price-amt">${fmt(10000)}</span><span class="price-lbl">por silla tapizada</span></div>
+          <button class="add-btn" onclick="addCatItem('sillas')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar al pedido
+          </button>
+        </div>`;
+    },
+    getItem: function(card){
+      const tBtn=card.querySelector('[data-key].sel');
+      const q=+card.querySelector('[id$="_qty"]').textContent;
+      return {slug:'sillas',label:`${tBtn?.dataset.label||'Tapizada'} × ${q}`,price:+(tBtn?.dataset.price||10000)*q};
+    }
+  },
+  {
+    slug:'respaldos', name:'Respaldos de cama', icon:'headboard',
+    desc:'Higienización tapizados a domicilio',
+    domicilio:true,
+    render: function(card){
+      const sizes=[
+        {k:'r1',l:'1 plaza',p:15000},{k:'r15',l:'1½ plaza',p:16000},
+        {k:'r2',l:'2 plazas',p:18000},{k:'rqk',l:'Queen/King',p:22000}
+      ];
+      return `
+        <div class="illus-wrap">${headboardPhoto('rqk')}</div>
+        <div class="ctrl-area">
+          <div class="ctrl-lbl">Tamaño del respaldo</div>
+          <div class="opt-row">
+            ${sizes.map((s,i)=>`<button class="opt${i===3?' sel':''}" data-key="${s.k}" data-price="${s.p}" data-label="${s.l}" onclick="catAction('respaldos','size',this.dataset.key,this)">${s.l}</button>`).join('')}
+          </div>
+          <div class="ctrl-lbl">Cantidad</div>
+          <div class="qty-row">
+            <div class="qty-ctrl">
+              <button class="qb" onclick="catQty('respaldos','respaldos_qty',-1)">−</button>
+              <span class="qv" id="respaldos_qty">1</span>
+              <button class="qb" onclick="catQty('respaldos','respaldos_qty',1)">+</button>
+            </div>
+            <span class="qty-lbl">respaldos</span>
+          </div>
+          <div class="price-row"><span class="price-amt">${fmt(22000)}</span><span class="price-lbl">Queen/King</span></div>
+          <button class="add-btn" onclick="addCatItem('respaldos')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar al pedido
+          </button>
+        </div>`;
+    },
+    getItem: function(card){
+      const sBtn=card.querySelector('[data-key].sel');
+      const q=+card.querySelector('[id$="_qty"]').textContent;
+      return {slug:'respaldos',label:`Respaldo ${sBtn?.dataset.label||'Queen/King'} × ${q}`,price:+(sBtn?.dataset.price||22000)*q};
+    }
+  }
+];
+
+/* ─── CATEGORY STATE ─── */
+const catState={};
+
+function catAction(slug,field,val,btn){
+  if(!catState[slug]) catState[slug]={};
+  catState[slug][field]=val;
+  const card=document.querySelector(`.cat-card[data-slug="${slug}"]`);
+  if(!card) return;
+  const group=btn.closest('.opt-row');
+  if(group) group.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  updateCatIllus(slug,card);
+  updateCatPrice(slug,card);
+}
+
+function catQty(slug,elId,delta,min=1){
+  const el=document.getElementById(elId);
+  if(!el) return;
+  const v=Math.max(min,+(el.textContent)+delta);
+  el.textContent=v;
+  const card=document.querySelector(`.cat-card[data-slug="${slug}"]`);
+  if(card) updateCatPrice(slug,card);
+}
+
+function updateCatIllus(slug,card){
+  const illus=card.querySelector('.illus-wrap');
+  if(!illus) return;
+  if(slug==='tapices'){
+    const n=+(card.querySelector('.opt.sel')?.dataset.val)||1;
+    illus.innerHTML=sofaPhoto(n);
+  } else if(slug==='colchones'){
+    const k=card.querySelector('[data-key].sel')?.dataset.key||'2pl';
+    const both=card.querySelector('[data-faces].sel')?.dataset.faces==='2';
+    illus.innerHTML=mattressPhoto(k,both);
+  } else if(slug==='vehiculos'){
+    const k=card.querySelector('[data-key].sel')?.dataset.key||'sedan';
+    const hasBaby=card.querySelector('[data-baby].sel')?.dataset.baby==='1';
+    illus.innerHTML=carPhoto(k,hasBaby);
+  } else if(slug==='escaleras'){
+    const steps=+(card.querySelector('[data-steps]')?.dataset.steps||8) + +document.getElementById('esc_extra')?.textContent;
+    illus.innerHTML=stairsPhoto(steps);
+  } else if(slug==='sillas'){
+    const k=card.querySelector('[data-key].sel')?.dataset.key||'tapizada';
+    illus.innerHTML=chairPhoto(k);
+  } else if(slug==='respaldos'){
+    const k=card.querySelector('[data-key].sel')?.dataset.key||'rqk';
+    illus.innerHTML=headboardPhoto(k);
+  }
+}
+
+function updateCatPrice(slug,card){
+  const pAmt=card.querySelector('.price-amt');
+  const pLbl=card.querySelector('.price-lbl');
+  if(!pAmt) return;
+  if(slug==='tapices'){
+    const n=+(card.querySelector('.opt.sel')?.dataset.val)||1;
+    const q=+document.getElementById('tapices_qty').textContent;
+    const prices={1:20000,2:30000,3:35000,4:45000,5:55000};
+    pAmt.textContent=fmt(prices[n]*q);
+    pLbl.textContent=q>1?`(${q} × ${fmt(prices[n])})`:`por sillón de ${n} cuerpo${n>1?'s':''}`;
+  } else if(slug==='colchones'){
+    const base=+(card.querySelector('[data-key].sel')?.dataset.price||35000);
+    const disc=+(card.querySelector('[data-faces].sel')?.dataset.discount||0);
+    const q=+document.getElementById('colchones_qty').textContent;
+    pAmt.textContent=fmt((base+disc)*q);
+    pLbl.textContent=card.querySelector('[data-faces].sel')?.dataset.faces==='1'?'1 cara':'ambas caras';
+  } else if(slug==='vehiculos'){
+    const base=+(card.querySelector('[data-key].sel')?.dataset.price||35000);
+    const baby=+(card.querySelector('[data-baby].sel')?.dataset.baby||0)*6000;
+    pAmt.textContent=fmt(base+baby);
+    pLbl.textContent=card.querySelector('[data-key].sel')?.dataset.label||'Sedán';
+  } else if(slug==='escaleras'){
+    const base=+(card.querySelector('[data-key].sel')?.dataset.price||38000);
+    const extra=+document.getElementById('esc_extra')?.textContent||0;
+    pAmt.textContent=fmt(base+extra*4000);
+    pLbl.textContent=card.querySelector('[data-key].sel')?.dataset.label||'Pequeña';
+  } else if(slug==='sillas'){
+    const p=+(card.querySelector('[data-key].sel')?.dataset.price||10000);
+    const q=+document.getElementById('sillas_qty').textContent;
+    pAmt.textContent=fmt(p*q);
+    pLbl.textContent=`por ${card.querySelector('[data-key].sel')?.dataset.label||'silla tapizada'}`;
+  } else if(slug==='respaldos'){
+    const p=+(card.querySelector('[data-key].sel')?.dataset.price||22000);
+    const q=+document.getElementById('respaldos_qty').textContent;
+    pAmt.textContent=fmt(p*q);
+    pLbl.textContent=card.querySelector('[data-key].sel')?.dataset.label||'Queen/King';
+  }
+}
+
+function addCatItem(slug){
+  const card=document.querySelector(`.cat-card[data-slug="${slug}"]`);
+  const cat=CATS.find(c=>c.slug===slug);
+  if(!cat||!card) return;
+  const item=cat.getItem(card);
+  addToCart(item);
+  renderCatItems();
+  const btn=card.querySelector('.add-btn');
+  if(btn){ btn.textContent='✓ Agregado'; btn.style.background='var(--g)'; setTimeout(()=>{btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> Agregar otro';btn.style.background='';},1200); }
+}
+
+/* ─── Alfombra decorativa dynamic ─── */
+function alfUpdate(){
+  const w=parseFloat(document.getElementById('alf_w')?.value);
+  const h=parseFloat(document.getElementById('alf_h')?.value);
+  const card=document.querySelector('.cat-card[data-slug="alfombras"]');
+  if(card) card.querySelector('.illus-wrap').innerHTML=rugPhoto(w||0,h||0);
+  if(!isNaN(w)&&!isNaN(h)&&w>0&&h>0){
+    const m2=Math.round(w*h*100)/100;
+    const tiers=[{max:2,p:20000},{max:4,p:25000},{max:6,p:30000}];
+    const tier=tiers.find(t=>m2<=t.max);
+    const q=+document.getElementById('alfombras_qty')?.textContent||1;
+    document.getElementById('alf_m2hint').textContent=`${m2.toFixed(2)} m²${tier?'':' — consultar precio'}`;
+    document.getElementById('alf_m2hint').style.color=tier?'var(--c)':'#DC2626';
+    document.getElementById('alf_price').textContent=tier?fmt(tier.p*q):'Consultar';
+    document.getElementById('alf_lbl').textContent=tier?`${tier.p===20000?'hasta 2 m²':tier.p===25000?'2–4 m²':'4–6 m²'}`:'más de 6 m²';
+    if(document.getElementById('alf_add')) document.getElementById('alf_add').disabled=!tier;
+  } else {
+    document.getElementById('alf_m2hint').textContent='Ingresa medidas para calcular m²';
+    document.getElementById('alf_m2hint').style.color='var(--c)';
+    document.getElementById('alf_price').textContent='—';
+    document.getElementById('alf_lbl').textContent='ingresa medidas';
+    if(document.getElementById('alf_add')) document.getElementById('alf_add').disabled=true;
+  }
+}
+
+function muroUpdate(){
+  const m2=parseFloat(document.getElementById('muro_m2')?.value);
+  const card=document.querySelector('.cat-card[data-slug="muro"]');
+  if(card&&!isNaN(m2)&&m2>0) card.querySelector('.illus-wrap').innerHTML=floorPhoto(m2);
+  const pe=document.getElementById('muro_price');
+  const pl=document.getElementById('muro_lbl');
+  const ab=document.getElementById('muro_add');
+  if(!isNaN(m2)&&m2>0){
+    if(pe) pe.textContent=fmt(Math.round(m2)*2600);
+    if(pl) pl.textContent=`${m2} m² × $2.600`;
+    if(ab) ab.disabled=false;
+  } else {
+    if(pe) pe.textContent='—';
+    if(pl) pl.textContent='ingresa los m²';
+    if(ab) ab.disabled=true;
+  }
+}
+
+/* ─── ICONS ─── */
+const ICONS={
+  sofa:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 9V6a2 2 0 00-2-2H6a2 2 0 00-2 2v3"/><path d="M2 11a2 2 0 012 2v2h16v-2a2 2 0 012-2 1 1 0 001-1V9a1 1 0 00-1-1H2a1 1 0 00-1 1v1a1 1 0 001 1z"/><path d="M4 15v2"/><path d="M20 15v2"/></svg>`,
+  bed:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 012 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>`,
+  car:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h14l4 4v4a2 2 0 01-2 2h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 9h6"/></svg>`,
+  rug:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>`,
+  grid:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>`,
+  stairs:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 21h4v-4h4v-4h4v-4h4V3"/></svg>`,
+  chair:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="4" width="12" height="8" rx="2"/><path d="M6 8H4a2 2 0 00-2 2v1h20v-1a2 2 0 00-2-2h-2"/><path d="M6 15v5"/><path d="M18 15v5"/><path d="M2 11v4h20v-4"/></svg>`,
+  headboard:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 18v-8a2 2 0 012-2h16a2 2 0 012 2v8"/><path d="M2 14h20"/><path d="M6 18v2"/><path d="M18 18v2"/></svg>`
+};
+
+/* ─── BUILD UI ─── */
+function buildCats(){
+  const container=document.getElementById('cats');
+  CATS.forEach(cat=>{
+    const card=document.createElement('div');
+    card.className='cat-card';
+    card.dataset.slug=cat.slug;
+    card.innerHTML=`
+      <div class="cat-hdr" onclick="toggleCat('${cat.slug}')">
+        <div class="cat-icon">${ICONS[cat.icon]||ICONS.sofa}</div>
+        <div class="cat-info">
+          <div class="cat-name">${cat.name}${cat.domicilio!==undefined?`<span class="dom-tag" style="margin-left:6px">${cat.domicilio?'A domicilio':'Retiro'}</span>`:''}</div>
+          <div class="cat-sub">${cat.desc}</div>
+        </div>
+        <div class="cat-right">
+          <span class="cat-items-badge">0</span>
+          <svg class="cat-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="cat-body"></div>
+      <div class="cat-items" data-slug="${cat.slug}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleCat(slug){
+  const card=document.querySelector(`.cat-card[data-slug="${slug}"]`);
+  if(!card) return;
+  const isOpen=card.classList.contains('open');
+  if(isOpen){ card.classList.remove('open'); return; }
+  card.classList.add('open');
+  const body=card.querySelector('.cat-body');
+  if(body&&!body.querySelector('.config')){
+    const cat=CATS.find(c=>c.slug===slug);
+    if(cat){
+      const configDiv=document.createElement('div');
+      configDiv.className='config';
+      configDiv.innerHTML=cat.render(card);
+      body.appendChild(configDiv);
+    }
+  }
+}
+
+buildCats();
+</script>
+</body>
+</html>

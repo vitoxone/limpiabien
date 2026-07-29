@@ -18,6 +18,14 @@ const SERVICES = [
     badge: 'Más solicitado',
   },
   {
+    slug: 'alfombras-muro',
+    name: 'Pisos alfombrados y Oficinas',
+    desc: 'Alfombras muro a muro de alto tráfico en oficinas, empresas y locales comerciales. Cotización por m².',
+    img: '/servicios/IMG_5673.jpg',
+    badge: 'Empresas & B2B',
+    badgeClass: 'badge-b2b',
+  },
+  {
     slug: 'colchones',
     name: 'Colchones',
     desc: '1 plaza, queen y king. Higienización completa con productos hipoalergénicos.',
@@ -31,14 +39,14 @@ const SERVICES = [
   },
   {
     slug: 'alfombras',
-    name: 'Alfombras',
-    desc: 'Decorativas y muro a muro. Recuperamos el color y eliminamos ácaros.',
+    name: 'Alfombras decorativas',
+    desc: 'Lavado en profundidad de alfombras sueltas. Recuperamos el color y eliminamos ácaros.',
     img: '/servicios/IMG_5673.jpg',
   },
   {
     slug: 'sillas',
     name: 'Sillas tapizadas',
-    desc: 'Sillas de comedor, sitiales y banquetas tapizadas — limpieza unidad por unidad.',
+    desc: 'Sillas de comedor, oficinas, sitiales y banquetas tapizadas — limpieza unidad por unidad.',
     img: '/servicios/IMG_3507.jpg',
   },
 ];
@@ -55,7 +63,7 @@ const WHY_US = [
   },
   {
     title: 'Productos seguros',
-    desc: 'Hipoalergénicos y biodegradables, seguros para niños y mascotas.',
+    desc: 'Hipoalergénicos y biodegradables, seguros para niños, mascotas y ambientes de trabajo.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -63,8 +71,8 @@ const WHY_US = [
     ),
   },
   {
-    title: 'Atención a domicilio',
-    desc: "Llegamos donde estés. Cubrimos toda la Región de O'Higgins.",
+    title: 'Atención a domicilio y empresas',
+    desc: "Llegamos donde estés. Cubrimos casas, departamentos y oficinas en toda la Región de O'Higgins.",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -73,7 +81,7 @@ const WHY_US = [
   },
   {
     title: 'Cotización al instante',
-    desc: 'Arma tu pedido en 30 segundos y recibe tu cotización por WhatsApp.',
+    desc: 'Arma tu pedido en 30 segundos y recibe tu cotización por WhatsApp con opción de factura.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -89,6 +97,7 @@ export default function HomePage() {
     mainEntity: [
       { '@type': 'Question', name: '¿Cada cuánto tiempo conviene limpiar sillones y colchones?', acceptedAnswer: { '@type': 'Answer', text: 'Recomendamos una mantención cada 6 a 12 meses, o antes si hay manchas visibles, alérgenos o mascotas.' } },
       { '@type': 'Question', name: '¿Trabajan a domicilio en Nancagua, Santa Cruz y San Fernando?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Atendemos en Nancagua, Santa Cruz, San Fernando, Chimbarongo, Chépica y alrededores.' } },
+      { '@type': 'Question', name: '¿Realizan limpieza de pisos alfombrados en oficinas y empresas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, atendemos oficinas, locales comerciales y empresas. Realizamos cotizaciones por m², trabajamos en horarios especiales y emitimos factura.' } },
       { '@type': 'Question', name: '¿Qué método usan para la limpieza de tapices y alfombras?', acceptedAnswer: { '@type': 'Answer', text: 'Usamos equipos de inyección–extracción con productos hipoalergénicos y biodegradables.' } },
     ],
   };
@@ -107,14 +116,13 @@ export default function HomePage() {
               <div>
                 <span className="hero-pill">
                   <span className="hero-pill-dot" aria-hidden="true" />
-                  Limpieza profesional · Región de O&apos;Higgins
+                  Limpieza profesional · Hogares y Oficinas en O&apos;Higgins
                 </span>
                 <h1 id="hero-title" className="hero-landing-title">
-                  Tu hogar fresco<br />y <em>como nuevo</em>
+                  Tu espacio fresco<br />y <em>como nuevo</em>
                 </h1>
                 <p className="hero-landing-sub">
-                  Limpieza profesional de sillones, colchones, alfombras y tapices de vehículos —
-                  inyección–extracción a domicilio con productos hipoalergénicos. Cotiza en 30 segundos.
+                  Limpieza profesional de sillones, colchones, tapices de vehículos, alfombras muro a muro y pisos alfombrados de oficinas. Inyección–extracción a domicilio y empresas.
                 </p>
                 <div className="hero-landing-actions">
                   <Link className="btn btn-cta btn-lg" href="/cotizar">
@@ -132,7 +140,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <div className="hero-stat-value">100%</div>
-                    <div className="hero-stat-label">a domicilio</div>
+                    <div className="hero-stat-label">a domicilio y empresas</div>
                   </div>
                   <div>
                     <div className="hero-stat-value">6 comunas</div>
@@ -156,7 +164,7 @@ export default function HomePage() {
                   </div>
                   <div className="hero-floating-text">
                     <strong>Reserva en línea</strong>
-                    <span>WhatsApp directo</span>
+                    <span>WhatsApp directo · Factura</span>
                   </div>
                 </div>
               </div>
@@ -170,14 +178,16 @@ export default function HomePage() {
             <div className="section-head">
               <span className="section-eyebrow">Lo que hacemos</span>
               <h2 className="section-title">
-                Servicios <em>profesionales</em> a domicilio
+                Servicios <em>profesionales</em> a domicilio y empresas
               </h2>
             </div>
             <div className="services-grid">
               {SERVICES.map(svc => (
                 <Link key={svc.slug} href={`/cotizar#cat-${svc.slug}`} className="service-card">
                   <div className="service-card-img" style={{ backgroundImage: `url('${svc.img}')` }}>
-                    {svc.badge && <span className="service-card-badge">{svc.badge}</span>}
+                    {svc.badge && (
+                      <span className={`service-card-badge ${svc.badgeClass || ''}`}>{svc.badge}</span>
+                    )}
                   </div>
                   <div className="service-card-body">
                     <div className="service-card-title">{svc.name}</div>
@@ -186,6 +196,73 @@ export default function HomePage() {
                   </div>
                 </Link>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SOLUCIONES PARA EMPRESAS Y OFICINAS */}
+        <section className="b2b-section" aria-labelledby="b2b-title">
+          <div className="band-inner">
+            <div className="b2b-head">
+              <span className="b2b-eyebrow">Soluciones Corporativas</span>
+              <h2 id="b2b-title" className="b2b-title">
+                Pisos alfombrados para <em>oficinas y empresas</em>
+              </h2>
+              <p className="b2b-sub">
+                Mantén tus instalaciones impecables, libres de ácaros y con presentación profesional sin interrumpir la jornada de tu equipo.
+              </p>
+            </div>
+            <div className="b2b-grid">
+              <div className="b2b-card">
+                <div className="b2b-card-icon">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="b2b-card-title">Horarios Flexibles</h3>
+                <p className="b2b-card-desc">
+                  Coordinamos el servicio fuera del horario laboral o en fines de semana para no interferir con las operaciones de tu empresa.
+                </p>
+              </div>
+              <div className="b2b-card">
+                <div className="b2b-card-icon">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="b2b-card-title">Cotización por m²</h3>
+                <p className="b2b-card-desc">
+                  Precios competitivos según la superficie total de alfombra muro a muro o sillas de oficina a limpiar.
+                </p>
+              </div>
+              <div className="b2b-card">
+                <div className="b2b-card-icon">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="b2b-card-title">Facturación Electrónica</h3>
+                <p className="b2b-card-desc">
+                  Emitimos factura por todos nuestros servicios para el respaldo contable y tributario de tu empresa.
+                </p>
+              </div>
+              <div className="b2b-card">
+                <div className="b2b-card-icon">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.6 15.11a2 2 0 01-1.022-.547l-1.074-1.074a2 2 0 010-2.828l1.074-1.074a2 2 0 011.022-.547l2.387-.477a6 6 0 013.86.517l.318.158a6 6 0 003.86.517l2.387-.477a2 2 0 011.022.547l1.074 1.074a2 2 0 010 2.828l-1.074 1.074z" />
+                  </svg>
+                </div>
+                <h3 className="b2b-card-title">Extracción Profunda Kärcher</h3>
+                <p className="b2b-card-desc">
+                  Equipos industriales que remueven suciedad incrustada y manchado en alfombras de alto tráfico con secado rápido.
+                </p>
+              </div>
+            </div>
+            <div className="b2b-actions">
+              <Link className="btn btn-cta btn-lg" href="/cotizar#cat-alfombras-muro">
+                <WaIcon />
+                Cotizar Oficina / Muro a Muro
+              </Link>
             </div>
           </div>
         </section>
