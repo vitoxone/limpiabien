@@ -238,17 +238,6 @@ export default function HomePage() {
               <div className="b2b-card">
                 <div className="b2b-card-icon">
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <h3 className="b2b-card-title">Facturación Electrónica</h3>
-                <p className="b2b-card-desc">
-                  Emitimos factura por todos nuestros servicios para el respaldo contable y tributario de tu empresa.
-                </p>
-              </div>
-              <div className="b2b-card">
-                <div className="b2b-card-icon">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.6 15.11a2 2 0 01-1.022-.547l-1.074-1.074a2 2 0 010-2.828l1.074-1.074a2 2 0 011.022-.547l2.387-.477a6 6 0 013.86.517l.318.158a6 6 0 003.86.517l2.387-.477a2 2 0 011.022.547l1.074 1.074a2 2 0 010 2.828l-1.074 1.074z" />
                   </svg>
                 </div>
