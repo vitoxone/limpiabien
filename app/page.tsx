@@ -9,6 +9,24 @@ const WaIcon = () => (
   </svg>
 );
 
+const COMUNAS = [
+  'San Fernando',
+  'Santa Cruz',
+  'Chimbarongo',
+  'Chépica',
+  'Nancagua',
+  'Palmilla',
+  'Placilla',
+  'Peralillo',
+];
+
+const PinIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+    <circle cx="12" cy="11" r="2.5" />
+  </svg>
+);
+
 const SERVICES = [
   {
     slug: 'tapices',
@@ -143,7 +161,7 @@ export default function HomePage() {
                     <div className="hero-stat-label">a domicilio y empresas</div>
                   </div>
                   <div>
-                    <div className="hero-stat-value">6 comunas</div>
+                    <div className="hero-stat-value">8 comunas</div>
                     <div className="hero-stat-label">en O&apos;Higgins</div>
                   </div>
                 </div>
@@ -179,6 +197,31 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* COBERTURA — comunas atendidas */}
+        <section className="cobertura-section" aria-labelledby="cobertura-title">
+          <div className="band-inner">
+            <div className="cobertura-head">
+              <span className="section-eyebrow">Zona de cobertura</span>
+              <h2 id="cobertura-title" className="cobertura-title">
+                ¿Dónde <em>trabajamos</em>?
+              </h2>
+              <p className="cobertura-sub">
+                Servicio a domicilio y empresas en 8 comunas de la Región de O&apos;Higgins.
+              </p>
+            </div>
+            <ul className="cobertura-grid">
+              {COMUNAS.map(comuna => (
+                <li key={comuna} className="cobertura-card">
+                  <span className="cobertura-card-icon">
+                    <PinIcon />
+                  </span>
+                  <span className="cobertura-card-name">{comuna}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -339,7 +382,7 @@ export default function HomePage() {
 
       <footer className="site-footer" role="contentinfo">
         <span className="footer-brand">LimpiaBien</span>
-        <span>Nancagua · Santa Cruz · San Fernando · Chimbarongo · Chépica</span>
+        <span>San Fernando · Santa Cruz · Chimbarongo · Chépica · Nancagua · Palmilla · Placilla · Peralillo</span>
         <span>© {new Date().getFullYear()} LimpiaBien</span>
       </footer>
     </>

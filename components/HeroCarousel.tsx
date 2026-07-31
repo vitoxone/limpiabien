@@ -153,7 +153,7 @@ export default function HeroCarousel() {
             </div>
             <div className="hero-stat-divider" aria-hidden="true" />
             <div>
-              <strong>6 comunas</strong>
+              <strong>8 comunas</strong>
               <span>en O&apos;Higgins</span>
             </div>
           </div>

@@ -210,7 +210,7 @@ export default function CotizarPage() {
 
       <footer className="site-footer" role="contentinfo">
         <span className="footer-brand">LimpiaBien</span>
-        <span>Nancagua · Santa Cruz · San Fernando · Chimbarongo · Chépica</span>
+        <span>San Fernando · Santa Cruz · Chimbarongo · Chépica · Nancagua · Palmilla · Placilla · Peralillo</span>
         <span>© {new Date().getFullYear()} LimpiaBien</span>
       </footer>
     </>
