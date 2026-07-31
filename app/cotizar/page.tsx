@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { CATEGORIES } from '@/data/catalog';
 import Category from '@/components/Category';
 import LeadForm from '@/components/LeadForm';
+import CartSummary from '@/components/CartSummary';
 import SiteHeader from '@/components/SiteHeader';
 import { buildWaLink } from '@/lib/wa';
 import { useCallback, useMemo, useState, useEffect } from 'react';
@@ -174,7 +175,7 @@ export default function CotizarPage() {
                 ))}
               </div>
 
-              <div className="catalog-cta">
+              <div className="catalog-cta" id="resumen-form">
                 {totalItems > 0 ? (
                   <LeadForm
                     items={items}
@@ -199,6 +200,12 @@ export default function CotizarPage() {
             </section>
           </div>
         </div>
+
+        <CartSummary
+          items={items}
+          setQty={setQty}
+          onCheckout={() => scrollTo('resumen-form')}
+        />
       </main>
 
       <footer className="site-footer" role="contentinfo">

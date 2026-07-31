@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { CatalogCategory } from '@/data/catalog';
 import SelectorRow from '@/components/SelectorRow';
 
@@ -27,8 +27,15 @@ export default function Category({
   onSpecialRequestChange?: (v: string) => void;
 }) {
   const isDomicilio = category.domicilio !== false;
-  const [open, setOpen] = useState(defaultOpen);
+  // Arranca cerrado en server y cliente para evitar mismatch de hidratación;
+  // `defaultOpen` depende del hash de la URL (sólo disponible en el cliente),
+  // así que se aplica tras el montaje.
+  const [open, setOpen] = useState(false);
   const isSpecial = category.slug === 'pedidos-especiales';
+
+  useEffect(() => {
+    if (defaultOpen) setOpen(true);
+  }, [defaultOpen]);
 
   const visibleItems = category.items.filter(
     (item) => !(publicOnly && item.show_public === false)
