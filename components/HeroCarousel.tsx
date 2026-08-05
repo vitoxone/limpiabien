@@ -29,7 +29,7 @@ const SLIDES = [
   {
     id: 'pisos',
     title: 'Pisos Alfombrados y Oficinas',
-    subtitle: 'Alfombras muro a muro de alto tráfico para empresas, oficinas y locales comerciales con opción de factura.',
+    subtitle: 'Alfombras muro a muro de alto tráfico para empresas, oficinas y locales comerciales.',
     img: '/servicios/IMG_5673.jpg',
     badge: 'Empresas & B2B',
     align: 'left', // Posición izquierda
@@ -116,12 +116,6 @@ export default function HeroCarousel() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               <span>Kärcher Pro</span>
-            </div>
-            <div className="hero-glass-badge">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <span>Factura B2B</span>
             </div>
             <div className="hero-glass-badge">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">

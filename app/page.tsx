@@ -99,7 +99,7 @@ const WHY_US = [
   },
   {
     title: 'Cotización al instante',
-    desc: 'Arma tu pedido en 30 segundos y recibe tu cotización por WhatsApp con opción de factura.',
+    desc: 'Arma tu pedido en 30 segundos y recibe tu cotización por WhatsApp.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -115,7 +115,7 @@ export default function HomePage() {
     mainEntity: [
       { '@type': 'Question', name: '¿Cada cuánto tiempo conviene limpiar sillones y colchones?', acceptedAnswer: { '@type': 'Answer', text: 'Recomendamos una mantención cada 6 a 12 meses, o antes si hay manchas visibles, alérgenos o mascotas.' } },
       { '@type': 'Question', name: '¿Trabajan a domicilio en Nancagua, Santa Cruz y San Fernando?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Atendemos en Nancagua, Santa Cruz, San Fernando, Chimbarongo, Chépica y alrededores.' } },
-      { '@type': 'Question', name: '¿Realizan limpieza de pisos alfombrados en oficinas y empresas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, atendemos oficinas, locales comerciales y empresas. Realizamos cotizaciones por m², trabajamos en horarios especiales y emitimos factura.' } },
+      { '@type': 'Question', name: '¿Realizan limpieza de pisos alfombrados en oficinas y empresas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí, atendemos oficinas, locales comerciales y empresas. Realizamos cotizaciones por m² y trabajamos en horarios especiales.' } },
       { '@type': 'Question', name: '¿Qué método usan para la limpieza de tapices y alfombras?', acceptedAnswer: { '@type': 'Answer', text: 'Usamos equipos de inyección–extracción con productos hipoalergénicos y biodegradables.' } },
     ],
   };
@@ -192,7 +192,7 @@ export default function HomePage() {
                   </div>
                   <div className="hero-floating-text">
                     <strong>Reserva en línea</strong>
-                    <span>WhatsApp directo · Factura</span>
+                    <span>WhatsApp directo</span>
                   </div>
                 </div>
               </div>

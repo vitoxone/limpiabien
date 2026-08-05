@@ -179,7 +179,7 @@ export default function ServicioPage({ params }: PageProps) {
                 <Link className={s.btnPrimary} href={waHref} target="_blank" rel="noopener nofollow">
                   Cotizar por WhatsApp
                 </Link>
-                <Link className={s.btnGhost} href="/servicios">Ver todos los servicios</Link>
+                <Link className={s.btnGhost} href="/#servicios">Ver todos los servicios</Link>
               </div>
             </div>
             {cfg.cover && (

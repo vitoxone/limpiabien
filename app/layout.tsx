@@ -138,7 +138,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de sillones y tapices', url: 'https://limpiabien.cl/servicios/tapices' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de colchones', url: 'https://limpiabien.cl/servicios/colchones' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Lavado de alfombras decorativas', url: 'https://limpiabien.cl/servicios/alfombras' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de pisos alfombrados y oficinas', url: 'https://limpiabien.cl/servicios/alfombras-muro' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de pisos alfombrados y oficinas' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de tapices de vehículos' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de escaleras alfombradas' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de sillas tapizadas' } },

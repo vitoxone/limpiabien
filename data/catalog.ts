@@ -75,7 +75,7 @@ export const CATEGORIES: CatalogCategory[] = [
     slug: 'alfombras-muro',
     name: 'Alfombras muro a muro',
     domicilio: true,
-    description: 'Servicio especializado para alfombras muro a muro y alto tráfico. Limpieza profunda e higienización ideal para oficinas, locales comerciales y hogares. Cotización por m² con opción de factura.',
+    description: 'Servicio especializado para alfombras muro a muro y alto tráfico. Limpieza profunda e higienización ideal para oficinas, locales comerciales y hogares. Cotización por m².',
     items: [
       { id: 'muro-1', title: '1 - Muro a muro  m² (Ingrese cantidad de metros cuadrados en el selector)', price: 2600, show_public: true },
       { id: 'muro-2', title: '2 - Muro a muro  m²', price: 2700, show_public: false },
