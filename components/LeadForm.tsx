@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { COMUNAS, COMUNA_OTRA } from '@/data/comunas';
 
 type CartItem = { section: string; title: string; qty: number };
 
@@ -9,6 +10,8 @@ interface Props {
   waHref: string;
   fullName: string;
   onNameChange: (name: string) => void;
+  commune: string;
+  onCommuneChange: (commune: string) => void;
   onClear: () => void;
   specialRequest?: string;
 }
@@ -21,16 +24,33 @@ const WaIcon = () => (
 
 type Step = 'form' | 'sending' | 'done' | 'error';
 
-export default function LeadForm({ items, waHref, fullName, onNameChange, onClear, specialRequest = '' }: Props) {
-  const [phone, setPhone] = useState('');
+export default function LeadForm({
+  items,
+  waHref,
+  fullName,
+  onNameChange,
+  commune,
+  onCommuneChange,
+  onClear,
+  specialRequest = '',
+}: Props) {
+  // Valor del <select>: una comuna del listado o "Otra" (que habilita el textbox).
+  const [selected, setSelected] = useState('');
   const [honeypot, setHoneypot] = useState(''); // nunca debe tener valor
   const [step, setStep] = useState<Step>('form');
 
   // const apiBase = process.env.NEXT_PUBLIC_API_URL ?? '';
   const totalQty = items.reduce((a, b) => a + b.qty, 0);
+  const esOtra = selected === COMUNA_OTRA;
+
+  function handleSelect(value: string) {
+    setSelected(value);
+    // Al elegir "Otra" se limpia hasta que el visitante escriba su comuna.
+    onCommuneChange(value === COMUNA_OTRA ? '' : value);
+  }
 
   async function handleSubmit() {
-    if (!fullName.trim() || !phone.trim()) return;
+    if (!fullName.trim() || !commune.trim()) return;
     setStep('sending');
 
     // Llamada a la API externa desactivada — sólo flujo WhatsApp.
@@ -41,7 +61,7 @@ export default function LeadForm({ items, waHref, fullName, onNameChange, onClea
     //       headers: { 'Content-Type': 'application/json' },
     //       body: JSON.stringify({
     //         fullName: fullName.trim(),
-    //         phone: phone.trim(),
+    //         commune: commune.trim(),
     //         channel: 'web',
     //         website: honeypot,
     //         ...(specialRequest.trim() && { needs: specialRequest.trim() }),
@@ -72,7 +92,7 @@ export default function LeadForm({ items, waHref, fullName, onNameChange, onClea
             <a href={waHref} target="_blank" rel="noopener noreferrer">haz clic aquí</a>.
           </p>
         </div>
-        <button className="btn btn-outline btn-sm" onClick={() => { onClear(); setStep('form'); onNameChange(''); setPhone(''); }}>
+        <button className="btn btn-outline btn-sm" onClick={() => { onClear(); setStep('form'); onNameChange(''); setSelected(''); onCommuneChange(''); }}>
           Nueva cotización
         </button>
       </div>
@@ -83,7 +103,7 @@ export default function LeadForm({ items, waHref, fullName, onNameChange, onClea
     <div className="lead-form">
       <p className="lead-form-label">
         Tienes <strong>{totalQty} ítem{totalQty > 1 ? 's' : ''}</strong> seleccionados.
-        Déjanos tu nombre y teléfono para enviar la cotización por WhatsApp:
+        Déjanos tu nombre y comuna para enviar la cotización por WhatsApp:
       </p>
       <div className="lead-form-fields">
         {/* Honeypot — oculto para humanos, los bots lo llenan */}
@@ -106,21 +126,39 @@ export default function LeadForm({ items, waHref, fullName, onNameChange, onClea
           disabled={step === 'sending'}
           autoComplete="name"
         />
-        <input
-          className="lead-input"
-          type="tel"
-          placeholder="+56 9 xxxx xxxx"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          disabled={step === 'sending'}
-          autoComplete="tel"
-        />
+        <div className="lead-field-comuna">
+          <select
+            className="lead-input lead-select"
+            value={selected}
+            onChange={(e) => handleSelect(e.target.value)}
+            disabled={step === 'sending'}
+            aria-label="Comuna"
+          >
+            <option value="" disabled>Tu comuna</option>
+            {COMUNAS.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+            <option value={COMUNA_OTRA}>Otra…</option>
+          </select>
+          {esOtra && (
+            <input
+              className="lead-input"
+              type="text"
+              placeholder="¿Cuál es tu comuna?"
+              value={commune}
+              onChange={(e) => onCommuneChange(e.target.value)}
+              disabled={step === 'sending'}
+              aria-label="Escribe tu comuna"
+              autoFocus
+            />
+          )}
+        </div>
       </div>
       <div className="lead-form-actions">
         <button
           className="btn btn-dark btn-lg"
           onClick={handleSubmit}
-          disabled={!fullName.trim() || !phone.trim() || step === 'sending'}
+          disabled={!fullName.trim() || !commune.trim() || step === 'sending'}
         >
           <WaIcon />
           {step === 'sending' ? 'Enviando…' : `Cotizar por WhatsApp · ${totalQty} ítem${totalQty > 1 ? 's' : ''}`}

@@ -691,11 +691,22 @@ button { font-family: inherit; }
   outline: none;
 }
 .lead-input:focus {
-  border-color: var(--sky); background: white;
+  border-color: var(--sky); background-color: white;
   box-shadow: 0 0 0 3px rgba(14,165,233,.12);
 }
 .lead-input::placeholder { color: var(--stone-400); }
 .lead-input:disabled { opacity: .6; cursor: not-allowed; }
+
+/* Comuna: select + textbox "Otra" apilados en la misma celda del grid */
+.lead-field-comuna { display: grid; gap: 8px; }
+.lead-select {
+  appearance: none; cursor: pointer;
+  padding-right: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2378716c' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+.lead-select:has(option[value='']:checked) { color: var(--stone-400); }
 .lead-form-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .lead-form-actions .btn:disabled { opacity: .6; cursor: not-allowed; }
 

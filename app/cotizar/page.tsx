@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { CATEGORIES } from '@/data/catalog';
+import { COMUNAS } from '@/data/comunas';
 import Category from '@/components/Category';
 import LeadForm from '@/components/LeadForm';
 import CartSummary from '@/components/CartSummary';
@@ -26,6 +27,7 @@ export default function CotizarPage() {
   const [cart, setCart] = useState<Cart>({});
   const [origin, setOrigin] = useState('web');
   const [fullName, setFullName] = useState('');
+  const [commune, setCommune] = useState('');
   const [specialRequest, setSpecialRequest] = useState('');
 
   // Categoría destino indicada por el hash (#cat-<slug>) al venir desde el home.
@@ -65,14 +67,20 @@ export default function CotizarPage() {
   const totalItems = useMemo(() => items.reduce((a, b) => a + b.qty, 0), [items]);
 
   const message = useMemo(() => {
-    const saludo = fullName.trim()
-      ? `Hola, soy ${fullName.trim()}! Quiero cotizar un servicio de limpieza. (${origin})`
+    const nombre = fullName.trim();
+    const zona = commune.trim();
+    const quien = [
+      nombre && `soy ${nombre}`,
+      zona && `vivo en ${zona}`,
+    ].filter(Boolean).join(', ');
+    const saludo = quien
+      ? `Hola, ${quien}! Quiero cotizar un servicio de limpieza. (${origin})`
       : `Hola! Quiero cotizar un servicio de limpieza. (${origin})`;
     const lines = items.map(i => `• ${i.section} — ${i.title} × ${i.qty}`);
     const extra = specialRequest.trim() ? `• Pedido especial: ${specialRequest.trim()}` : '';
     const body = [...lines, extra].filter(Boolean).join('\n');
     return body ? `${saludo}\n${body}` : saludo;
-  }, [items, fullName, origin, specialRequest]);
+  }, [items, fullName, origin, specialRequest, commune]);
 
   const waHref = useMemo(() => buildWaLink(message), [message]);
 
@@ -182,6 +190,8 @@ export default function CotizarPage() {
                     waHref={waHref}
                     fullName={fullName}
                     onNameChange={setFullName}
+                    commune={commune}
+                    onCommuneChange={setCommune}
                     onClear={() => setCart({})}
                     specialRequest={specialRequest}
                   />
@@ -210,7 +220,7 @@ export default function CotizarPage() {
 
       <footer className="site-footer" role="contentinfo">
         <span className="footer-brand">LimpiaBien</span>
-        <span>San Fernando · Santa Cruz · Chimbarongo · Chépica · Nancagua · Palmilla · Placilla · Peralillo</span>
+        <span>{COMUNAS.join(' · ')}</span>
         <span>© {new Date().getFullYear()} LimpiaBien</span>
       </footer>
     </>
