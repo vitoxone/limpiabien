@@ -16,14 +16,18 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   metadataBase: new URL('https://limpiabien.cl'),
   title: {
-    default: "LimpiaBien — Limpieza de sillones, colchones y alfombras a domicilio | Región de O'Higgins",
+    default: "LimpiaBien — Limpieza de pisos, sillones, colchones y tapices | Región de O'Higgins",
     template: '%s | LimpiaBien',
   },
   description:
-    "Limpieza profesional de sillones, colchones, alfombras y tapices de vehículos a domicilio en Nancagua, Santa Cruz, San Fernando, Chimbarongo y Chépica. Cotiza al instante por WhatsApp.",
+    "Limpieza profesional de pisos duros y alfombrados, sillones, colchones y tapices de vehículos y buses. A domicilio y empresas en Nancagua, Santa Cruz, San Fernando, Chimbarongo y Chépica.",
   applicationName: 'LimpiaBien',
   keywords: [
+    'limpieza de pisos duros',
+    'decapado y encerado de pisos',
+    'limpieza de porcelanato',
     'limpieza de tapices',
+    'limpieza de tapices de buses',
     'lavado de sillones',
     'limpieza de colchones',
     'lavado de alfombras',
@@ -44,25 +48,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://limpiabien.cl',
-    title: 'LimpiaBien — Limpieza de sillones, colchones, alfombras y oficinas',
+    title: 'LimpiaBien — Limpieza de pisos, tapices y colchones',
     description:
-      "Limpieza profesional de sillones, colchones, pisos alfombrados, oficinas y tapices de vehículos a domicilio en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
+      "Pisos duros y alfombrados, sillones, colchones y tapices a domicilio y empresas en la Región de O'Higgins. Cotiza por WhatsApp.",
     siteName: 'LimpiaBien',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: "LimpiaBien — Limpieza profesional de tapices, alfombras y oficinas en la Región de O'Higgins",
+        alt: "LimpiaBien — Limpieza profesional de pisos, tapices y colchones en la Región de O'Higgins",
       },
     ],
     locale: 'es_CL',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LimpiaBien — Limpieza de sillones, colchones, alfombras y oficinas',
+    title: 'LimpiaBien — Limpieza de pisos, tapices y colchones',
     description:
-      "Limpieza profesional a domicilio y empresas en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
+      "Pisos duros y alfombrados, sillones, colchones y tapices de vehículos. A domicilio y empresas en la Región de O'Higgins.",
     images: ['/og-image.jpg'],
   },
   robots: {
