@@ -13,7 +13,7 @@ export const PARTNERS: Partner[] = [
     id: 'santiago-pro',
     name: 'LimpiaPro Santiago',
     city: 'Santiago · Región Metropolitana',
-    services: 'Limpieza de sillones, colchones, alfombras muro a muro y oficinas.',
+    services: 'Limpieza de sillones, colchones, pisos alfombrados y oficinas.',
     phone: '+56911112222',
     instagram: '@limpiapro.stgo',
   },

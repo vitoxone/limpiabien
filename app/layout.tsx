@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     url: 'https://limpiabien.cl',
     title: 'LimpiaBien — Limpieza de sillones, colchones, alfombras y oficinas',
     description:
-      "Limpieza profesional de sillones, colchones, alfombras muro a muro, oficinas y tapices de vehículos a domicilio en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
+      "Limpieza profesional de sillones, colchones, pisos alfombrados, oficinas y tapices de vehículos a domicilio en la Región de O'Higgins. Cotiza al instante por WhatsApp.",
     siteName: 'LimpiaBien',
     images: [
       {
@@ -138,10 +138,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de sillones y tapices', url: 'https://limpiabien.cl/servicios/tapices' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de colchones', url: 'https://limpiabien.cl/servicios/colchones' } },
         { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Lavado de alfombras decorativas', url: 'https://limpiabien.cl/servicios/alfombras' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de pisos alfombrados y oficinas' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de tapices de vehículos' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de escaleras alfombradas' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de sillas tapizadas' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de pisos alfombrados y oficinas', url: 'https://limpiabien.cl/servicios/alfombras-muro' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de tapices de vehículos', url: 'https://limpiabien.cl/servicios/vehiculos' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de pisos duros: porcelanato, cerámica y flotantes', url: 'https://limpiabien.cl/servicios/pisos-duros' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de escaleras alfombradas', url: 'https://limpiabien.cl/servicios/escaleras' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de sillas tapizadas', url: 'https://limpiabien.cl/servicios/sillas' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Limpieza de respaldos de cama', url: 'https://limpiabien.cl/servicios/respaldos' } },
       ],
     },
   };

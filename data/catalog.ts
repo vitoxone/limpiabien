@@ -16,6 +16,36 @@ export type CatalogCategory = {
 
 export const CATEGORIES: CatalogCategory[] = [
   {
+    slug: 'pisos-duros',
+    name: 'Pisos duros',
+    domicilio: true,
+    description: 'Decapado, limpieza profunda, sellado, encerado acrílico y lustrado. Indica los m² de cada tipo de piso en el selector. El valor final depende del estado del piso y de los tratamientos que incluya.',
+    items: [
+      { id: 'piso-porcelanato', title: 'Porcelanato — m²', price: 0, show_public: true },
+      { id: 'piso-ceramico-interior', title: 'Cerámico interior — m²', price: 0, show_public: true },
+      { id: 'piso-ceramico-exterior', title: 'Cerámico exterior — m²', price: 0, show_public: true },
+      { id: 'piso-flotante', title: 'Flotante — m²', price: 0, show_public: true },
+      { id: 'piso-vinilico', title: 'Vinílico — m²', price: 0, show_public: true },
+      { id: 'piso-madera', title: 'Madera — m²', price: 0, show_public: true },
+      { id: 'piso-otro', title: 'Otro tipo de piso — m² (indícanos cuál por WhatsApp)', price: 0, show_public: true },
+    ],
+  },
+  {
+    slug: 'alfombras-muro',
+    name: 'Pisos alfombrados',
+    domicilio: true,
+    description: 'Servicio especializado para pisos alfombrados y alto tráfico. Limpieza profunda e higienización ideal para oficinas, locales comerciales y hogares. Cotización por m².',
+    items: [
+      { id: 'muro-1', title: '1 - Pisos alfombrados  m² (Ingrese cantidad de metros cuadrados en el selector)', price: 2600, show_public: true },
+      { id: 'muro-2', title: '2 - Pisos alfombrados  m²', price: 2700, show_public: false },
+      { id: 'muro-3', title: '3 - Pisos alfombrados  m²', price: 2800, show_public: false },
+      { id: 'muro-4', title: '4 - Pisos alfombrados  m²', price: 2900, show_public: false },
+      { id: 'muro-5', title: '5 - Pisos alfombrados  m²', price: 3000, show_public: false },
+      { id: 'muro-6', title: '6 - Pisos alfombrados  m²', price: 3100, show_public: false },
+      { id: 'muro-7', title: '7 - Pisos alfombrados  m²', price: 3200, show_public: false }
+    ],
+  },
+  {
     slug: 'tapices',
     name: 'Tapices',
     domicilio: true,
@@ -49,14 +79,16 @@ export const CATEGORIES: CatalogCategory[] = [
   },
   {
     slug: 'vehiculos',
-    name: 'Tapices vehículos',
+    name: 'Vehículos y buses',
     domicilio: true,
-    description: 'Limpieza interior de autos, camionetas y SUVs. Incluye asientos, alfomillas y detalles, removiendo manchas y olores para un viaje más fresco.',
+    description: 'Limpieza interior de autos, SUV, camionetas, furgones de pasajeros y buses. Incluye asientos, alfombrillas y detalles, removiendo manchas y olores.',
     items: [
       { id: 'auto-sedan', title: 'Auto sedán/hatchback (interior)', price: 35000, show_public: true },
       { id: 'suv-mediana', title: 'SUV Mediana', price: 45000, show_public: true },
       { id: 'Camioneta', title: 'Camioneta', price: 45000, show_public: true },
       { id: 'suv-grande', title: 'SUV 3 corridas asientos', price: 55000, show_public: true },
+      { id: 'furgon-pasajeros', title: 'Furgón de pasajeros', price: 0, show_public: true },
+      { id: 'bus', title: 'Bus', price: 0, show_public: true },
       { id: 'butaca-infantil', title: 'Asiento infantil', price: 6000, show_public: true },
     ],
   },
@@ -69,21 +101,6 @@ export const CATEGORIES: CatalogCategory[] = [
       { id: 'alfombra-pequena', title: 'Alfombra pequeña (hasta 2 m²)', price: 20000, show_public: true },
       { id: 'alfombra-mediana', title: 'Alfombra mediana (2–4 m²)', price: 25000, show_public: true },
       { id: 'alfombra-grande', title: 'Alfombra grande (4–6 m²)', price: 30000, show_public: true },
-    ],
-  },
-  {
-    slug: 'alfombras-muro',
-    name: 'Alfombras muro a muro',
-    domicilio: true,
-    description: 'Servicio especializado para alfombras muro a muro y alto tráfico. Limpieza profunda e higienización ideal para oficinas, locales comerciales y hogares. Cotización por m².',
-    items: [
-      { id: 'muro-1', title: '1 - Muro a muro  m² (Ingrese cantidad de metros cuadrados en el selector)', price: 2600, show_public: true },
-      { id: 'muro-2', title: '2 - Muro a muro  m²', price: 2700, show_public: false },
-      { id: 'muro-3', title: '3 - Muro a muro  m²', price: 2800, show_public: false },
-      { id: 'muro-4', title: '4 - Muro a muro  m²', price: 2900, show_public: false },
-      { id: 'muro-5', title: '5 - Muro a muro  m²', price: 3000, show_public: false },
-      { id: 'muro-6', title: '6 - Muro a muro  m²', price: 3100, show_public: false },
-      { id: 'muro-7', title: '7 - Muro a muro  m²', price: 3200, show_public: false }
     ],
   },
   {

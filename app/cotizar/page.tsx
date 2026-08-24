@@ -23,6 +23,38 @@ const WaIcon = () => (
   </svg>
 );
 
+/* Íconos y bajadas por categoría. La grilla se arma recorriendo CATEGORIES,
+   así que agregar un servicio en data/catalog.ts lo suma acá solo; si el slug
+   todavía no tiene ícono propio, cae en FALLBACK_ICON. */
+const ICON_PROPS = {
+  width: 26,
+  height: 26,
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 1.6,
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+  'aria-hidden': true,
+};
+
+const FALLBACK_ICON = (
+  <svg {...ICON_PROPS}><path d="M12 3l2.4 5.5 6 .5-4.5 4 1.3 5.9L12 15.8 6.8 18.9l1.3-5.9-4.5-4 6-.5z" /></svg>
+);
+
+const CAT_ICONS: Record<string, JSX.Element> = {
+  tapices: (<svg {...ICON_PROPS}><path d="M5 11V8a2 2 0 012-2h10a2 2 0 012 2v3" /><path d="M3 12a2 2 0 114 0v2h10v-2a2 2 0 114 0v6H3z" /></svg>),
+  colchones: (<svg {...ICON_PROPS}><rect x="2" y="8" width="20" height="9" rx="2" /><path d="M7 8v9M12 8v9M17 8v9" /><path d="M4 17v2M20 17v2" /></svg>),
+  vehiculos: (<svg {...ICON_PROPS}><path d="M5 13l1.4-4.2A2 2 0 018.3 7h7.4a2 2 0 011.9 1.4L19 13" /><path d="M3 13h18v4h-2.5M8.5 17H3v-4" /><path d="M8.5 17h7" /><circle cx="6.5" cy="17" r="1.5" /><circle cx="17.5" cy="17" r="1.5" /></svg>),
+  alfombras: (<svg {...ICON_PROPS}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M6 9c2 0 2 1.6 4 1.6S12 9 14 9s2 1.6 4 1.6" /><path d="M6 14c2 0 2 1.6 4 1.6s2-1.6 4-1.6 2 1.6 4 1.6" /></svg>),
+  'alfombras-muro': (<svg {...ICON_PROPS}><rect x="3" y="6" width="18" height="13" rx="2" /><path d="M6.5 10h1.2M11.4 10h1.2M16.3 10h1.2" /><path d="M9 12.5h1.2M13.9 12.5h1.2M4.5 12.5h1.2M18.3 12.5h1.2" /><path d="M6.5 15h1.2M11.4 15h1.2M16.3 15h1.2" /></svg>),
+  escaleras: (<svg {...ICON_PROPS}><path d="M3 21v-3.5h4.5V14H12v-3.5h4.5V7H21" /><path d="M3 21h18" /></svg>),
+  'pisos-duros': (<svg {...ICON_PROPS}><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M3 15h18M9 3v18M15 3v18" /></svg>),
+  sillas: (<svg {...ICON_PROPS}><rect x="7" y="3" width="10" height="8" rx="1.5" /><rect x="5" y="11" width="14" height="3.5" rx="1.5" /><path d="M7.5 14.5V21M16.5 14.5V21" /></svg>),
+  respaldos: (<svg {...ICON_PROPS}><path d="M5 16V8a3 3 0 013-3h8a3 3 0 013 3v8" /><path d="M10 5.5V16M14 5.5V16" /><rect x="3" y="16" width="18" height="3.5" rx="1" /><path d="M5 19.5V21M19 19.5V21" /></svg>),
+  'pedidos-especiales': (<svg {...ICON_PROPS}><path d="M21 14a2 2 0 01-2 2H8l-4 4V5a2 2 0 012-2h13a2 2 0 012 2z" /><path d="M8.5 9.5h7M8.5 12.5h4" /></svg>),
+};
+
 export default function CotizarPage() {
   const [cart, setCart] = useState<Cart>({});
   const [origin, setOrigin] = useState('web');
@@ -109,56 +141,19 @@ export default function CotizarPage() {
               Toca una categoría para ver los servicios
             </p>
 
-            <div className="mosaic" aria-label="Categorías de servicios" role="group">
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-tapices')} aria-label="Ver servicios de Tapices">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/tapices.jpg')", backgroundPosition: 'center 30%' }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Tapices</span>
-                  <span className="mosaic-sub">Sillones · Seccionales</span>
-                </div>
-              </button>
-
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-colchones')} aria-label="Ver servicios de Colchones">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Colchones</span>
-                  <span className="mosaic-sub">1 plaza · Queen · King</span>
-                </div>
-              </button>
-
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-vehiculos')} aria-label="Ver servicios de Vehículos">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_5942.jpg')" }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Vehículos</span>
-                  <span className="mosaic-sub">Autos · SUV · Camionetas</span>
-                </div>
-              </button>
-
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-alfombras-muro')} aria-label="Ver servicios de Oficinas y Alfombras">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_5673.jpg')" }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Oficinas y Alfombras</span>
-                  <span className="mosaic-sub">Muro a muro · Decorativas</span>
-                </div>
-              </button>
-
-              <button className="mosaic-cell" onClick={() => scrollTo('cat-sillas')} aria-label="Ver servicios de Sillas">
-                <div className="mosaic-img" style={{ backgroundImage: "url('/servicios/IMG_3507.jpg')" }} />
-                <div className="mosaic-overlay" />
-                <span className="mosaic-cta" aria-hidden="true">Toca para ver →</span>
-                <div className="mosaic-label">
-                  <span className="mosaic-tag">Sillas</span>
-                  <span className="mosaic-sub">Tapizadas · Sitiales</span>
-                </div>
-              </button>
+            <div className="cat-nav" aria-label="Categorías de servicios" role="group">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.slug}
+                  type="button"
+                  className="cat-nav-item"
+                  onClick={() => scrollTo(`cat-${cat.slug}`)}
+                  aria-label={`Ver servicios de ${cat.name}`}
+                >
+                  <span className="cat-nav-icon">{CAT_ICONS[cat.slug] ?? FALLBACK_ICON}</span>
+                  <span className="cat-nav-name">{cat.name}</span>
+                </button>
+              ))}
             </div>
           </div>
         </div>

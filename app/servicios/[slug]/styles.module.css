@@ -1,35 +1,137 @@
-.svc {}
-.wrap { max-width: 1100px; margin: 0 auto; padding: 18px 16px; }
-.hero { background: linear-gradient(135deg, #e0f7ff, #f8fdff); border-bottom: 1px solid #e6eef5; }
-.heroGrid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; align-items: center; }
-.heroText h1 { font-size: 34px; letter-spacing: -.02em; margin: 6px 0 8px; color: #0f172a; }
-.lead { color: #1f2937; }
-.eyebrow { display: inline-block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #0284c7; background: rgba(14,165,233,.08); border: 1px solid rgba(14,165,233,.2); padding: 6px 10px; border-radius: 999px; }
-.heroImg img { border-radius: 16px; box-shadow: 0 18px 50px rgba(14,165,233,.18); }
+/* Landing de servicio.
+   Usa los mismos tokens y patrones que app/globals.css: aquí sólo vive lo
+   específico de esta ruta (hero con imagen, pasos, cards de secado). El resto
+   son clases globales compartidas con la home — no duplicar estilos acá. */
 
-.btnPrimary, .btnGhost { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; font-weight: 700; text-decoration: none; border: 1px solid transparent; }
-.btnPrimary { color: #fff; background: linear-gradient(135deg, #0ea5e9, #06b6d4 45%, #22d3ee); box-shadow: 0 10px 26px rgba(14,165,233,.25); }
-.btnGhost { color: #0369a1; background: rgba(230,246,255,.85); border: 1px solid rgba(14,165,233,.35); }
+.svc { display: block; }
 
-.section { padding: 26px 0; }
-.alt { background: #fbfdff; border-top: 1px solid #eef4f9; border-bottom: 1px solid #eef4f9; }
-.bullets { margin: 10px 0 0; padding-left: 18px; }
-.steps { display: grid; gap: 10px; counter-reset: step; margin-top: 10px; }
-.steps li { display: grid; grid-template-columns: 36px 1fr; gap: 10px; background: #fff; border: 1px solid #e6eef5; border-radius: 12px; padding: 10px 12px; }
-.stepNum { width: 28px; height: 28px; border-radius: 999px; display: grid; place-items: center; background: #e0f2fe; color: #0369a1; font-weight: 800; }
-.cards { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 10px 0; }
-.card { background: #fff; border: 1px solid #e6eef5; border-radius: 12px; padding: 12px 14px; }
-.muted { color: #5b6b7a; }
-.small { font-size: 13px; }
+/* ── HERO — mismo tratamiento de fondo que .hero-top de la home ── */
+.hero {
+  position: relative;
+  padding: 56px 0 64px;
+  isolation: isolate;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 60% 70% at 25% 0%, rgba(14,165,233,.18), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 30%, rgba(255,127,0,.14), transparent 60%);
+  pointer-events: none;
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 48px;
+  align-items: center;
+}
+/* Breadcrumb — vuelve al listado de servicios de la home (/servicios es un 301).
+   El padding/margin negativo agranda el área táctil sin engordar la fila. */
+.breadcrumb { margin-bottom: 16px; }
+.breadcrumb ol {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 4px 10px; list-style: none;
+  font-family: var(--ff-sans); font-size: 13px;
+}
+.breadcrumb li { display: flex; align-items: center; gap: 10px; }
+.breadcrumb li + li::before { content: '/'; color: var(--stone-400); }
+.breadcrumb a,
+.breadcrumb span {
+  display: inline-flex; align-items: center;
+  padding: 11px 2px; margin: -11px 0;
+}
+.breadcrumb a { color: var(--muted); transition: color .2s ease; }
+.breadcrumb a:hover { color: var(--sky-dark); }
+.breadcrumb span { color: var(--ink); font-weight: 500; }
 
-.grid2 { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; }
-.faq details { background: #fff; border: 1px solid #e6eef5; border-radius: 12px; padding: 10px 12px; margin-bottom: 10px; }
+.heroTitle {
+  font-family: var(--ff-serif);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.heroImg {
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+/* Encuadre fijo: las fotos del catálogo mezclan formato vertical y horizontal,
+   así que se recortan al mismo ratio en vez de estirar el hero. */
+.heroImg img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
 
-.cta { background: linear-gradient(135deg, #e0f7ff, #f8fdff); border-top: 1px solid #e6eef5; }
-.ctaInner { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+/* ── PASOS DEL PROCEDIMIENTO ── */
+.steps { display: grid; gap: 12px; max-width: 72ch; margin: 0 auto; list-style: none; }
+.steps li {
+  display: grid; grid-template-columns: 32px 1fr; gap: 16px; align-items: start;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  transition: border-color .2s ease, box-shadow .25s ease;
+}
+.steps li:hover {
+  border-color: rgba(14,165,233,.45);
+  box-shadow: 0 12px 28px rgba(14,165,233,.10);
+}
+.stepNum {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(14,165,233,.10);
+  color: var(--sky-dark);
+  font-family: var(--ff-sans);
+  font-weight: 600; font-size: 14px;
+}
+.stepBody { font-size: 15px; line-height: 1.65; color: var(--muted); padding-top: 4px; }
+
+/* ── CARDS (tiempos de secado) ── */
+.cards {
+  display: grid; gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-bottom: 22px; list-style: none;
+}
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 22px 24px;
+  font-family: var(--ff-sans);
+  font-weight: 500; font-size: 15px; color: var(--ink);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ── LISTAS (importancia, productos, maquinaria) ── */
+.bullets { list-style: none; display: grid; gap: 12px; }
+.bullets li {
+  position: relative; padding-left: 26px;
+  font-size: 15px; line-height: 1.7; color: var(--muted);
+}
+.bullets li::before {
+  content: ''; position: absolute; left: 0; top: .6em;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--sky);
+}
+.bullets a { color: var(--sky-dark); text-decoration: underline; text-underline-offset: 3px; }
+.bullets a:hover { color: var(--cta); }
+
+.grid2 { display: grid; gap: 48px; grid-template-columns: 1fr 1fr; }
+.colTitle {
+  font-family: var(--ff-serif); font-size: 22px; font-weight: 400;
+  color: var(--ink); margin-bottom: 18px;
+}
+
+.note {
+  color: var(--muted); font-size: 15px; line-height: 1.7;
+  max-width: 60ch; margin: 0 auto 24px; text-align: center;
+}
+.tips { font-size: 13px; color: var(--muted); text-align: center; max-width: 60ch; margin: 0 auto; }
+.narrow { max-width: 760px; margin: 0 auto; }
 
 @media (max-width: 900px) {
-  .heroGrid { grid-template-columns: 1fr; }
-  .grid2 { grid-template-columns: 1fr; }
-  .ctaInner { flex-direction: column; align-items: start; }
+  .hero { padding: 40px 0 48px; }
+  .heroGrid { grid-template-columns: 1fr; gap: 32px; }
+  .grid2 { grid-template-columns: 1fr; gap: 32px; }
 }

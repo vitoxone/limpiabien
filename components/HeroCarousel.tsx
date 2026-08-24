@@ -29,7 +29,7 @@ const SLIDES = [
   {
     id: 'pisos',
     title: 'Pisos Alfombrados y Oficinas',
-    subtitle: 'Alfombras muro a muro de alto tráfico para empresas, oficinas y locales comerciales.',
+    subtitle: 'Pisos alfombrados de alto tráfico para empresas, oficinas y locales comerciales.',
     img: '/servicios/IMG_5673.jpg',
     badge: 'Empresas & B2B',
     align: 'left', // Posición izquierda

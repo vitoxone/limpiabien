@@ -3,6 +3,7 @@ import SiteHeader from '@/components/SiteHeader';
 import Testimonios from '@/components/Testimonios';
 import InstagramSection from '@/components/InstagramSection';
 import { COMUNAS } from '@/data/comunas';
+import { CATEGORIES } from '@/data/catalog';
 
 const WaIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -17,6 +18,14 @@ const PinIcon = () => (
   </svg>
 );
 
+// El orden de los servicios vive en data/catalog.ts: acá sólo se respeta,
+// para que la home, el cotizador y las landings muestren siempre la misma secuencia.
+const ORDEN_CATALOGO = CATEGORIES.map((c) => c.slug);
+const posEnCatalogo = (slug: string) => {
+  const i = ORDEN_CATALOGO.indexOf(slug);
+  return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+};
+
 const SERVICES = [
   {
     slug: 'tapices',
@@ -28,7 +37,7 @@ const SERVICES = [
   {
     slug: 'alfombras-muro',
     name: 'Pisos alfombrados y Oficinas',
-    desc: 'Alfombras muro a muro de alto tráfico en oficinas, empresas y locales comerciales. Cotización por m².',
+    desc: 'Pisos alfombrados de alto tráfico en oficinas, empresas y locales comerciales. Cotización por m².',
     img: '/servicios/IMG_5673.jpg',
     badge: 'Empresas & B2B',
     badgeClass: 'badge-b2b',
@@ -38,18 +47,28 @@ const SERVICES = [
     name: 'Colchones',
     desc: '1 plaza, queen y king. Higienización completa con productos hipoalergénicos.',
     img: '/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg',
+    badge: 'Pausado durante invierno',
+    badgeClass: 'badge-pausado',
   },
   {
     slug: 'vehiculos',
-    name: 'Vehículos',
-    desc: 'Limpieza interior de autos, camionetas y SUVs. Quitamos manchas y olores.',
-    img: '/servicios/IMG_5942.jpg',
+    name: 'Vehículos y buses',
+    desc: 'Interior de autos, SUV, camionetas, furgones y buses. Quitamos manchas y olores.',
+    img: '/servicios/bus.jpg',
   },
   {
     slug: 'alfombras',
     name: 'Alfombras decorativas',
     desc: 'Lavado en profundidad de alfombras sueltas. Recuperamos el color y eliminamos ácaros.',
-    img: '/servicios/IMG_5673.jpg',
+    img: '/servicios/decorativa.jpg',
+  },
+  {
+    slug: 'pisos-duros',
+    name: 'Pisos duros',
+    desc: 'Porcelanato, cerámica, flotantes y vinílicos. Decapado, sellado, encerado y lustrado.',
+    img: '/servicios/piso.jpg',
+    badge: 'Empresas & B2B',
+    badgeClass: 'badge-b2b',
   },
   {
     slug: 'sillas',
@@ -57,7 +76,7 @@ const SERVICES = [
     desc: 'Sillas de comedor, oficinas, sitiales y banquetas tapizadas — limpieza unidad por unidad.',
     img: '/servicios/IMG_3507.jpg',
   },
-];
+].sort((a, b) => posEnCatalogo(a.slug) - posEnCatalogo(b.slug));
 
 const WHY_US = [
   {
@@ -130,7 +149,7 @@ export default function HomePage() {
                   Tu espacio fresco<br />y <em>como nuevo</em>
                 </h1>
                 <p className="hero-landing-sub">
-                  Limpieza profesional de sillones, colchones, tapices de vehículos, alfombras muro a muro y pisos alfombrados de oficinas. Inyección–extracción a domicilio y empresas.
+                  Limpieza profesional de sillones, colchones, tapices de vehículos y pisos alfombrados de oficinas. Inyección–extracción a domicilio y empresas.
                 </p>
                 <div className="hero-landing-actions">
                   <Link className="btn btn-cta btn-lg" href="/cotizar">
@@ -226,7 +245,7 @@ export default function HomePage() {
             </div>
             <div className="services-grid">
               {SERVICES.map(svc => (
-                <Link key={svc.slug} href={`/cotizar#cat-${svc.slug}`} className="service-card">
+                <article key={svc.slug} className="service-card">
                   <div className="service-card-img" style={{ backgroundImage: `url('${svc.img}')` }}>
                     {svc.badge && (
                       <span className={`service-card-badge ${svc.badgeClass || ''}`}>{svc.badge}</span>
@@ -235,9 +254,24 @@ export default function HomePage() {
                   <div className="service-card-body">
                     <div className="service-card-title">{svc.name}</div>
                     <p className="service-card-desc">{svc.desc}</p>
-                    <span className="service-card-link">Ver detalle →</span>
+                    <div className="service-card-actions">
+                      <Link
+                        href={`/servicios/${svc.slug}`}
+                        className="service-card-link"
+                        aria-label={`Ver detalle de ${svc.name}`}
+                      >
+                        Ver detalle →
+                      </Link>
+                      <Link
+                        href={`/cotizar#cat-${svc.slug}`}
+                        className="btn btn-cta btn-sm"
+                        aria-label={`Cotizar ${svc.name}`}
+                      >
+                        Cotizar
+                      </Link>
+                    </div>
                   </div>
-                </Link>
+                </article>
               ))}
             </div>
           </div>
@@ -275,7 +309,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="b2b-card-title">Cotización por m²</h3>
                 <p className="b2b-card-desc">
-                  Precios competitivos según la superficie total de alfombra muro a muro o sillas de oficina a limpiar.
+                  Precios competitivos según la superficie total de piso alfombrado o sillas de oficina a limpiar.
                 </p>
               </div>
               <div className="b2b-card">
@@ -293,7 +327,7 @@ export default function HomePage() {
             <div className="b2b-actions">
               <Link className="btn btn-cta btn-lg" href="/cotizar#cat-alfombras-muro">
                 <WaIcon />
-                Cotizar Oficina / Muro a Muro
+                Cotizar Oficina / Pisos Alfombrados
               </Link>
             </div>
           </div>
