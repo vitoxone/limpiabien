@@ -5,6 +5,7 @@ import Testimonios from '@/components/Testimonios';
 import InstagramSection from '@/components/InstagramSection';
 import { COMUNAS } from '@/data/comunas';
 import { CATEGORIES } from '@/data/catalog';
+import { buildWaLink } from '@/lib/wa';
 
 const WaIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -332,6 +333,22 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
+
+            <div className="cobertura-extra">
+              <p className="cobertura-extra-text">
+                ¿Estás en <strong>Rancagua, Machalí, Curicó, Talca o Santiago</strong>? Háblanos y podemos
+                llevar nuestro servicio hasta tu hogar, oficina o comercio.
+              </p>
+              <Link
+                className="btn btn-cta"
+                href={buildWaLink('Hola, estoy fuera de las comunas de cobertura. ¿Pueden llegar hasta mi ciudad?')}
+                target="_blank"
+                rel="noopener nofollow"
+              >
+                <WaIcon />
+                Consultar por mi ciudad
+              </Link>
+            </div>
           </div>
         </section>
 
