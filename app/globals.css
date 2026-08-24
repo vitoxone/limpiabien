@@ -1149,12 +1149,72 @@ button { font-family: inherit; }
   aspect-ratio: 1 / 1;
 }
 .hero-collage-img {
+  position: relative;          /* ancla para <Image fill> */
   width: 100%; height: 100%;
   border-radius: 20px;
   overflow: hidden;
-  background-size: cover; background-position: center;
   box-shadow: 0 12px 32px rgba(15,23,42,.14);
   transition: transform .4s ease;
+}
+.hero-collage-img img { object-fit: cover; }
+
+/* ── Rotación automática de fotos (sólo CSS, sin JS) ──────
+   Cada celda apila sus slides y los va cruzando con opacidad. Las 13 fotos
+   están repartidas en 4 grupos DISJUNTOS (uno por celda), así que dos celdas
+   nunca pueden mostrar la misma imagen. El desfase de 1.25s entre celdas
+   evita que cambien todas a la vez. */
+.hero-collage-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  animation-name: collage-fade;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  will-change: opacity;
+}
+.hero-collage-slide img { object-fit: cover; }
+
+/* duración = nº de slides × 5s de exposición */
+.rot-3 .hero-collage-slide { animation-duration: 15s; }
+.rot-4 .hero-collage-slide { animation-duration: 20s; }
+
+/* 3 slides: visible 1/3 del ciclo; el fundido ocupa ~0.8s */
+.rot-3 .hero-collage-slide { animation-name: collage-fade-3; }
+.rot-4 .hero-collage-slide { animation-name: collage-fade-4; }
+
+@keyframes collage-fade-3 {
+  0%      { opacity: 0; }
+  4%      { opacity: 1; }
+  33.33%  { opacity: 1; }
+  38%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+@keyframes collage-fade-4 {
+  0%   { opacity: 0; }
+  3%   { opacity: 1; }
+  25%  { opacity: 1; }
+  29%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.hero-collage-img-main .hero-collage-slide:nth-child(1) { animation-delay: 0.0s; }
+.hero-collage-img-main .hero-collage-slide:nth-child(2) { animation-delay: -5.0s; }
+.hero-collage-img-main .hero-collage-slide:nth-child(3) { animation-delay: -10.0s; }
+.hero-collage-img-top .hero-collage-slide:nth-child(1) { animation-delay: -1.25s; }
+.hero-collage-img-top .hero-collage-slide:nth-child(2) { animation-delay: -6.25s; }
+.hero-collage-img-top .hero-collage-slide:nth-child(3) { animation-delay: -11.25s; }
+.hero-collage-img-bl .hero-collage-slide:nth-child(1) { animation-delay: -2.5s; }
+.hero-collage-img-bl .hero-collage-slide:nth-child(2) { animation-delay: -7.5s; }
+.hero-collage-img-bl .hero-collage-slide:nth-child(3) { animation-delay: -12.5s; }
+.hero-collage-img-br .hero-collage-slide:nth-child(1) { animation-delay: -3.75s; }
+.hero-collage-img-br .hero-collage-slide:nth-child(2) { animation-delay: -8.75s; }
+.hero-collage-img-br .hero-collage-slide:nth-child(3) { animation-delay: -13.75s; }
+.hero-collage-img-br .hero-collage-slide:nth-child(4) { animation-delay: -18.75s; }
+
+/* Sin animación: se muestra sólo la primera foto de cada celda. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-collage-slide { animation: none; opacity: 0; }
+  .hero-collage-slide:first-child { opacity: 1; }
 }
 .hero-collage-img:hover { transform: translateY(-4px) scale(1.01); }
 .hero-collage-img-main { grid-area: main; }
@@ -1182,8 +1242,34 @@ button { font-family: inherit; }
 @media (max-width: 900px) {
   .hero-landing { padding: 56px 0 64px; }
   .hero-landing-grid { grid-template-columns: 1fr; gap: 40px; }
-  .hero-collage { max-width: 460px; margin: 0 auto; }
+  .hero-collage { width: 100%; max-width: 460px; margin: 0 auto; }
   .hero-floating-card { left: 0; bottom: -14px; }
+}
+
+@media (max-width: 600px) {
+  /* Con 3 columnas las celdas chicas quedaban en ~90px: en móvil el mosaico
+     pasa a 2x2 parejo para que cada foto siga siendo legible. La tarjeta
+     flotante baja al flujo (fila propia) porque superpuesta tapaba una foto. */
+  .hero-collage {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "main top"
+      "bl   br";
+    grid-auto-rows: auto;
+    aspect-ratio: auto;
+    gap: 10px;
+  }
+  .hero-collage-img { border-radius: 16px; height: auto; aspect-ratio: 1 / 1; }
+  .hero-floating-card {
+    position: static;
+    grid-column: 1 / -1;
+    margin-top: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-collage-img { transition: none; }
+  .hero-collage-img:hover { transform: none; }
 }
 
 /* ── Services grid (5 cards) ────────────────────────────── */
@@ -1362,7 +1448,7 @@ button { font-family: inherit; }
 }
 
 /* ─────────────────────────────────────────────────────────
-   SECCIÓN B2B / EMPRESAS Y OFICINAS
+   BADGE B2B (etiqueta en las cards de servicio)
    ───────────────────────────────────────────────────────── */
 .badge-b2b {
   background: var(--sky-dark);
@@ -1372,95 +1458,6 @@ button { font-family: inherit; }
   text-transform: uppercase;
   font-size: 10px;
   box-shadow: 0 2px 10px rgba(2,132,199,.3);
-}
-
-.b2b-section {
-  padding: 80px 0;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-.b2b-section::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 60% at 80% 20%, rgba(14,165,233,.18), transparent 70%);
-  pointer-events: none;
-}
-.b2b-head {
-  text-align: center;
-  margin-bottom: 48px;
-}
-.b2b-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--sky-mid);
-  margin-bottom: 12px;
-}
-.b2b-title {
-  font-family: var(--ff-serif);
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 400;
-  line-height: 1.15;
-  color: white;
-  margin-bottom: 12px;
-}
-.b2b-title em {
-  font-style: italic;
-  color: var(--sky-mid);
-}
-.b2b-sub {
-  font-size: 16px;
-  color: rgba(255,255,255,.7);
-  max-width: 54ch;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-.b2b-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  margin-bottom: 44px;
-}
-.b2b-card {
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.1);
-  backdrop-filter: blur(12px);
-  border-radius: var(--r-lg);
-  padding: 28px 24px;
-  transition: transform .3s ease, border-color .3s ease, background .3s ease;
-}
-.b2b-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(56,189,248,.4);
-  background: rgba(255,255,255,.08);
-}
-.b2b-card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: rgba(56,189,248,.15);
-  color: var(--sky-mid);
-  display: grid;
-  place-items: center;
-  margin-bottom: 18px;
-}
-.b2b-card-title {
-  font-family: var(--ff-serif);
-  font-size: 20px;
-  font-weight: 500;
-  color: white;
-  margin-bottom: 8px;
-}
-.b2b-card-desc {
-  font-size: 14px;
-  color: rgba(255,255,255,.65);
-  line-height: 1.6;
 }
 
 /* ─────────────────────────────────────────────────────────

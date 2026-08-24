@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import Testimonios from '@/components/Testimonios';
 import InstagramSection from '@/components/InstagramSection';
@@ -149,7 +150,7 @@ export default function HomePage() {
                   Tu espacio fresco<br />y <em>como nuevo</em>
                 </h1>
                 <p className="hero-landing-sub">
-                  Limpieza profesional de sillones, colchones, tapices de vehículos y pisos alfombrados de oficinas. Inyección–extracción a domicilio y empresas.
+                  Pisos duros y alfombrados, sillones, colchones, tapices de vehículos y buses. Inyección–extracción, decapado y encerado, a domicilio y para empresas.
                 </p>
                 <div className="hero-landing-actions">
                   <Link className="btn btn-cta btn-lg" href="/cotizar">
@@ -176,23 +177,123 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="hero-collage" aria-hidden="true">
-                <div
-                  className="hero-collage-img hero-collage-img-main"
-                  style={{ backgroundImage: "url('/servicios/tapices.jpg')" }}
-                />
-                <div
-                  className="hero-collage-img hero-collage-img-top"
-                  style={{ backgroundImage: "url('/servicios/IMG_9245.jpg')" }}
-                />
-                <div
-                  className="hero-collage-img hero-collage-img-bl"
-                  style={{ backgroundImage: "url('/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg')" }}
-                />
-                <div
-                  className="hero-collage-img hero-collage-img-br"
-                  style={{ backgroundImage: "url('/servicios/IMG_8836.jpg')" }}
-                />
+              <div className="hero-collage">
+                <div className="hero-collage-img hero-collage-img-main rot-3">
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/piso2.jpg"
+                      alt="Lustrado de piso de porcelanato con rotativa"
+                      fill
+                      sizes="(max-width: 600px) 45vw, (max-width: 900px) 210px, 215px"
+                      priority
+                    />
+                  </div>
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/piso.jpg"
+                      alt="Limpieza profunda de piso de porcelanato"
+                      fill
+                      sizes="(max-width: 600px) 45vw, (max-width: 900px) 210px, 215px"
+                    />
+                  </div>
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/IMG_8836.jpg"
+                      alt="Escalera alfombrada limpia"
+                      fill
+                      sizes="(max-width: 600px) 45vw, (max-width: 900px) 210px, 215px"
+                    />
+                  </div>
+                </div>
+                <div className="hero-collage-img hero-collage-img-top rot-3">
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/IMG_9245.jpg"
+                      alt="Limpieza de piso alfombrado en oficina"
+                      fill
+                      sizes="(max-width: 600px) 45vw, (max-width: 900px) 300px, 320px"
+                      priority
+                    />
+                  </div>
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/decorativa.jpg"
+                      alt="Lavado de alfombra decorativa con rotativa"
+                      fill
+                      sizes="(max-width: 600px) 45vw, (max-width: 900px) 300px, 320px"
+                    />
+                  </div>
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/IMG_5673.jpg"
+                      alt="Piso alfombrado de oficina recién limpiado"
+                      fill
+                      sizes="(max-width: 600px) 45vw, (max-width: 900px) 300px, 320px"
+                    />
+                  </div>
+                </div>
+                <div className="hero-collage-img hero-collage-img-bl rot-3">
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/tapices.jpg"
+                      alt="Sillón tras la limpieza de tapiz"
+                      fill
+                      sizes="(max-width: 600px) 45vw, 160px"
+                      priority
+                    />
+                  </div>
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/IMG_54561.jpg"
+                      alt="Sofá de tela limpio"
+                      fill
+                      sizes="(max-width: 600px) 45vw, 160px"
+                    />
+                  </div>
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/IMG_3507.jpg"
+                      alt="Silla tapizada tras la limpieza"
+                      fill
+                      sizes="(max-width: 600px) 45vw, 160px"
+                    />
+                  </div>
+                </div>
+                <div className="hero-collage-img hero-collage-img-br rot-4">
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/bus2.jpg"
+                      alt="Asiento de bus limpio"
+                      fill
+                      sizes="(max-width: 600px) 45vw, 160px"
+                      priority
+                    />
+                  </div>
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/bus.jpg"
+                      alt="Interior de bus tras la limpieza de tapices"
+                      fill
+                      sizes="(max-width: 600px) 45vw, 160px"
+                    />
+                  </div>
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/IMG_5942.jpg"
+                      alt="Asientos de vehículo limpios"
+                      fill
+                      sizes="(max-width: 600px) 45vw, 160px"
+                    />
+                  </div>
+                  <div className="hero-collage-slide">
+                    <Image
+                      src="/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg"
+                      alt="Colchón higienizado"
+                      fill
+                      sizes="(max-width: 600px) 45vw, 160px"
+                    />
+                  </div>
+                </div>
                 <div className="glass-card hero-floating-card">
                   <div className="hero-floating-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
@@ -273,62 +374,6 @@ export default function HomePage() {
                   </div>
                 </article>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* SOLUCIONES PARA EMPRESAS Y OFICINAS */}
-        <section className="b2b-section" aria-labelledby="b2b-title">
-          <div className="band-inner">
-            <div className="b2b-head">
-              <span className="b2b-eyebrow">Soluciones Corporativas</span>
-              <h2 id="b2b-title" className="b2b-title">
-                Pisos alfombrados para <em>oficinas y empresas</em>
-              </h2>
-              <p className="b2b-sub">
-                Mantén tus instalaciones impecables, libres de ácaros y con presentación profesional sin interrumpir la jornada de tu equipo.
-              </p>
-            </div>
-            <div className="b2b-grid">
-              <div className="b2b-card">
-                <div className="b2b-card-icon">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="b2b-card-title">Horarios Flexibles</h3>
-                <p className="b2b-card-desc">
-                  Coordinamos el servicio fuera del horario laboral o en fines de semana para no interferir con las operaciones de tu empresa.
-                </p>
-              </div>
-              <div className="b2b-card">
-                <div className="b2b-card-icon">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <h3 className="b2b-card-title">Cotización por m²</h3>
-                <p className="b2b-card-desc">
-                  Precios competitivos según la superficie total de piso alfombrado o sillas de oficina a limpiar.
-                </p>
-              </div>
-              <div className="b2b-card">
-                <div className="b2b-card-icon">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.6 15.11a2 2 0 01-1.022-.547l-1.074-1.074a2 2 0 010-2.828l1.074-1.074a2 2 0 011.022-.547l2.387-.477a6 6 0 013.86.517l.318.158a6 6 0 003.86.517l2.387-.477a2 2 0 011.022.547l1.074 1.074a2 2 0 010 2.828l-1.074 1.074z" />
-                  </svg>
-                </div>
-                <h3 className="b2b-card-title">Extracción Profunda Kärcher</h3>
-                <p className="b2b-card-desc">
-                  Equipos industriales que remueven suciedad incrustada y manchado en alfombras de alto tráfico con secado rápido.
-                </p>
-              </div>
-            </div>
-            <div className="b2b-actions">
-              <Link className="btn btn-cta btn-lg" href="/cotizar#cat-alfombras-muro">
-                <WaIcon />
-                Cotizar Oficina / Pisos Alfombrados
-              </Link>
             </div>
           </div>
         </section>
