@@ -578,6 +578,12 @@ button { font-family: inherit; }
 }
 .svc-row.selected .svc-label { color: var(--teal); font-weight: 500; }
 
+.svc-label-wrap { display: flex; flex-direction: column; gap: 3px; }
+.svc-note {
+  font-size: 12.5px; line-height: 1.45; color: var(--muted);
+  margin: 0; max-width: 60ch;
+}
+
 /* Qty stepper */
 .qty {
   display: flex; align-items: center;

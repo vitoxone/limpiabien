@@ -4,6 +4,8 @@ export type CatalogItem = {
   title: string;
   price: number;
   show_public: boolean;
+  /** Nota aclaratoria opcional que se muestra bajo el título del ítem. */
+  note?: string;
 };
 
 export type CatalogCategory = {
@@ -26,7 +28,7 @@ export const CATEGORIES: CatalogCategory[] = [
       { id: 'piso-ceramico-exterior', title: 'Cerámico exterior — m²', price: 0, show_public: true },
       { id: 'piso-flotante', title: 'Flotante — m²', price: 0, show_public: true },
       { id: 'piso-vinilico', title: 'Vinílico — m²', price: 0, show_public: true },
-      { id: 'piso-madera', title: 'Madera — m²', price: 0, show_public: true },
+      { id: 'piso-madera', title: 'Madera — m²', price: 0, show_public: true, note: 'Consulta previamente. Actualmente no realizamos pulido, lijado ni vitrificado de pisos de madera.' },
       { id: 'piso-otro', title: 'Otro tipo de piso — m² (indícanos cuál por WhatsApp)', price: 0, show_public: true },
     ],
   },

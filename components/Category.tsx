@@ -99,6 +99,7 @@ export default function Category({
                   key={`${item.id}-${item.title}`}
                   id={item.id}
                   title={item.title}
+                  note={item.note}
                   price={showPrice ? item.price : undefined}
                   qty={getQty(key)}
                   onQtyChange={(q) => setQty(key, q)}

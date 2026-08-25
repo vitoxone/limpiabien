@@ -5,12 +5,13 @@ import { currency } from '@/lib/format';
 type Props = {
   id: string;
   title: string;
+  note?: string;
   price?: number;
   qty: number;
   onQtyChange: (qty: number) => void;
 };
 
-export default function SelectorRow({ id, title, price, qty, onQtyChange }: Props) {
+export default function SelectorRow({ id, title, note, price, qty, onQtyChange }: Props) {
   const inputId = `svc-${id}-${title.slice(0, 6)}`;
   const selected = qty > 0;
 
@@ -28,7 +29,10 @@ export default function SelectorRow({ id, title, price, qty, onQtyChange }: Prop
         </span>
       </label>
 
-      <label htmlFor={inputId} className="svc-label">{title}</label>
+      <div className="svc-label-wrap">
+        <label htmlFor={inputId} className="svc-label">{title}</label>
+        {note && <p className="svc-note">{note}</p>}
+      </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         {typeof price === 'number' && (
