@@ -2000,3 +2000,64 @@ button { font-family: inherit; }
 
 
 
+
+/* ─────────────────────────────────────────────────────────
+   PYME CTA — bloque sobre el footer: sitios web para pymes
+   Banda oscura a propósito: es una oferta distinta a la de
+   limpieza, y el contraste evita que compita con el CTA final.
+   ───────────────────────────────────────────────────────── */
+.pyme-cta {
+  background:
+    radial-gradient(ellipse 60% 90% at 85% 20%, rgba(14,165,233,.30), transparent 62%),
+    radial-gradient(ellipse 55% 80% at 10% 90%, rgba(255,127,0,.22), transparent 60%),
+    var(--stone-900);
+  color: rgba(255,255,255,.78);
+  padding: 56px 0;
+}
+.pyme-cta-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 40px; flex-wrap: wrap;
+}
+.pyme-cta-text { max-width: 60ch; }
+.pyme-cta-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--ff-sans);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--sky-mid);
+}
+.pyme-cta-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--cta);
+  box-shadow: 0 0 0 4px rgba(255,127,0,.22);
+}
+.pyme-cta-title {
+  font-family: var(--ff-serif);
+  font-size: clamp(26px, 3.4vw, 36px);
+  font-weight: 500; letter-spacing: -.02em; line-height: 1.15;
+  color: #fff;
+  margin: 12px 0 10px;
+}
+.pyme-cta-title em { font-style: italic; color: var(--sky-mid); }
+.pyme-cta-body {
+  font-family: var(--ff-body);
+  font-size: 15px; line-height: 1.7;
+  margin: 0;
+}
+.pyme-cta-btn { flex-shrink: 0; gap: 10px; }
+
+@media (max-width: 860px) {
+  .pyme-cta { padding: 44px 0; }
+  .pyme-cta-inner { padding: 0 20px; gap: 26px; }
+  .pyme-cta-btn { width: 100%; justify-content: center; }
+}
+
+.footer-legal { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer-link { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+.footer-link:hover { color: var(--sky-dark); border-bottom-color: var(--sky-dark); }
+@media (max-width: 600px) {
+  .footer-legal { flex-direction: column; align-items: flex-start; gap: 8px; }
+}

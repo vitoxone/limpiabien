@@ -1,6 +1,7 @@
 // app/blog/page.tsx
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Blog | LimpiaBien',
@@ -17,6 +18,8 @@ export default function Page() {
         <h1>Blog</h1>
         <p>Pronto publicaremos tips y guías prácticas.</p>
       </main>
+
+      <SiteFooter />
     </>
   );
 }

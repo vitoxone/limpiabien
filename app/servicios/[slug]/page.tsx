@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { buildWaLink } from '@/lib/wa';
 import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 import { CATEGORIES } from '@/data/catalog';
 import s from './styles.module.css';
 
@@ -627,11 +628,7 @@ export default function ServicioPage({ params }: PageProps) {
         </section>
       </main>
 
-      <footer className="site-footer" role="contentinfo">
-        <span className="footer-brand">LimpiaBien</span>
-        <span>San Fernando · Santa Cruz · Chimbarongo · Chépica · Nancagua · Palmilla · Placilla · Peralillo</span>
-        <span>© {new Date().getFullYear()} LimpiaBien</span>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

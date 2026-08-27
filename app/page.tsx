@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 import Testimonios from '@/components/Testimonios';
 import InstagramSection from '@/components/InstagramSection';
 import { COMUNAS } from '@/data/comunas';
@@ -466,11 +467,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className="site-footer" role="contentinfo">
-        <span className="footer-brand">LimpiaBien</span>
-        <span>San Fernando · Santa Cruz · Chimbarongo · Chépica · Nancagua · Palmilla · Placilla · Peralillo</span>
-        <span>© {new Date().getFullYear()} LimpiaBien</span>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

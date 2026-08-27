@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { CATEGORIES } from '@/data/catalog';
-import { COMUNAS } from '@/data/comunas';
 import Category from '@/components/Category';
 import LeadForm from '@/components/LeadForm';
 import CartSummary from '@/components/CartSummary';
 import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 import { buildWaLink } from '@/lib/wa';
 import { useCallback, useMemo, useState, useEffect } from 'react';
 
@@ -213,11 +213,7 @@ export default function CotizarPage() {
         />
       </main>
 
-      <footer className="site-footer" role="contentinfo">
-        <span className="footer-brand">LimpiaBien</span>
-        <span>{COMUNAS.join(' · ')}</span>
-        <span>© {new Date().getFullYear()} LimpiaBien</span>
-      </footer>
+      <SiteFooter />
     </>
   );
 }
