@@ -384,3 +384,236 @@
 
 /* ── FAQ ─────────────────────────────────────────────────── */
 .faqWrap { max-width: 780px; margin: 0 auto; }
+
+/* ─────────────────────────────────────────────────────────
+   LANDING POR CIUDAD — /web-para-pymes/[ciudad]
+   ───────────────────────────────────────────────────────── */
+
+/* El hero de ciudad no lleva mockup: una sola columna centrada a la izquierda. */
+.heroCiudad { padding: 40px 0 68px; }
+.ciudadHead { max-width: 760px; }
+
+.crumbs {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 28px;
+  font-family: var(--ff-body);
+  font-size: 13px; color: var(--muted);
+}
+.crumbs a { color: var(--sky-dark); text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+.crumbs span[aria-current] { color: var(--ink); }
+
+@media (max-width: 600px) {
+  .heroCiudad { padding: 28px 0 48px; }
+  .crumbs { margin-bottom: 20px; }
+}
+
+/* ── Contexto local + tarjeta de trabajo remoto ──────────── */
+.contextoSection { padding: 64px 0; background: var(--white); }
+.contextoInner {
+  display: grid;
+  grid-template-columns: 1.25fr .75fr;
+  gap: 48px;
+  align-items: start;
+}
+.contextoTitle {
+  font-family: var(--ff-serif);
+  font-size: clamp(26px, 3.4vw, 38px);
+  font-weight: 500; line-height: 1.15; letter-spacing: -.02em;
+  color: var(--ink);
+  margin: 10px 0 16px;
+}
+.contextoTitle em { font-style: italic; color: var(--sky-dark); }
+.contextoBody {
+  font-family: var(--ff-body);
+  font-size: 16px; line-height: 1.8; color: var(--muted);
+  max-width: 62ch;
+  margin: 0;
+}
+
+.remotoCard {
+  padding: 28px 26px 26px;
+  background: var(--sky-pale);
+  border: 1px solid var(--sky-light);
+  border-radius: var(--r-lg);
+  position: sticky; top: 96px;
+}
+.remotoTitle {
+  font-family: var(--ff-sans);
+  font-size: 17px; font-weight: 600; letter-spacing: -.01em;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.remotoBody {
+  font-family: var(--ff-body);
+  font-size: 14.5px; line-height: 1.7; color: var(--muted);
+  margin: 0 0 20px;
+}
+.remotoCard .btn { gap: 8px; }
+
+@media (max-width: 900px) {
+  .contextoSection { padding: 44px 0; }
+  .contextoInner { grid-template-columns: 1fr; gap: 28px; }
+  .remotoCard { position: static; }
+}
+
+/* ── Ciudades cercanas ───────────────────────────────────── */
+.cercaSection {
+  padding: 60px 0 68px;
+  background: var(--stone-50);
+  border-top: 1px solid var(--border);
+}
+.cercaGrid {
+  list-style: none;
+  margin: 0 auto; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 940px;
+}
+.cercaCard {
+  display: flex; flex-direction: column; gap: 6px;
+  height: 100%;
+  padding: 20px 20px 18px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-xs);
+  text-decoration: none;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.cercaCard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--sky-mid);
+}
+.cercaCard strong {
+  font-family: var(--ff-sans);
+  font-size: 16px; font-weight: 600; letter-spacing: -.01em;
+  color: var(--ink);
+}
+.cercaCard span {
+  font-family: var(--ff-body);
+  font-size: 13px; color: var(--muted);
+}
+.cercaCard:hover span { color: var(--sky-dark); }
+
+.cercaTodas {
+  text-align: center;
+  margin: 26px 0 0;
+  font-family: var(--ff-body);
+  font-size: 14.5px;
+}
+.cercaTodas a { color: var(--sky-dark); }
+
+@media (max-width: 860px) { .cercaGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .cercaGrid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .cercaCard { transition: none; }
+  .cercaCard:hover { transform: none; }
+}
+
+/* ─────────────────────────────────────────────────────────
+   LISTADO DE CIUDADES — en la landing madre
+   ───────────────────────────────────────────────────────── */
+.ciudadesSection {
+  padding: 64px 0 72px;
+  background: var(--stone-50);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.ciudadesGrid {
+  list-style: none;
+  margin: 0 auto; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 980px;
+}
+.ciudadCard {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  height: 100%;
+  padding: 16px 18px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.ciudadCard:hover {
+  border-color: var(--sky-mid);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+.ciudadCardName {
+  font-family: var(--ff-sans);
+  font-size: 15px; font-weight: 600; color: var(--ink);
+}
+.ciudadCardProv {
+  font-family: var(--ff-body);
+  font-size: 12px; color: var(--muted);
+  display: block; font-weight: 400; margin-top: 1px;
+}
+.ciudadCardArrow { color: var(--stone-400); flex-shrink: 0; }
+.ciudadCard:hover .ciudadCardArrow { color: var(--sky-dark); }
+
+.ciudadesNota {
+  text-align: center;
+  max-width: 60ch;
+  margin: 28px auto 0;
+  font-family: var(--ff-body);
+  font-size: 14.5px; line-height: 1.7; color: var(--muted);
+}
+.ciudadesNota strong { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 860px) { .ciudadesGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .ciudadesGrid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .ciudadCard { transition: none; }
+  .ciudadCard:hover { transform: none; }
+}
+
+/* ── Búsquedas locales (long-tail) ───────────────────────── */
+.busquedasSection {
+  padding: 60px 0;
+  background: var(--stone-900);
+  color: rgba(255,255,255,.72);
+}
+.busquedasInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.busquedasSection .contextoTitle { color: #fff; margin-top: 10px; }
+.busquedasSection .contextoTitle em { color: var(--sky-mid); }
+.busquedasBody {
+  font-family: var(--ff-body);
+  font-size: 15.5px; line-height: 1.75;
+  max-width: 54ch;
+  margin: 0;
+}
+.busquedasList {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.busquedaItem {
+  display: flex; align-items: center; gap: 9px;
+  padding: 11px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--r-md);
+  font-family: var(--ff-body);
+  font-size: 13.5px; line-height: 1.35;
+  color: rgba(255,255,255,.9);
+}
+.busquedaItem svg { color: var(--sky-mid); flex-shrink: 0; }
+
+@media (max-width: 900px) {
+  .busquedasSection { padding: 44px 0; }
+  .busquedasInner { grid-template-columns: 1fr; gap: 26px; }
+}
+@media (max-width: 560px) {
+  .busquedasList { grid-template-columns: 1fr; }
+}
