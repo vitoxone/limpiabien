@@ -50,8 +50,6 @@ const SERVICES = [
     name: 'Colchones',
     desc: '1 plaza, queen y king. Higienización completa con productos hipoalergénicos.',
     img: '/servicios/664ECA3A-C9B9-4F50-A0C9-89F168C420F2.jpg',
-    badge: 'Pausado durante invierno',
-    badgeClass: 'badge-pausado',
   },
   {
     slug: 'vehiculos',
