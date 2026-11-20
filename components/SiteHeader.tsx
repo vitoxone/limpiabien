@@ -28,7 +28,7 @@ export default function SiteHeader({ active }: { active?: NavKey }) {
       <div className="header-inner">
         <Link href="/" className="logo-wrap" aria-label="LimpiaBien — inicio">
           <div className="logo-mark-white">
-            <Image src="/logo.png" width={48} height={48} alt="LimpiaBien" priority />
+            <Image src="/logo_nuevo.JPG" width={48} height={48} alt="LimpiaBien" priority />
           </div>
           <div>
             <div className="logo-name">LimpiaBien</div>
