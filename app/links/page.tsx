@@ -96,8 +96,9 @@ export default function Page() {
           />
           <h1 className={styles.name}>limpiabien.cl</h1>
           <p className={styles.bio}>
-            Transformamos tus espacios con limpieza profesional de tapices, colchones y
-            vehículos. ¡Cuidamos lo que amas! 🚗🛋️ <span className={styles.tag}>#LimpiezaConAmor</span>
+
+            Soluciones profesionales de limpieza y mantención de pisos para empresas, oficinas y hogares. Especialistas en pisos alfombrados, cerámicos y flotantes. <span className={styles.tag}>#LimpiezaProfesional</span>
+
           </p>
         </header>
 
