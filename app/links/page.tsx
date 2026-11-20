@@ -87,7 +87,7 @@ export default function Page() {
       <div className={styles.card}>
         <header className={styles.profile}>
           <Image
-            src="/logo.png"
+            src="/logo_nuevo.JPG"
             width={96}
             height={96}
             alt="LimpiaBien"
