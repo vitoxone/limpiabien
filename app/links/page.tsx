@@ -95,11 +95,9 @@ export default function Page() {
             priority
           />
           <h1 className={styles.name}>limpiabien.cl</h1>
-          <p className={styles.bio}>
-
-            Soluciones profesionales de limpieza y mantención de pisos para empresas, oficinas y hogares. Especialistas en pisos alfombrados, cerámicos y flotantes. <span className={styles.tag}>#LimpiezaProfesional</span>
-
-          </p>
+        <p className={styles.bio}>
+          Soluciones profesionales de limpieza para empresas y hogares. Especialistas en mantención de pisos (alfombrados, cerámicos y flotantes) y limpieza de tapices: sillones, colchones, sillas, alfombras y vehículos. <span className={styles.tag}>#LimpiezaProfesional</span>
+        </p>
         </header>
 
         <nav className={styles.links} aria-label="Enlaces de LimpiaBien">
